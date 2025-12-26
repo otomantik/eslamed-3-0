@@ -35,6 +35,7 @@ export function HeroSection({ intent }: { intent: string }) {
                     fill
                     className="object-cover opacity-60"
                     priority
+                    fetchPriority="high"
                 />
                 <div className="absolute inset-0 bg-linear-to-r from-white via-white/80 to-transparent" />
             </div>
