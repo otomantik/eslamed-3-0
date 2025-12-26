@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # --- HIGH PERFORMANCE INGESTION (GO) ---
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "8080:8080"
+    environment:
+      - CLICKHOUSE_HOST=clickhouse
+    depends_on:
+      - clickhouse
+
+  # --- ANALYTICS ENGINE (CLICKHOUSE) ---
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    restart: always
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - ./db/clickhouse:/var/lib/clickhouse
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+
+  # --- FRONTEND (NEXT.JS 16) ---
+  frontend:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      - backend
+
+networks:
+  default:
+    name: eslamed-network
