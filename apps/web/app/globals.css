@@ -2,20 +2,23 @@
 
 @theme {
   /* BRAND COLORS (Eslamed Identity) */
-  --color-brand-primary:   oklch(0.55 0.25 255); /* Deep Medical Blue */
-  --color-brand-accent:    oklch(0.85 0.15 85);  /* Urgent Amber */
-  --color-brand-success:   oklch(0.70 0.20 145); /* Trust Green */
-  
+  --color-brand-primary: oklch(0.55 0.25 255);
+  /* Deep Medical Blue */
+  --color-brand-accent: oklch(0.60 0.20 25);
+  /* Urgent Red - High Contrast */
+  --color-brand-success: oklch(0.70 0.20 145);
+  /* Trust Green */
+
   /* UI SEMANTICS */
-  --color-ui-bg:           oklch(0.98 0.01 240);
-  --color-ui-surface:      oklch(1.00 0.00 0);
-  
+  --color-ui-bg: oklch(0.98 0.01 240);
+  --color-ui-surface: oklch(1.00 0.00 0);
+
   /* TYPOGRAPHY */
-  --font-sans:             "Inter", sans-serif;
-  --font-display:          "Outfit", sans-serif;
-  
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Outfit", sans-serif;
+
   /* ANIMATIONS */
-  --animate-pulse-fast:    pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* CUSTOM UTILITIES */
