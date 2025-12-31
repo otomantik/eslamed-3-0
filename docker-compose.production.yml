@@ -1,0 +1,112 @@
+version: '3.8'
+
+services:
+  # --- HIGH PERFORMANCE INGESTION (GO) ---
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:8080:8080"  # Sadece localhost'tan erişilebilir
+    environment:
+      # ClickHouse Bağlantı Bilgileri
+      - CLICKHOUSE_ADDR=clickhouse:9000
+      - CLICKHOUSE_DB=eslamed
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=${CLICKHOUSE_PASSWORD:-}
+      # GÜVENLİK (KVKK): Telefon numaralarını şifrelemek için gizli anahtar
+      - CLICKHOUSE_PHONE_SECRET=${CLICKHOUSE_PHONE_SECRET}
+      # Frontend URL (CORS ayarları için)
+      - CLIENT_URL=${CLIENT_URL:-https://eslamed.com}
+      # Backend API Keys (opsiyonel)
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - DEEPSEEK_API_KEY=${DEEPSEEK_API_KEY:-}
+      - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_SALIH_CHAT_ID=${TELEGRAM_SALIH_CHAT_ID:-}
+      - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL:-}
+      - NODE_ENV=production
+    depends_on:
+      - clickhouse
+    networks:
+      - eslamed-network
+    healthcheck:
+      test: ["CMD-SHELL", "wget --quiet --tries=1 --spider http://localhost:8080/api/health || exit 0"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # --- ANALYTICS ENGINE (CLICKHOUSE) ---
+  clickhouse:
+    image: clickhouse/clickhouse-server:latest
+    restart: always
+    ports:
+      - "127.0.0.1:8123:8123"  # HTTP Portu (sadece localhost)
+      - "127.0.0.1:9000:9000"  # Native Port (sadece localhost)
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./db/clickhouse_logs:/var/log/clickhouse-server
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    networks:
+      - eslamed-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8123/ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # --- FRONTEND (NEXT.JS 16) ---
+  frontend:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "127.0.0.1:3000:3000"  # Sadece localhost'tan erişilebilir (Nginx reverse proxy kullanılacak)
+    environment:
+      # Production API URL
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8080}
+      - NODE_ENV=production
+    # Frontend backend'e bağımlı değil, bağımsız başlayabilir
+    networks:
+      - eslamed-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 120s  # Next.js build sonrası başlaması için daha fazla süre
+
+  # --- VISUALIZATION LAYER (GRAFANA) - Opsiyonel ---
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "127.0.0.1:3003:3000"  # Sadece localhost'tan erişilebilir
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_SERVER_ROOT_URL=${GRAFANA_ROOT_URL:-http://localhost:3003}
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - clickhouse
+    networks:
+      - eslamed-network
+
+networks:
+  eslamed-network:
+    name: eslamed-network
+    driver: bridge
+
+volumes:
+  clickhouse_data:
+  grafana_data:
+

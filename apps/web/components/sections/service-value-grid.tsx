@@ -1,0 +1,65 @@
+import { Sparkles, Truck, ShieldCheck } from 'lucide-react';
+
+export function ServiceValueGrid() {
+  const services = [
+    {
+      icon: Sparkles,
+      title: 'Hijyen ve güvenlik',
+      description: 'Her kullanımdan sonra filtre değişimi ve profesyonel dezenfeksiyon. Steril teslimat.',
+      iconColor: 'text-blue-600',
+      bgColor: 'bg-blue-50',
+    },
+    {
+      icon: Truck,
+      title: 'Hızlı teslimat',
+      description: 'İstanbul geneli hızlı ve güvenli teslimat. Aynı gün içinde kapınızda.',
+      iconColor: 'text-emerald-600',
+      bgColor: 'bg-emerald-50',
+    },
+    {
+      icon: ShieldCheck,
+      title: 'Sürekli destek',
+      description: 'Arızada yedek cihaz değişimi. 7/24 teknik destek ve profesyonel kurulum.',
+      iconColor: 'text-purple-600',
+      bgColor: 'bg-purple-50',
+    },
+  ];
+
+  return (
+    <section className="py-20 bg-slate-50">
+      <div className="container-wide">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4">
+            Size nasıl yardımcı oluyoruz
+          </h2>
+          <p className="text-base text-slate-600 max-w-2xl mx-auto">
+            Güvenilir medikal ekipman çözümleri sunuyoruz
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const Icon = service.icon;
+            return (
+              <div
+                key={index}
+                className="bg-white rounded-xl p-8 border border-slate-200"
+              >
+                <div className={`${service.bgColor} w-14 h-14 rounded-xl flex items-center justify-center mb-6`}>
+                  <Icon className={`w-7 h-7 ${service.iconColor}`} strokeWidth={1.5} />
+                </div>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">
+                  {service.title}
+                </h3>
+                <p className="text-slate-600 leading-relaxed text-sm">
+                  {service.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+

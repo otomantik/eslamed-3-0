@@ -10,7 +10,15 @@ services:
     ports:
       - "8080:8080"
     environment:
-      - CLICKHOUSE_HOST=clickhouse
+      # ClickHouse Bağlantı Bilgileri
+      - CLICKHOUSE_ADDR=clickhouse:9000
+      - CLICKHOUSE_DB=eslamed
+      - CLICKHOUSE_USER=default
+      - CLICKHOUSE_PASSWORD=  # Default kurulumda şifre boştur (boş bırakın)
+      # GÜVENLİK (KVKK): Telefon numaralarını şifrelemek için gizli anahtar
+      - CLICKHOUSE_PHONE_SECRET=buraya_cok_gizli_ve_uzun_bir_yazi_yaz
+      # Frontend URL (CORS ayarları için gerekebilir)
+      - CLIENT_URL=http://localhost:3000
     depends_on:
       - clickhouse
 
@@ -19,10 +27,11 @@ services:
     image: clickhouse/clickhouse-server:latest
     restart: always
     ports:
-      - "8123:8123"
-      - "9000:9000"
+      - "8123:8123" # HTTP Portu (DBeaver vb. bağlanmak için)
+      - "9000:9000" # Native Port (Go Client burayı kullanır)
     volumes:
-      - ./db/clickhouse:/var/lib/clickhouse
+      - clickhouse_data:/var/lib/clickhouse  # Named volume (Windows permission sorunlarını çözer)
+      - ./db/clickhouse_logs:/var/log/clickhouse-server # Logları da dışarı alalım, hata ayıklarken lazım olur
     ulimits:
       nofile:
         soft: 262144
@@ -35,12 +44,36 @@ services:
       dockerfile: Dockerfile
     restart: always
     ports:
-      - "3000:3000"
+      - "3001:3000"  # Host:Container (Frontend 3001'de kalıyor)
     environment:
+      # Tarayıcı tarafında API'ye erişim için
       - NEXT_PUBLIC_API_URL=http://localhost:8080
     depends_on:
       - backend
 
+  # --- VISUALIZATION LAYER (GRAFANA) ---
+  grafana:
+    image: grafana/grafana:latest
+    restart: always
+    ports:
+      - "3003:3000"  # Host:Container (Grafana için 3003 portu - 3001 frontend için kullanılıyor)
+    environment:
+      # Default admin credentials
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      # Auto-install ClickHouse datasource plugin
+      - GF_INSTALL_PLUGINS=grafana-clickhouse-datasource
+      # Allow anonymous access (optional, for easier setup)
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+    volumes:
+      - grafana_data:/var/lib/grafana  # Persist dashboards and settings
+    depends_on:
+      - clickhouse
+
 networks:
   default:
     name: eslamed-network
+
+volumes:
+  clickhouse_data:  # Named volume for ClickHouse data (Windows permission fix)
+  grafana_data:     # Named volume for Grafana dashboards and settings

@@ -20,3 +20,6 @@ go.work
 # Docker
 docker-data/
 db/clickhouse/data/
+db/clickhouse/store/
+db/clickhouse_logs/
+db/clickhouse_logs/*.log

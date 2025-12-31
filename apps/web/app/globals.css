@@ -8,6 +8,8 @@
   /* Urgent Red - High Contrast */
   --color-brand-success: oklch(0.70 0.20 145);
   /* Trust Green */
+  --color-brand-price: oklch(0.60 0.18 145);
+  /* Budget Green */
 
   /* UI SEMANTICS */
   --color-ui-bg: oklch(0.98 0.01 240);
@@ -24,4 +26,29 @@
 /* CUSTOM UTILITIES */
 @utility container-wide {
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+/* Marquee Animation for Live Ticker */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 30s linear infinite;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible for accessibility */
+*:focus-visible {
+  outline: 2px solid oklch(0.55 0.25 255);
+  outline-offset: 2px;
 }
