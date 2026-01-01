@@ -14,7 +14,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       icon: Wrench,
       color: 'bg-red-500',
       iconColor: 'text-red-600',
-      href: '/servis'
+      href: '/hizmetler/teknik-servis'
     },
     {
       id: 'refill',
@@ -23,7 +23,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       icon: Droplets,
       color: 'bg-blue-500',
       iconColor: 'text-blue-600',
-      href: '/dolum'
+      href: '/hizmetler/oksijen-dolum'
     },
     {
       id: 'rental',
@@ -32,7 +32,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       icon: Heart,
       color: 'bg-emerald-500',
       iconColor: 'text-emerald-600',
-      href: '/kiralama'
+      href: '/hizmetler/cihaz-kiralama'
     },
     {
       id: 'sales',
@@ -41,7 +41,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       icon: ShoppingCart,
       color: 'bg-purple-500',
       iconColor: 'text-purple-600',
-      href: '/satis'
+      href: '/hizmetler/cihaz-satisi'
     },
     {
       id: 'buyback',
@@ -50,7 +50,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       icon: RefreshCw,
       color: 'bg-orange-500',
       iconColor: 'text-orange-600',
-      href: '/alim'
+      href: '/hizmetler/ikinci-el-alim'
     }
   ];
 

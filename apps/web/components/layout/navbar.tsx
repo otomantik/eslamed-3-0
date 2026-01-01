@@ -83,22 +83,28 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
             {/* NAVIGATION LINKS - Desktop */}
             <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
               <Link 
-                href="/oksijen-cozumleri" 
+                href="/rehber/solunum-sistemleri" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
               >
                 Oksijen Çözümleri
               </Link>
               <Link 
-                href="/evde-bakim" 
+                href="/rehber/evde-bakim-ekipmanlari" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
               >
                 Evde Bakım
               </Link>
               <Link 
-                href="/urunler" 
+                href="/ekipmanlar" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
               >
                 Ürünler
+              </Link>
+              <Link 
+                href="/tabanlik" 
+                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+              >
+                VIP Hizmetler
               </Link>
               <Link 
                 href="/iletisim" 
@@ -207,25 +213,32 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
               
               <nav className="flex flex-col gap-3">
                 <Link
-                  href="/oksijen-cozumleri"
+                  href="/rehber/solunum-sistemleri"
                   onClick={() => setIsMenuOpen(false)}
                   className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
                 >
                   Oksijen Çözümleri
                 </Link>
                 <Link
-                  href="/evde-bakim"
+                  href="/rehber/evde-bakim-ekipmanlari"
                   onClick={() => setIsMenuOpen(false)}
                   className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
                 >
                   Evde Bakım
                 </Link>
                 <Link
-                  href="/urunler"
+                  href="/ekipmanlar"
                   onClick={() => setIsMenuOpen(false)}
                   className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
                 >
                   Ürünler
+                </Link>
+                <Link
+                  href="/tabanlik"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                >
+                  VIP Hizmetler
                 </Link>
                 <Link
                   href="/iletisim"

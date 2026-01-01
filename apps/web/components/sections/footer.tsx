@@ -97,6 +97,11 @@ export function Footer() {
                     </a>
                   </li>
                   <li>
+                    <a href="/istanbul" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                      İstanbul Hizmetleri
+                    </a>
+                  </li>
+                  <li>
                     <a href="/rehber/evde-bakim-ekipmanlari" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       Evde Bakım Rehberi
                     </a>
