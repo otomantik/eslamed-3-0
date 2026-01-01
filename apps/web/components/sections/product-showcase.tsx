@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { MessageCircle, Footprints, Ruler } from 'lucide-react';
+import { MessageCircle, Footprints } from 'lucide-react';
 import Image from 'next/image';
 
 type ProductTab = 'respiratory' | 'diagnostic' | 'homecare';
@@ -30,7 +30,7 @@ export function ProductShowcase() {
 
   const filteredProducts = products.filter(p => p.category === activeTab);
   const tabanlikWhatsappHref = `https://wa.me/905372425535?text=${encodeURIComponent(
-    'Merhaba, Kişiye Özel Tabanlık Analizi & Çözümleri hakkında detaylı bilgi almak istiyorum.'
+    'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
   )}`;
   const categoryVisuals: Record<ProductTab, { src: string; alt: string; label: string }> = {
     respiratory: {
@@ -74,47 +74,55 @@ export function ProductShowcase() {
           aria-label="Kişiye Özel Tabanlık"
           className="mb-10"
         >
-          <div className="rounded-2xl border border-slate-200 bg-slate-50 overflow-hidden">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-              <div className="relative min-h-[220px] sm:min-h-[260px]">
-                {/* Use <img> to keep this as a placeholder even if the asset isn't uploaded yet. */}
-                <img
+          <div
+            className="rounded-3xl border border-slate-200 bg-slate-50/50 shadow-sm overflow-hidden"
+            aria-labelledby="vip-tabanlik-title"
+          >
+            <div className="flex flex-col lg:flex-row">
+              {/* Left: image (full-bleed) */}
+              <div className="relative w-full lg:w-1/2 h-64 sm:h-72 lg:h-auto lg:min-h-[420px]">
+                <Image
                   src="/assets/kisiye-ozel-tabanlik-analizi.webp"
                   alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed"
-                  className="absolute inset-0 w-full h-full object-cover"
-                  loading="lazy"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  priority={false}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/45 via-black/15 to-transparent" />
-                <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-3 py-1.5 text-white text-xs backdrop-blur-sm">
-                  <Ruler className="w-4 h-4" strokeWidth={1.5} />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent" />
+                <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-slate-900 text-xs font-semibold backdrop-blur-sm">
                   VIP / Öncelikli
                 </div>
               </div>
 
-              <div className="p-6 sm:p-8">
+              {/* Right: content (vertically centered) */}
+              <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
                 <div className="flex items-start gap-3">
                   <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
-                    <Footprints className="w-5 h-5 text-slate-700" strokeWidth={1.5} />
+                    <Footprints className="w-5 h-5 text-slate-800" strokeWidth={1.5} />
                   </div>
                   <div className="min-w-0">
-                    <h2 className="text-xl sm:text-2xl font-display font-semibold text-slate-900 leading-snug">
+                    <h2
+                      id="vip-tabanlik-title"
+                      className="text-2xl lg:text-3xl font-semibold text-slate-900 leading-snug"
+                    >
                       Kişiye Özel Tabanlık Analizi &amp; Çözümleri
                     </h2>
-                    <p className="mt-2 text-sm text-slate-600 leading-relaxed">
+                    <p className="mt-3 text-slate-600 leading-relaxed">
                       Yürüme analizi ve biomekanik ölçümlerle size özel tabanlık çözümleri sunuyoruz. Ayak sağlığınız için uzman desteği alın.
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                <div className="mt-8">
                   <a
                     href={tabanlikWhatsappHref}
-                    className="inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-5 py-3 text-sm font-semibold hover:bg-slate-800 transition-colors"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-sm font-semibold hover:bg-slate-800 transition-colors"
                   >
                     <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
                     Randevu Al / Detaylı Bilgi
                   </a>
-                  <div className="text-xs text-slate-500 sm:self-center">
+                  <div className="mt-3 text-xs text-slate-500">
                     Hekim planına uygun teknik süreç bilgilendirmesi.
                   </div>
                 </div>
