@@ -1,3 +1,9 @@
+export interface IntentWeights {
+  urgent: number;
+  research: number;
+  vip: number;
+}
+
 export type SearchItem = {
   id: string;
   title: string;
@@ -9,6 +15,9 @@ export type SearchItem = {
   kind?: 'guide' | 'equipment' | 'vip';
   filters?: Array<'kurulum' | 'kiralik' | 'vip'>;
   isUrgent?: boolean;
+  intent_weights?: IntentWeights;
+  meta_title?: string;
+  slug?: string;
 };
 
 export type SearchConfig = {

@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useEffect, useMemo, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import {
   Activity,
   Bed,
@@ -13,6 +13,9 @@ import {
 import type { SearchItem } from '@/lib/search/search-config';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
 import { CatalogSkeleton } from '@/components/catalog/skeleton';
+import { VirtualizedCatalog } from './virtualized-catalog';
+import { useIntent } from '@/context/IntentContext';
+import { filterByCategoryAndMode, sortByIntentWeight } from '@/lib/search/intent-ranking';
 
 type FilterKey = 'kurulum' | 'kiralik' | 'vip';
 
@@ -31,15 +34,13 @@ function makeWhatsAppLink(title: string) {
 
 export function CatalogExplorer() {
   const params = useSearchParams();
+  const router = useRouter();
+  const { mode } = useIntent();
   const [raw, setRaw] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
   const [activeFilter, setActiveFilter] = useState<FilterKey | 'all'>('all');
   const [ghostLoading, setGhostLoading] = useState(false);
-
-  // For basic windowing
-  const listRef = useRef<HTMLDivElement | null>(null);
-  const [scrollTop, setScrollTop] = useState(0);
 
   useEffect(() => {
     let cancelled = false;
@@ -101,13 +102,14 @@ export function CatalogExplorer() {
     return equipmentCategories.find((c) => c.id === activeCategoryId) || equipmentCategories[0];
   }, [equipmentCategories, activeCategoryId]);
 
-  // Support pre-applied filters from links (e.g. /ekipmanlar?filter=kiralik&category=solunum)
+  // Support pre-applied filters from URL params (e.g. /ekipmanlar?category=solunum&mode=urgent)
   useEffect(() => {
     if (loading) return;
     if (!equipmentCategories.length) return;
 
     const filterParam = (params.get('filter') || '').toLowerCase();
     const catParamRaw = (params.get('category') || '').toLowerCase();
+    const modeParam = params.get('mode');
 
     if (filterParam === 'kurulum' || filterParam === 'kiralik' || filterParam === 'vip' || filterParam === 'all') {
       setActiveFilter(filterParam as any);
@@ -121,14 +123,38 @@ export function CatalogExplorer() {
         equipmentCategories.find((c) => c.label.toLowerCase().replace(/\s+/g, '-') === normalizedCat);
       if (found) setActiveCategoryId(found.id);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, equipmentCategories.length]);
 
+    // Update URL if mode changes (for shareable links)
+    if (modeParam && modeParam !== mode) {
+      const newParams = new URLSearchParams(params.toString());
+      newParams.set('mode', mode);
+      router.replace(`/ekipmanlar?${newParams.toString()}`, { scroll: false });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, equipmentCategories.length, mode]);
+
+  // Intent-based filtering and ranking
   const filteredItems = useMemo(() => {
     const base = activeCategory?.items || [];
-    if (activeFilter === 'all') return base;
-    return base.filter((x) => (x.filters || []).includes(activeFilter));
-  }, [activeCategory, activeFilter]);
+    
+    // Apply filter
+    let filtered = activeFilter === 'all' 
+      ? base 
+      : base.filter((x) => (x.filters || []).includes(activeFilter));
+
+    // Apply category filter from URL
+    const categoryParam = params.get('category');
+    if (categoryParam && categoryParam !== 'all') {
+      filtered = filterByCategoryAndMode(filtered, categoryParam, mode);
+    }
+
+    // Sort by intent weight if mode is active
+    if (mode) {
+      filtered = sortByIntentWeight(filtered, mode);
+    }
+
+    return filtered;
+  }, [activeCategory, activeFilter, mode, params]);
 
   // Ghost loading on filter/category change (perceived performance)
   useEffect(() => {
@@ -136,17 +162,32 @@ export function CatalogExplorer() {
     setGhostLoading(true);
     const t = window.setTimeout(() => setGhostLoading(false), 220);
     return () => window.clearTimeout(t);
-  }, [activeCategoryId, activeFilter, loading]);
+  }, [activeCategoryId, activeFilter, loading, mode]);
 
-  const rowHeight = 88; // fixed height for basic virtualization
-  const viewportHeight = 520;
-  const totalRows = filteredItems.length;
-  const startIndex = Math.max(0, Math.floor(scrollTop / rowHeight) - 5);
-  const endIndex = Math.min(totalRows, startIndex + Math.ceil(viewportHeight / rowHeight) + 10);
-  const visible = filteredItems.slice(startIndex, endIndex);
-
-  const paddingTop = startIndex * rowHeight;
-  const paddingBottom = Math.max(0, (totalRows - endIndex) * rowHeight);
+  // Log no-result queries
+  useEffect(() => {
+    if (loading || filteredItems.length > 0) return;
+    
+    const query = params.get('query');
+    const category = params.get('category');
+    if (query || category) {
+      fetch('/api/demand_logs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'catalog_no_result',
+          query: query || null,
+          category: category || null,
+          mode: mode || null,
+          filter: activeFilter,
+          timestamp: new Date().toISOString(),
+        }),
+        keepalive: true,
+      }).catch(() => {
+        // Silent fail
+      });
+    }
+  }, [loading, filteredItems.length, params, mode, activeFilter]);
 
   if (loading) {
     return <CatalogSkeleton />;
@@ -225,7 +266,7 @@ export function CatalogExplorer() {
         </div>
       </section>
 
-      {/* Results list (ghost loading + basic virtualization) */}
+      {/* Results list (ghost loading + virtualized) */}
       <section className="rounded-3xl border border-slate-200 bg-white p-2">
         {ghostLoading ? (
           <div className="p-6 space-y-3">
@@ -233,32 +274,39 @@ export function CatalogExplorer() {
               <div key={i} className="h-[88px] rounded-2xl border border-slate-200 bg-slate-50 animate-pulse" />
             ))}
           </div>
-        ) : (
-          <div
-            ref={listRef}
-            className="max-h-[520px] overflow-auto p-2"
-            onScroll={(e) => setScrollTop((e.target as HTMLDivElement).scrollTop)}
-          >
-            <div style={{ paddingTop, paddingBottom }}>
-              {visible.map((it) => (
-                <div
-                  key={it.id}
-                  className="h-[88px] rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 transition-colors px-5 py-4 flex items-center justify-between gap-4"
-                >
-                  <div className="min-w-0">
-                    <div className="text-base font-semibold text-slate-900 truncate">{it.title}</div>
-                    <div className="text-sm text-slate-600 truncate">{it.category}</div>
-                  </div>
-                  <a
-                    href={makeWhatsAppLink(it.title)}
-                    className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors flex-shrink-0"
-                  >
-                    WhatsApp
-                  </a>
-                </div>
-              ))}
-            </div>
+        ) : filteredItems.length === 0 ? (
+          <div className="p-8 text-center">
+            <p className="text-slate-600 mb-4">Bu filtreler için sonuç bulunamadı.</p>
+            <button
+              onClick={() => {
+                setActiveCategoryId('all');
+                setActiveFilter('all');
+              }}
+              className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors"
+            >
+              Filtreleri Temizle
+            </button>
           </div>
+        ) : (
+          <VirtualizedCatalog
+            items={filteredItems}
+            onItemClick={(item) => {
+              // Log item click for analytics
+              fetch('/api/demand_logs', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  type: 'catalog_item_click',
+                  itemId: item.id,
+                  itemTitle: item.title,
+                  category: item.category,
+                  mode: mode || null,
+                  timestamp: new Date().toISOString(),
+                }),
+                keepalive: true,
+              }).catch(() => {});
+            }}
+          />
         )}
       </section>
     </section>

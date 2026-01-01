@@ -5,6 +5,7 @@ import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { CatalogExplorer } from '@/components/catalog/catalog-explorer';
 import { CatalogSkeleton } from '@/components/catalog/skeleton';
+import { CatalogSchemaGenerator } from '@/components/catalog/catalog-schema-generator';
 
 export const metadata: Metadata = {
   title: 'Tüm Ekipmanlar | ESLAMED',
@@ -14,39 +15,12 @@ export const metadata: Metadata = {
 };
 
 export default function EkipmanlarPage() {
-  // SEO: lightweight CollectionPage schema (top items placeholder)
-  const collectionSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    '@id': 'https://eslamed.com/ekipmanlar#collection',
-    name: 'Tüm Ekipmanlar | ESLAMED',
-    url: 'https://eslamed.com/ekipmanlar',
-    description:
-      'Evde kullanım için medikal ekipmanları kategori ve tek tık filtrelerle inceleyin.',
-    breadcrumb: {
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: 'https://eslamed.com/' },
-        { '@type': 'ListItem', position: 2, name: 'Tüm Ekipmanlar', item: 'https://eslamed.com/ekipmanlar' },
-      ],
-    },
-    // Placeholder mainEntity list; later we can replace with analytics-derived top 50.
-    mainEntity: {
-      '@type': 'ItemList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Oksijen Konsantratörü', url: 'https://eslamed.com/ekipmanlar' },
-        { '@type': 'ListItem', position: 2, name: 'Tansiyon Aleti', url: 'https://eslamed.com/ekipmanlar' },
-        { '@type': 'ListItem', position: 3, name: 'Havalı Yatak', url: 'https://eslamed.com/ekipmanlar' },
-      ],
-    },
-  };
-
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
-      />
+      {/* Dynamic JSON-LD schemas generated client-side */}
+      <Suspense fallback={null}>
+        <CatalogSchemaGenerator />
+      </Suspense>
 
       <Navbar />
 
