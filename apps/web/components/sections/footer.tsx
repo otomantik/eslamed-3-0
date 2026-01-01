@@ -45,9 +45,9 @@ export function Footer() {
               <div>
                 <div className="font-medium text-slate-800">İletişim</div>
                 <p className="mt-1">
-                  Telefon / WhatsApp: <span className="font-mono text-slate-800">+90 555 555 55 55</span>
+                  Telefon / WhatsApp: <span className="font-mono text-slate-800">+90 537 242 55 35</span>
                   <br />
-                  Hizmet bölgesi: İstanbul (ilçe bazlı planlama)
+                  Adres: Alemdağ Mah. Atabey Caddesi 19/BA, Çekmeköy/İstanbul
                   <br />
                   Çalışma saatleri: talebe göre planlama (detaylar iletişimde netleşir)
                 </p>

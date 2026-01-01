@@ -11,7 +11,7 @@ export function FloatingRescueBar({ intent }: FloatingRescueBarProps) {
   const isEmergency = intent === 'CRITICAL_EMERGENCY';
   
   const leftButton = {
-    href: 'https://wa.me/905555555555?text=Konumumu gönderiyorum',
+    href: 'https://wa.me/905372425535?text=Konumumu gönderiyorum',
     label: 'Konum Gönder',
     icon: MessageCircle,
     bg: 'bg-emerald-600 hover:bg-emerald-700'

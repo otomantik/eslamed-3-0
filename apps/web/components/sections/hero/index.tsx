@@ -164,7 +164,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
               {config.cta}
             </a>
             <a
-              href="https://wa.me/905555555555?text=Merhaba"
+              href="https://wa.me/905372425535?text=Merhaba"
               className="bg-white/90 backdrop-blur-sm text-slate-900 border border-white/50 px-8 py-4 rounded-lg font-semibold text-base hover:bg-white transition-colors flex items-center justify-center gap-2"
             >
               <MessageCircle className="w-5 h-5" strokeWidth={1.5} />

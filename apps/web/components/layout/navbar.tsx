@@ -101,7 +101,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
 
             {/* WHATSAPP CTA - Desktop */}
             <Link
-              href="https://wa.me/905555555555?text=Merhaba"
+              href="https://wa.me/905372425535?text=Merhaba"
               className="hidden lg:flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg transition-colors font-medium text-sm flex-shrink-0"
             >
               <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
@@ -175,7 +175,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
                 </Link>
                 <div className="border-t border-slate-200 my-3" />
                 <Link
-                  href="https://wa.me/905555555555?text=Merhaba"
+                  href="https://wa.me/905372425535?text=Merhaba"
                   onClick={() => setIsMenuOpen(false)}
                   className="mx-0 flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-4 rounded-lg font-semibold text-base transition-colors shadow-sm"
                 >

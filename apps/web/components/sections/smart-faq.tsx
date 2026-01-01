@@ -90,7 +90,7 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
       '@type': 'City',
       name: 'Istanbul'
     },
-    telephone: '+905555555555'
+    telephone: '+905372425535'
   };
 
   return (

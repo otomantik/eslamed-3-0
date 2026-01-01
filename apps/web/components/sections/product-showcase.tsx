@@ -85,7 +85,7 @@ export function ProductShowcase() {
 
               {/* CTA Button */}
               <a
-                href={`https://wa.me/905555555555?text=${encodeURIComponent(`${product.name} hakkında bilgi almak istiyorum.`)}`}
+                href={`https://wa.me/905372425535?text=${encodeURIComponent(`${product.name} hakkında bilgi almak istiyorum.`)}`}
                 className="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-700 px-4 py-3 rounded-lg transition-colors font-medium text-sm border border-slate-200"
               >
                 <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
