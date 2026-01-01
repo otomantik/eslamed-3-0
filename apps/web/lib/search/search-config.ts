@@ -6,6 +6,9 @@ export type SearchItem = {
   synonyms?: string[];
   href?: string; // optional (if a full page exists)
   whatsappText: string;
+  kind?: 'guide' | 'equipment' | 'vip';
+  filters?: Array<'kurulum' | 'kiralik' | 'vip'>;
+  isUrgent?: boolean;
 };
 
 export type SearchConfig = {

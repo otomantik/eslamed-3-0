@@ -1,47 +1,105 @@
-[
-  {
-    "id": "kisiye-ozel-tabanlik",
-    "title": "Kişiye Özel Tabanlık",
-    "category": "Ortopedi",
-    "tags": ["ortopedi", "ortopedik", "tabanlık", "ayak sağlığı", "ayak analizi", "yürüme analizi", "düz taban", "postür", "yürüme", "basma analizi", "biomekanik"],
-    "synonyms": ["tabanlik", "tabanlk", "insol", "insole", "ortopedik tabanlık", "kişiye özel tabanlik", "ayak analizi", "yürüme analizi", "duz taban", "düz taban", "pronasyon", "supinasyon", "topuk", "ayak"],
-    "href": "/tabanlik",
-    "whatsappText": "Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum."
+{
+  "meta": {
+    "version": 2,
+    "totalProducts": 2500
   },
-  {
-    "id": "rehber-solunum-sistemleri",
-    "title": "Solunum Sistemleri Rehberi",
-    "category": "Tıbbi Rehber",
-    "tags": ["rehber", "solunum", "oksijen", "filtre", "bakım", "elektrik kesintisi", "cihaz ötüyor"],
-    "synonyms": ["elektrik kesildi", "elektrik kesintisi", "cihaz ötüyor", "cihaz otuyor", "oksijen filtresi", "filtre nasıl temizlenir", "su bitti", "nemlendirici su", "saf su", "oksijen cihazı"],
-    "href": "/rehber/solunum-sistemleri",
-    "whatsappText": "Merhaba, solunum cihazım için teknik kontrol ve elektrik kesintisi planı hakkında bilgi almak istiyorum."
-  },
-  {
-    "id": "rehber-olcum-cihazlari",
-    "title": "Ölçüm Cihazları Rehberi (Tansiyon)",
-    "category": "Tıbbi Rehber",
-    "tags": ["rehber", "tansiyon", "ölçüm", "takip", "hata", "kalibrasyon"],
-    "synonyms": ["tansiyon hata veriyor", "tansiyon ölçümü", "dogru tansiyon olcumu", "doğru tansiyon ölçümü", "manşet", "kural", "kalibrasyon", "konuşmadan ölç", "5 dakika dinlen", "mesane"],
-    "href": "/rehber/olcum-cihazlari",
-    "whatsappText": "Merhaba, tansiyon ölçümü ve cihaz hatası/kalibrasyon hakkında bilgi almak istiyorum."
-  },
-  {
-    "id": "tansiyon-aleti",
-    "title": "Tansiyon Aleti",
-    "category": "Tanı & Ölçüm",
-    "tags": ["tansiyon", "ölçüm", "takip"],
-    "synonyms": ["omron", "tansiyon olcer", "tansiyon ölçer", "kan basıncı", "kan basinci"],
-    "whatsappText": "Merhaba, tansiyon aleti hakkında bilgi almak istiyorum."
-  },
-  {
-    "id": "oksijen-konsantratoru",
-    "title": "Oksijen Konsantratörü",
-    "category": "Solunum",
-    "tags": ["solunum", "oksijen", "konsantratör", "kurulum"],
-    "synonyms": ["oksijen konsantratoru", "concentrator", "konsantrator", "oksijen cihazı", "oksijen cihazi"],
-    "whatsappText": "Merhaba, oksijen konsantratörü hakkında bilgi almak istiyorum."
-  }
-]
-
-
+  "categories": [
+    {
+      "id": "vip-hizmetler",
+      "label": "VIP Hizmetler",
+      "kind": "vip",
+      "items": [
+        {
+          "id": "kisiye-ozel-tabanlik",
+          "kind": "vip",
+          "title": "Kişiye Özel Tabanlık",
+          "category": "Ortopedi",
+          "tags": ["ortopedi", "ortopedik", "tabanlık", "ayak sağlığı", "ayak analizi", "yürüme analizi", "düz taban", "biomekanik"],
+          "synonyms": ["tabanlik", "tabanlk", "tansyon", "insol", "insole", "ortopedik tabanlık", "kişiye özel tabanlik", "ayak analizi", "yürüme analizi", "duz taban", "düz taban", "pronasyon", "supinasyon", "topuk", "ayak"],
+          "href": "/tabanlik",
+          "filters": ["vip"],
+          "whatsappText": "Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum."
+        }
+      ]
+    },
+    {
+      "id": "rehber",
+      "label": "Tıbbi Rehber",
+      "kind": "guide",
+      "items": [
+        {
+          "id": "rehber-solunum-sistemleri",
+          "kind": "guide",
+          "title": "Solunum Sistemleri Rehberi",
+          "category": "Tıbbi Rehber",
+          "tags": ["rehber", "solunum", "oksijen", "filtre", "bakım", "elektrik kesintisi", "cihaz ötüyor"],
+          "synonyms": ["elektrik kesildi", "elektrik kesintisi", "cihaz ötüyor", "cihaz otuyor", "oksijen filtresi", "filtre nasıl temizlenir", "su bitti", "nemlendirici su", "saf su", "oksijen cihazı"],
+          "href": "/rehber/solunum-sistemleri",
+          "whatsappText": "Merhaba, solunum cihazım için teknik kontrol ve elektrik kesintisi planı hakkında bilgi almak istiyorum."
+        },
+        {
+          "id": "rehber-olcum-cihazlari",
+          "kind": "guide",
+          "title": "Ölçüm Cihazları Rehberi (Tansiyon)",
+          "category": "Tıbbi Rehber",
+          "tags": ["rehber", "tansiyon", "ölçüm", "takip", "hata", "kalibrasyon"],
+          "synonyms": ["tansyon", "tansiyon hata veriyor", "tansiyon ölçümü", "dogru tansiyon olcumu", "doğru tansiyon ölçümü", "manşet", "kural", "kalibrasyon", "konuşmadan ölç", "5 dakika dinlen", "mesane"],
+          "href": "/rehber/olcum-cihazlari",
+          "whatsappText": "Merhaba, tansiyon ölçümü ve cihaz hatası/kalibrasyon hakkında bilgi almak istiyorum."
+        }
+      ]
+    },
+    {
+      "id": "solunum",
+      "label": "Solunum",
+      "kind": "equipment",
+      "items": [
+        {
+          "id": "oksijen-konsantratoru",
+          "kind": "equipment",
+          "title": "Oksijen Konsantratörü",
+          "category": "Solunum",
+          "tags": ["solunum", "oksijen", "konsantratör", "kurulum"],
+          "synonyms": ["nefes cihazı", "nefes cihazi", "oksijen konsantratoru", "concentrator", "konsantrator", "oksijen cihazı", "oksijen cihazi", "cihaz ötüyor"],
+          "filters": ["kurulum", "kiralik"],
+          "isUrgent": true,
+          "whatsappText": "Merhaba, Oksijen Konsantratörü hakkında kurulum ve fiyat bilgisi almak istiyorum."
+        }
+      ]
+    },
+    {
+      "id": "olcum",
+      "label": "Tanı & Ölçüm",
+      "kind": "equipment",
+      "items": [
+        {
+          "id": "tansiyon-aleti",
+          "kind": "equipment",
+          "title": "Tansiyon Aleti",
+          "category": "Tanı & Ölçüm",
+          "tags": ["tansiyon", "ölçüm", "takip"],
+          "synonyms": ["tansyon", "omron", "tansiyon olcer", "tansiyon ölçer", "kan basıncı", "kan basinci"],
+          "filters": ["kurulum"],
+          "whatsappText": "Merhaba, Tansiyon Aleti hakkında kurulum ve fiyat bilgisi almak istiyorum."
+        }
+      ]
+    },
+    {
+      "id": "evde-bakim",
+      "label": "Evde Bakım",
+      "kind": "equipment",
+      "items": [
+        {
+          "id": "havali-yatak",
+          "kind": "equipment",
+          "title": "Havalı Yatak",
+          "category": "Evde Bakım",
+          "tags": ["evde bakım", "hasta yatağı", "bası yarası", "konfor"],
+          "synonyms": ["hasta yatağı", "hasta yatagi", "havalı yatak", "havali yatak", "yatak", "baklava tip", "baklava tipi"],
+          "filters": ["kurulum", "kiralik"],
+          "whatsappText": "Merhaba, Havalı Yatak hakkında kurulum ve fiyat bilgisi almak istiyorum."
+        }
+      ]
+    }
+  ]
+}
