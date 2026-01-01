@@ -25,10 +25,15 @@ export async function POST(req: Request) {
         logData.mode = body?.mode;
         break;
       case 'intent_switch':
+      case 'intent_shift':
         logData.mode = body?.mode;
         logData.originalParam = body?.originalParam;
         logData.district = body?.district;
         logData.sessionId = body?.sessionId;
+        logData.previousMode = body?.previousMode;
+        logData.newMode = body?.newMode;
+        logData.subtype = body?.subtype; // e.g., 'High_Intent_Conversion_Signal'
+        logData.intent_mode = body?.mode || body?.newMode; // Canonical field name for analytics
         break;
       default:
         // Legacy: search term logging

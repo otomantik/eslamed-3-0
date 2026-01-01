@@ -3,6 +3,9 @@ import { Recycle, Bed, Wind, Accessibility } from 'lucide-react';
 import { ServiceTemplate } from '@/components/services/service-template';
 import { SanitizationChecklist } from '@/components/services/sanitization-checklist';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { ProcessTimeline } from '@/components/services/process-timeline';
+import { PricingTransparency } from '@/components/services/pricing-transparency';
+import { ServiceFAQ } from '@/components/services/service-faq';
 
 export const metadata: Metadata = {
   title: 'Cihaz Kiralama | ESLAMED',
@@ -36,6 +39,33 @@ export default function CihazKiralamaPage() {
       accentHex={accent}
       serviceSchema={serviceSchema}
     >
+      {/* SECTION A: Process Timeline */}
+      <ProcessTimeline
+        steps={[
+          {
+            number: '1',
+            title: 'İhtiyaç Analizi',
+            description: 'WhatsApp veya telefon ile ihtiyacınızı paylaşın. Cihaz tipi, süre ve kullanım koşulları netleştirilir.',
+          },
+          {
+            number: '2',
+            title: 'Cihaz Hazırlığı',
+            description: 'Cihaz sterilizasyon protokollerine göre hazırlanır. Teknik kontrol ve güvenlik testleri yapılır.',
+          },
+          {
+            number: '3',
+            title: 'Teslimat & Kurulum',
+            description: 'İstanbul içi yerinde teslimat ve kurulum. Kullanım eğitimi ve güvenlik adımları gösterilir.',
+          },
+          {
+            number: '4',
+            title: 'Kullanım & İade',
+            description: 'Kiralama süresi boyunca teknik destek sağlanır. Süre sonunda güvenli iade süreci yürütülür.',
+          },
+        ]}
+        accentColor={accent}
+      />
+
       <section className="rounded-3xl border border-slate-200 bg-white p-8">
         <h2 className="text-2xl font-semibold text-slate-900">Kapsam (Örnek Ekipmanlar)</h2>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -61,6 +91,34 @@ export default function CihazKiralamaPage() {
       </section>
 
       <SanitizationChecklist />
+
+      {/* SECTION B: Pricing & Timeline */}
+      <PricingTransparency
+        title="Fiyatlandırma & Zamanlama"
+        content="Kiralama fiyatlandırması, cihaz tipine, kiralama süresine ve kullanım koşullarına göre belirlenir. Minimum kiralama süresi genellikle 1 aydır; daha kısa süreler için iletişimde netleştirilir. Teslimat ve kurulum genellikle aynı gün veya ertesi gün yapılır. Kiralama süresi boyunca teknik destek ve bakım hizmeti dahildir."
+        accentColor={accent}
+      />
+
+      {/* SECTION C: FAQ */}
+      <ServiceFAQ
+        faqs={[
+          {
+            question: 'Ne kadar süre kiralayabilirim?',
+            answer:
+              'Minimum kiralama süresi genellikle 1 aydır. Daha kısa süreler için iletişimde netleştirilir. Kiralama süresi, cihaz tipi ve hekim önerisine göre esnek olarak planlanır.',
+          },
+          {
+            question: 'Kiralama koşulları nelerdir?',
+            answer:
+              'Kiralama koşulları, cihaz tipine ve kullanım koşullarına göre değişir. Detaylar (minimum süre, depozito, kullanım kuralları) iletişimde netleştirilir. Tüm cihazlar sterilizasyon protokollerine göre hazırlanır.',
+          },
+          {
+            question: 'Kiralama sırasında teknik destek alabilir miyim?',
+            answer:
+              'Evet. Kiralama süresi boyunca teknik destek ve bakım hizmeti dahildir. Sorun yaşadığınızda WhatsApp veya telefon hattımızdan 7/24 ulaşabilirsiniz.',
+          },
+        ]}
+      />
 
       <QuickActionCard variant="info" title="Şeffaflık notu">
         Kiralama süreçlerinde minimum süre ve kullanım koşulları, cihaz tipi ve hekim önerisine göre esnek olarak planlanır; detaylar iletişimde netleştirilir.

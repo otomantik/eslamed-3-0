@@ -12,3 +12,4 @@ Notlar:
 - Bu logolar sadece “trust strip” amaçlıdır; yıldız/puan/yorum içermez.
 
 
+

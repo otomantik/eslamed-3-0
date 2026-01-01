@@ -1,8 +1,11 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { ShoppingBag, ArrowUpRight, ListChecks } from 'lucide-react';
+import { ShoppingBag, ArrowUpRight } from 'lucide-react';
 import { ServiceTemplate } from '@/components/services/service-template';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { ProcessTimeline } from '@/components/services/process-timeline';
+import { PricingTransparency } from '@/components/services/pricing-transparency';
+import { ServiceFAQ } from '@/components/services/service-faq';
 
 export const metadata: Metadata = {
   title: 'Cihaz Satışı | ESLAMED',
@@ -36,29 +39,60 @@ export default function CihazSatisiPage() {
       accentHex={accent}
       serviceSchema={serviceSchema}
     >
-      <section className="rounded-3xl border border-slate-200 bg-white p-8">
-        <h2 className="text-2xl font-semibold text-slate-900">Süreç (kısa)</h2>
-        <ol className="mt-6 space-y-3 text-slate-700" style={{ lineHeight: 1.8 }}>
-          <li className="flex items-start gap-3">
-            <ListChecks className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">1) İhtiyaç çerçevesi:</span> hekim önerisi + ev koşulu + kullanıcı profili (50+ kullanım kolaylığı).
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <ListChecks className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">2) Cihaz sınıfı seçimi:</span> teknik kapasite ve aksesuar uyumu netleştirilir.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <ListChecks className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">3) Kurulum ve eğitim:</span> cihazın güvenli kullanım adımları sahada gösterilir.
-            </span>
-          </li>
-        </ol>
-      </section>
+      {/* SECTION A: Process Timeline */}
+      <ProcessTimeline
+        steps={[
+          {
+            number: '1',
+            title: 'İhtiyaç Analizi',
+            description: 'Hekim önerisi, ev koşulları ve kullanıcı profili (50+ kullanım kolaylığı) değerlendirilir.',
+          },
+          {
+            number: '2',
+            title: 'Cihaz Eşleştirme',
+            description: 'Teknik kapasite, aksesuar uyumu ve güvenlik standartlarına göre doğru cihaz sınıfı seçilir.',
+          },
+          {
+            number: '3',
+            title: 'Fiyatlandırma & Onay',
+            description: 'Şeffaf fiyat çerçevesi sunulur. Onayınız sonrasında cihaz hazırlığına geçilir.',
+          },
+          {
+            number: '4',
+            title: 'Kurulum & Eğitim',
+            description: 'İstanbul içi yerinde kurulum ve kullanım eğitimi. Güvenli kullanım adımları sahada gösterilir.',
+          },
+        ]}
+        accentColor={accent}
+      />
+
+      {/* SECTION B: Pricing & Timeline */}
+      <PricingTransparency
+        title="Fiyatlandırma & Zamanlama"
+        content="Fiyatlandırma, cihaz tipine, teknik özelliklerine ve aksesuar paketine göre belirlenir. Tüm cihazlar ÜTS kayıtlı ve CE belgelidir. Kurulum ve eğitim hizmeti dahildir. Teslimat genellikle aynı gün veya ertesi gün yapılır. Detaylı fiyat bilgisi için kataloğu inceleyebilir veya WhatsApp üzerinden iletişime geçebilirsiniz."
+        accentColor={accent}
+      />
+
+      {/* SECTION C: FAQ */}
+      <ServiceFAQ
+        faqs={[
+          {
+            question: 'Hangi cihaz bana uygun?',
+            answer:
+              'Cihaz seçimi, hekim önerisi, ev koşulları ve kullanıcı profili (50+ kullanım kolaylığı) göz önünde bulundurularak yapılır. İhtiyaç analizi sonrasında doğru cihaz sınıfı belirlenir.',
+          },
+          {
+            question: 'Fiyat aralığı nedir?',
+            answer:
+              'Fiyatlandırma, cihaz tipine, teknik özelliklerine ve aksesuar paketine göre değişir. Detaylı fiyat bilgisi için kataloğu inceleyebilir veya WhatsApp üzerinden iletişime geçebilirsiniz.',
+          },
+          {
+            question: 'Kurulum dahil mi?',
+            answer:
+              'Evet. Tüm satış işlemlerinde İstanbul içi yerinde kurulum ve kullanım eğitimi dahildir. Güvenli kullanım adımları sahada gösterilir.',
+          },
+        ]}
+      />
 
       <QuickActionCard variant="info" title="Katalog bağlantısı (filtreli)">
         Kataloğa doğrudan gidebilirsiniz. Filtreler, sayfada otomatik uygulanır.

@@ -41,6 +41,39 @@ export default function EkipmanlarPage() {
         </div>
       </header>
 
+      {/* Category Introductions */}
+      <section className="py-10">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div className="rounded-3xl border border-slate-200 bg-white p-6">
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">Solunum Ekipmanları</h2>
+              <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                Oksijen konsantratörleri, tüpler, regülatörler ve solunum destek üniteleri. Evde kullanım için güvenli ve standartlara uygun cihazlar.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white p-6">
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">Tanı & Ölçüm Cihazları</h2>
+              <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                Tansiyon ölçüm cihazları, ateş ölçerler, oksimetreler ve diğer evde kullanım için ölçüm donanımları. Dijital ve kullanıcı dostu arayüzler.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white p-6">
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">Evde Bakım Ekipmanları</h2>
+              <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                Hasta yatakları, mobilite yardımcıları, banyo güvenlik ekipmanları ve evde bakım sürecini kolaylaştıran donanımlar.
+              </p>
+            </div>
+            <div className="rounded-3xl border border-slate-200 bg-white p-6">
+              <h2 className="text-xl font-semibold text-slate-900 mb-3">Ortopedi & Destek</h2>
+              <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                Kişiye özel tabanlıklar, ortezler, destek malzemeleri ve yürüme yardımcıları. Konfor ve destek odaklı çözümler.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Catalog Explorer */}
       <section className="py-10">
         <div className="container-wide">
           <Suspense fallback={<CatalogSkeleton />}>

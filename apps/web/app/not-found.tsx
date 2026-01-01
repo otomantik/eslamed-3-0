@@ -14,11 +14,28 @@ export default function NotFound() {
   const [suggestedRoutes, setSuggestedRoutes] = useState<Array<{ path: string; title: string }>>([]);
 
   useEffect(() => {
-    // Smart route suggestions: show top 5 most relevant routes
-    const routes = Object.entries(routeDictionary)
-      .filter(([path]) => path !== '/')
-      .slice(0, 5)
+    // Smart route suggestions based on path analysis (Healing Shield)
+    // Keywords: servis, tamir, cihaz, rehber, hizmet
+    const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
+    let smartSuggestion: { path: string; title: string } | null = null;
+    
+    // Enhanced path-based smart suggestions with multiple keyword patterns
+    if (currentPath.includes('servis') || currentPath.includes('tamir') || currentPath.includes('hizmet')) {
+      smartSuggestion = { path: '/hizmetler/teknik-servis', title: 'Teknik Servis' };
+    } else if (currentPath.includes('cihaz') || currentPath.includes('ekipman')) {
+      smartSuggestion = { path: '/ekipmanlar', title: 'Ekipmanlar' };
+    } else if (currentPath.includes('rehber') || currentPath.includes('bilgi') || currentPath.includes('nasil')) {
+      smartSuggestion = { path: '/rehber/solunum-sistemleri', title: 'Solunum Sistemleri Rehberi' };
+    }
+    
+    // Get additional suggestions from route dictionary
+    const allRoutes = Object.entries(routeDictionary)
+      .filter(([path]) => path !== '/' && (!smartSuggestion || path !== smartSuggestion.path))
+      .slice(0, 4)
       .map(([path, meta]) => ({ path, title: meta.title }));
+    
+    // Combine smart suggestion with other routes (smart suggestion first)
+    const routes = smartSuggestion ? [smartSuggestion, ...allRoutes] : allRoutes;
     setSuggestedRoutes(routes);
   }, []);
 
@@ -68,6 +85,18 @@ export default function NotFound() {
                     </ul>
                   </div>
                 )}
+
+                {/* Smart Redirect: "Yolunuzu mu kaybettiniz?" CTA */}
+                <div className="mt-8">
+                  <a
+                    href={`https://wa.me/905372425535?text=${encodeURIComponent('Merhaba, site içinde yolumu kaybettim. Uzmanınızla görüşmek istiyorum.')}`}
+                    className="min-h-[56px] w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-6 text-base font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg hover:shadow-xl"
+                    aria-label="WhatsApp ile uzmanımıza bağlan"
+                  >
+                    <LifeBuoy className="w-5 h-5" strokeWidth={2} />
+                    Yolunuzu mu kaybettiniz? Sizi uzmanımıza bağlayalım
+                  </a>
+                </div>
 
                 <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <Link

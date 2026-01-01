@@ -77,7 +77,7 @@ export function StickySupport() {
               className="flex-1 min-h-[48px] inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 text-white px-6 text-base font-semibold hover:bg-emerald-700 transition-colors"
             >
               <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
-              Hızlı Destek
+              Uzman Danışman ile Görüş
             </a>
             <button
               type="button"

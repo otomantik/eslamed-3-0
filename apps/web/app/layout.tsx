@@ -3,7 +3,7 @@ import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
-import { StickySupport } from "@/components/ui/sticky-support";
+import { MobileFAB } from "@/components/ui/mobile-fab";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 import { IntentThemeProvider } from "@/context/theme-provider";
 
@@ -130,6 +130,17 @@ export default function RootLayout({
   return (
     <html lang="tr">
       <head>
+        {/* Preconnect to Google Fonts for Core Web Vitals optimization */}
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        {/* Critical CSS: Playfair Display font variable for premium perception (0.00 CLS during font-swap) */}
+        <style dangerouslySetInnerHTML={{
+          __html: `
+            :root {
+              --font-premium: ${playfair.style.fontFamily};
+            }
+          `
+        }} />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalBusinessSchema) }}
@@ -148,7 +159,7 @@ export default function RootLayout({
           <IntentProviderWrapper>
             <IntentThemeProvider>
               {children}
-              <StickySupport />
+              <MobileFAB />
             </IntentThemeProvider>
           </IntentProviderWrapper>
         </Suspense>

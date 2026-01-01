@@ -84,10 +84,65 @@ export default function IstanbulPage() {
       // radius in meters (approx)
       geoRadius: 30000,
     },
-    areaServed: districts.map((d) => ({
-      '@type': 'AdministrativeArea',
-      name: d.label,
-    })),
+    areaServed: districts.map((d) => {
+      // Wikidata entity IDs for major Istanbul neighborhoods
+      const wikidataMap: Record<string, string> = {
+        'Kadıköy': 'Q81091',
+        'Beşiktaş': 'Q81253',
+        'Üsküdar': 'Q232484',
+        'Şişli': 'Q81098',
+        'Beyoğlu': 'Q81085',
+        'Maltepe': 'Q232450',
+        'Kartal': 'Q232446',
+        'Pendik': 'Q232451',
+        'Ataşehir': 'Q232449',
+        'Ümraniye': 'Q232453',
+        'Çekmeköy': 'Q232448',
+        'Beykoz': 'Q232443',
+      };
+      
+      const baseArea = {
+        '@type': 'AdministrativeArea',
+        name: d.label,
+      };
+      
+      // Add Wikidata ID if available
+      if (wikidataMap[d.label]) {
+        return {
+          ...baseArea,
+          '@id': `https://www.wikidata.org/entity/${wikidataMap[d.label]}`,
+          sameAs: `https://www.wikidata.org/entity/${wikidataMap[d.label]}`,
+        };
+      }
+      
+      return baseArea;
+    }),
+    department: [
+      {
+        '@type': 'Department',
+        '@id': 'https://eslamed.com/#department/teknik-servis',
+        name: 'Teknik Servis',
+        url: 'https://eslamed.com/hizmetler/teknik-servis',
+        sameAs: 'https://eslamed.com/hizmetler/teknik-servis#service', // Entity graph: links to Service schema @id
+        description: 'Medikal cihazlarda teknik ön değerlendirme, arıza analizi ve onarım planlama süreci.',
+      },
+      {
+        '@type': 'Department',
+        '@id': 'https://eslamed.com/#department/oksijen-dolum',
+        name: 'Oksijen Dolum',
+        url: 'https://eslamed.com/hizmetler/oksijen-dolum',
+        sameAs: 'https://eslamed.com/hizmetler/oksijen-dolum#service', // Entity graph: links to Service schema @id
+        description: 'Oksijen tüpü temin/dolum süreçlerinde güvenlik standartlarına uygun kontrol adımları ve İstanbul içi planlı hızlı lojistik.',
+      },
+      {
+        '@type': 'Department',
+        '@id': 'https://eslamed.com/#department/cihaz-kiralama',
+        name: 'Medikal Ekipman Kiralama',
+        url: 'https://eslamed.com/hizmetler/cihaz-kiralama',
+        sameAs: 'https://eslamed.com/hizmetler/cihaz-kiralama#service', // Entity graph: links to Service schema @id
+        description: 'Evde kullanım için cihaz kiralama sürecinde hijyen hazırlığı, teknik kontrol ve esnek süre/koşul planlama yaklaşımı.',
+      },
+    ],
   };
 
   if (gbpUrl.trim()) {

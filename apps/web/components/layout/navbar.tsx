@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MessageCircle, Search, Menu, X } from 'lucide-react';
+import { MessageCircle, Search, Menu, X, Phone } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 const SearchModal = dynamic(
@@ -17,6 +17,7 @@ interface NavbarProps {
 export function Navbar({ isEmergency = false }: NavbarProps = {}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [searchEnabled, setSearchEnabled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const openSearch = (prefill?: string) => {
     if (typeof window === 'undefined') return;
@@ -51,12 +52,35 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
     };
   }, [isMenuOpen]);
 
+  // Sticky header scroll detection (60fps optimized with requestAnimationFrame)
+  useEffect(() => {
+    let ticking = false;
+    function handleScroll() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 80);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <>
-      <header className={`fixed w-full z-50 border-b border-slate-200 bg-white shadow-sm ${isEmergency ? 'top-12' : 'top-0'}`}>
+      <header 
+        className={`fixed w-full z-50 border-b border-slate-200 shadow-sm transition-all duration-300 ease-out ${isEmergency ? 'top-12' : 'top-0'} ${
+          isScrolled 
+            ? 'backdrop-blur-md bg-white/90 h-14' 
+            : 'bg-white h-16'
+        }`}
+        style={{ willChange: 'height, background-color' }}
+      >
         <div className="container-wide">
-          {/* Top Row: Logo + Menu/WhatsApp CTA */}
-          <div className="h-16 flex items-center justify-between gap-3">
+          {/* Top Row: Logo + Navigation + CTA */}
+          <div className={`flex items-center justify-between gap-3 transition-all duration-300 ${isScrolled ? 'h-14' : 'h-16'}`}>
             {/* LOGO */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-2xl">
@@ -80,37 +104,43 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
               </div>
             </Link>
 
-            {/* NAVIGATION LINKS - Desktop */}
+            {/* NAVIGATION LINKS - Desktop with Playfair Display */}
             <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
               <Link 
                 href="/rehber/solunum-sistemleri" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                title="Oksijen konsantratörü ve solunum destek sistemleri"
               >
-                Oksijen Çözümleri
+                Oksijen
               </Link>
               <Link 
                 href="/rehber/evde-bakim-ekipmanlari" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                title="Evde bakım ekipmanları ve hasta yatakları"
               >
                 Evde Bakım
               </Link>
               <Link 
                 href="/ekipmanlar" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                title="Tüm medikal ekipman kataloğu"
               >
-                Ürünler
+                Ekipmanlar
+              </Link>
+              <Link 
+                href="/hizmetler" 
+                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                title="Teknik servis, kiralama ve satış hizmetleri"
+              >
+                Hizmetler
               </Link>
               <Link 
                 href="/tabanlik" 
                 className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                style={{ fontFamily: 'var(--font-premium)' }}
+                title="Kişiye özel tabanlık analizi ve çözümleri"
               >
-                VIP Hizmetler
-              </Link>
-              <Link 
-                href="/iletisim" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
-              >
-                İletişim
+                VIP Tabanlık
               </Link>
             </nav>
 
@@ -152,13 +182,14 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
               )}
             </button>
 
-            {/* WHATSAPP CTA - Desktop */}
+            {/* ACIL DESTEK BUTTON - Desktop */}
             <Link
-              href="https://wa.me/905372425535?text=Merhaba"
-              className="hidden lg:flex min-h-[48px] items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-lg transition-colors font-medium text-sm flex-shrink-0"
+              href="tel:+905372425535"
+              className="hidden lg:flex min-h-[48px] items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg transition-colors font-semibold text-sm flex-shrink-0 shadow-sm"
+              title="Acil teknik destek için hemen arayın"
             >
-              <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
-              <span>WhatsApp Destek</span>
+              <Phone className="w-5 h-5" strokeWidth={2} />
+              <span>Acil Destek</span>
             </Link>
           </div>
 
@@ -211,50 +242,55 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
                 <X className="w-6 h-6" strokeWidth={1.5} />
               </button>
               
-              <nav className="flex flex-col gap-3">
+              <nav className="flex flex-col gap-0">
                 <Link
                   href="/rehber/solunum-sistemleri"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  title="Oksijen konsantratörü ve solunum destek sistemleri"
                 >
                   Oksijen Çözümleri
                 </Link>
                 <Link
                   href="/rehber/evde-bakim-ekipmanlari"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  title="Evde bakım ekipmanları ve hasta yatakları"
                 >
                   Evde Bakım
                 </Link>
                 <Link
                   href="/ekipmanlar"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  title="Tüm medikal ekipman kataloğu"
                 >
-                  Ürünler
+                  Ekipmanlar
+                </Link>
+                <Link
+                  href="/hizmetler"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  title="Teknik servis, kiralama ve satış hizmetleri"
+                >
+                  Hizmetler
                 </Link>
                 <Link
                   href="/tabanlik"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  style={{ fontFamily: 'var(--font-premium)' }}
+                  title="Kişiye özel tabanlık analizi ve çözümleri"
                 >
-                  VIP Hizmetler
+                  VIP Tabanlık
                 </Link>
                 <Link
                   href="/iletisim"
                   onClick={() => setIsMenuOpen(false)}
-                  className="px-4 py-3.5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  className="px-4 py-5 text-slate-700 hover:bg-slate-50 rounded-lg font-medium text-base transition-colors"
+                  title="İletişim bilgileri ve adres"
                 >
                   İletişim
-                </Link>
-                <div className="border-t border-slate-200 my-3" />
-                <Link
-                  href="https://wa.me/905372425535?text=Merhaba"
-                  onClick={() => setIsMenuOpen(false)}
-                  className="mx-0 min-h-[48px] flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-4 rounded-lg font-semibold text-base transition-colors shadow-sm"
-                >
-                  <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
-                  WhatsApp ile İletişim
                 </Link>
               </nav>
             </div>

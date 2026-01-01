@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { BadgePercent, ShieldCheck, Search, ClipboardList } from 'lucide-react';
 import { ServiceTemplate } from '@/components/services/service-template';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { ProcessTimeline } from '@/components/services/process-timeline';
+import { PricingTransparency } from '@/components/services/pricing-transparency';
+import { ServiceFAQ } from '@/components/services/service-faq';
 
 export const metadata: Metadata = {
   title: '2. El Alım | ESLAMED',
@@ -35,35 +37,60 @@ export default function IkinciElAlimPage() {
       accentHex={accent}
       serviceSchema={serviceSchema}
     >
-      <section className="rounded-3xl border border-slate-200 bg-white p-8">
-        <h2 className="text-2xl font-semibold text-slate-900">Süreç</h2>
-        <ol className="mt-6 space-y-4 text-slate-700" style={{ lineHeight: 1.8 }}>
-          <li className="flex items-start gap-3">
-            <Search className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">1) Model doğrulama:</span> cihaz modeli/seri bilgisi ve temel uyumluluk kontrol edilir.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <ClipboardList className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">2) Durum değerlendirmesi:</span> çalışma saatleri, sarf/aksesuar, dış gövde ve temel fonksiyon testleri yapılır.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <ShieldCheck className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">3) Yenileme planı:</span> gerekiyorsa parça/sarf değişimleri ve güvenlik kontrol adımları netleştirilir.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <BadgePercent className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">4) Şeffaf fiyat:</span> değerlendirme çıktısı üzerinden açık bir fiyat çerçevesi sunulur.
-            </span>
-          </li>
-        </ol>
-      </section>
+      {/* SECTION A: Process Timeline */}
+      <ProcessTimeline
+        steps={[
+          {
+            number: '1',
+            title: 'Model Doğrulama',
+            description: 'Cihaz modeli/seri bilgisi ve temel uyumluluk kontrol edilir. WhatsApp veya telefon ile iletişime geçin.',
+          },
+          {
+            number: '2',
+            title: 'Durum Değerlendirmesi',
+            description: 'Çalışma saatleri, sarf/aksesuar, dış gövde ve temel fonksiyon testleri yapılır. Gerekirse yerinde kontrol planlanır.',
+          },
+          {
+            number: '3',
+            title: 'Yenileme Planı',
+            description: 'Gerekiyorsa parça/sarf değişimleri ve güvenlik kontrol adımları netleştirilir.',
+          },
+          {
+            number: '4',
+            title: 'Şeffaf Fiyat & Alım',
+            description: 'Değerlendirme çıktısı üzerinden açık bir fiyat çerçevesi sunulur. Onayınız sonrasında alım süreci başlar.',
+          },
+        ]}
+        accentColor={accent}
+      />
+
+      {/* SECTION B: Pricing & Timeline */}
+      <PricingTransparency
+        title="Fiyatlandırma & Zamanlama"
+        content="Değerleme, cihazın modeline, çalışma saatlerine, sarf/aksesuar durumuna ve dış görünümüne göre belirlenir. Yenileme ihtiyacı varsa bu maliyet fiyatlandırmaya yansır. Değerlendirme genellikle aynı gün veya ertesi gün tamamlanır. Şeffaf bir fiyat çerçevesi sunulur; onayınız olmadan işlem yapılmaz."
+        accentColor={accent}
+      />
+
+      {/* SECTION C: FAQ */}
+      <ServiceFAQ
+        faqs={[
+          {
+            question: 'Cihazım ne kadar eder?',
+            answer:
+              'Değerleme, cihazın modeline, çalışma saatlerine, sarf/aksesuar durumuna ve dış görünümüne göre belirlenir. Değerlendirme sonrasında şeffaf bir fiyat çerçevesi sunulur.',
+          },
+          {
+            question: 'Nasıl teslim ederim?',
+            answer:
+              'Cihazınızı Çekmeköy merkezimize getirebilir veya yerinde kontrol talep edebilirsiniz. İstanbul içi yerinde kontrol hizmeti mevcuttur. Detaylar iletişimde netleştirilir.',
+          },
+          {
+            question: 'Yenileme ihtiyacı varsa ne olur?',
+            answer:
+              'Yenileme ihtiyacı varsa (parça/sarf değişimi, güvenlik kontrolü) bu maliyet fiyatlandırmaya yansır. Şeffaf bir şekilde netleştirilir.',
+          },
+        ]}
+      />
 
       <QuickActionCard variant="info" title="Sınırımız (net)">
         Bu süreç, cihazın <span className="font-semibold text-slate-900">teknik durumunu</span> değerlendirir. Tıbbi tanı/tedavi önerisi içermez.

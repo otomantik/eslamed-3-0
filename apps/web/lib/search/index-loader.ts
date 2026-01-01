@@ -36,3 +36,4 @@ export function normalizeSearchIndex(raw: any): { items: SearchItem[]; totalProd
 }
 
 
+

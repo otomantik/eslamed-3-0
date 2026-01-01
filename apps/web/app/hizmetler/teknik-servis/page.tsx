@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { Wrench, ClipboardCheck, ListChecks } from 'lucide-react';
 import { ServiceTemplate } from '@/components/services/service-template';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { ProcessTimeline } from '@/components/services/process-timeline';
+import { PricingTransparency } from '@/components/services/pricing-transparency';
+import { ServiceFAQ } from '@/components/services/service-faq';
 
 export const metadata: Metadata = {
   title: 'Teknik Servis | ESLAMED',
@@ -35,29 +37,65 @@ export default function TeknikServisPage() {
       accentHex={accent}
       serviceSchema={serviceSchema}
     >
-      <section className="rounded-3xl border border-slate-200 bg-white p-8">
-        <h2 className="text-2xl font-semibold text-slate-900">Süreç Nasıl İlerler?</h2>
-        <ol className="mt-6 space-y-4 text-slate-700" style={{ lineHeight: 1.8 }}>
-          <li className="flex items-start gap-3">
-            <ClipboardCheck className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">1) İlk belirti kontrolü (teknik):</span> alarm/hata, güç/elektrik, filtre, bağlantılar ve temel çalışma koşulları gözden geçirilir.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <ListChecks className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">2) Ön değerlendirme:</span> arızanın olası sınıfı (elektriksel, mekanik, sarf/aksesuar, kullanım kaynaklı) ayrıştırılır.
-            </span>
-          </li>
-          <li className="flex items-start gap-3">
-            <Wrench className="w-5 h-5 mt-1 text-slate-700" strokeWidth={1.5} />
-            <span className="text-[18px]">
-              <span className="font-semibold text-slate-900">3) Onarım planlama:</span> yapılacak işlem, parça/sarf ihtiyacı ve süreç adımları şeffaf biçimde netleştirilir.
-            </span>
-          </li>
-        </ol>
-      </section>
+      {/* SECTION A: Process Timeline */}
+      <ProcessTimeline
+        steps={[
+          {
+            number: '1',
+            title: 'İlk İletişim',
+            description: 'WhatsApp veya telefon ile cihazınızın durumunu paylaşın. Uzman ekibimiz ön değerlendirme yapar.',
+          },
+          {
+            number: '2',
+            title: 'Ön Değerlendirme',
+            description: 'Arızanın sınıfı (elektriksel, mekanik, sarf/aksesuar) belirlenir. Gerekirse yerinde kontrol planlanır.',
+          },
+          {
+            number: '3',
+            title: 'Onarım Planlama',
+            description: 'Yapılacak işlem, parça ihtiyacı ve süreç adımları şeffaf biçimde netleştirilir.',
+          },
+          {
+            number: '4',
+            title: 'Onarım & Teslimat',
+            description: 'Onarım tamamlandıktan sonra cihazınız güvenli şekilde teslim edilir ve kullanım eğitimi verilir.',
+          },
+        ]}
+        accentColor={accent}
+      />
+
+      {/* SECTION B: Pricing & Timeline */}
+      <PricingTransparency
+        title="Fiyatlandırma & Zamanlama"
+        content="Fiyatlandırma, arızanın türüne, gerekli parça/sarf malzemelerine ve işçilik süresine göre belirlenir. Ön değerlendirme sonrasında şeffaf bir fiyat çerçevesi sunulur. Süreç genellikle 1-3 iş günü içinde tamamlanır; acil durumlarda aynı gün müdahale mümkündür. Parça temin süresi varsa bu süreç önceden bildirilir."
+        accentColor={accent}
+      />
+
+      {/* SECTION C: FAQ */}
+      <ServiceFAQ
+        faqs={[
+          {
+            question: 'Ne kadar sürer?',
+            answer:
+              'Ön değerlendirme genellikle aynı gün veya ertesi gün yapılır. Onarım süresi arızanın türüne göre 1-3 iş günü arasında değişir. Acil durumlarda aynı gün müdahale mümkündür.',
+          },
+          {
+            question: 'Fiyat nasıl belirlenir?',
+            answer:
+              'Fiyatlandırma, arızanın türüne, gerekli parça/sarf malzemelerine ve işçilik süresine göre belirlenir. Ön değerlendirme sonrasında şeffaf bir fiyat çerçevesi sunulur. Onayınız olmadan işlem yapılmaz.',
+          },
+          {
+            question: 'Cihazımı nereye getirmem gerekiyor?',
+            answer:
+              'Çekmeköy merkezimize getirebilir veya yerinde kontrol talep edebilirsiniz. İstanbul içi yerinde kontrol hizmeti mevcuttur. Detaylar iletişimde netleştirilir.',
+          },
+          {
+            question: 'Garanti var mı?',
+            answer:
+              'Yapılan onarım işlemleri için garanti süresi, işlem türüne göre değişir. Parça değişimlerinde üretici garantisi geçerlidir. Detaylar onarım sonrası belgelenir.',
+          },
+        ]}
+      />
 
       <QuickActionCard variant="info" title="Sınırımız (net)">
         Bu hizmet, yalnızca cihazın <span className="font-semibold text-slate-900">donanım / mekanik / elektriksel</span> sorunlarını ele alır.

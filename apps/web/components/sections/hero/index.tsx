@@ -123,7 +123,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
 
   return (
     <section className={`relative min-h-[90vh] flex items-center overflow-hidden ${intent === 'CRITICAL_EMERGENCY' ? 'pt-32' : 'pt-24 sm:pt-20'}`}>
-      {/* Background Image */}
+      {/* Background Image - LCP Optimization */}
       <div className="absolute inset-0 z-0">
         <Image
           src={config.bgImage}
@@ -133,6 +133,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
           sizes="100vw"
           priority
           fetchPriority="high"
+          decoding="async"
           loading="eager"
         />
         <div className={`absolute inset-0 ${config.bgOverlay}`} />

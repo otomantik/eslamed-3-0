@@ -1,16 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { BookOpen, FileText, CheckCircle2 } from 'lucide-react';
+import { CheckCircle2 } from 'lucide-react';
 import dynamic from 'next/dynamic';
 
 // Lazy load heavy components
-const ComparisonTable = dynamic(() => import('./comparison-table').then((m) => ({ default: m.ComparisonTable })), {
-  ssr: false,
-});
-const TechnicalSpecToggle = dynamic(() => import('./technical-spec-toggle').then((m) => ({ default: m.TechnicalSpecToggle })), {
-  ssr: false,
-});
 const RequestQuoteSidebar = dynamic(() => import('./request-quote-sidebar').then((m) => ({ default: m.RequestQuoteSidebar })), {
   ssr: false,
 });
@@ -35,7 +29,7 @@ export function EducationUI({ children }: { children: React.ReactNode }) {
   // SmartDwellTracker is now handled inside RequestQuoteSidebar component
 
   return (
-    <div className="min-h-screen bg-slate-50">
+    <>
       {/* Trust Proof Marquee - High-speed logo carousel */}
       <section className="bg-white border-b border-slate-200 py-3 overflow-hidden">
         <div className="relative">
@@ -57,25 +51,12 @@ export function EducationUI({ children }: { children: React.ReactNode }) {
         </div>
       </section>
 
-      {/* Main Content with Comparison Table & Spec Toggle */}
-      <div className="container-wide py-8">
-        {/* Comparison Table - Immediately under H1 */}
-        <div className="mb-8">
-          <ComparisonTable />
-        </div>
+      {/* Main Content */}
+      {children}
 
-        {/* Technical Spec Toggle */}
-        <div className="mb-8">
-          <TechnicalSpecToggle />
-        </div>
-
-        {/* Main Content */}
-        {children}
-
-        {/* Request Quote Sidebar - Appears after 15s dwell */}
-        {showSidebar && <RequestQuoteSidebar onClose={() => setShowSidebar(false)} />}
-      </div>
-    </div>
+      {/* Request Quote Sidebar - Appears after 15s dwell */}
+      {showSidebar && <RequestQuoteSidebar onClose={() => setShowSidebar(false)} />}
+    </>
   );
 }
 

@@ -14,6 +14,7 @@ interface FAQAccordionProps {
   faqs: FAQItem[];
   autoExpand?: boolean;
   staggerDelay?: number; // Delay between each item (ms)
+  onFaqClick?: (faqId: string) => void; // Callback for tracking FAQ interactions
 }
 
 const containerVariants = {
@@ -53,8 +54,9 @@ const contentVariants = {
 /**
  * FAQAccordion: Staggered reveal with Framer Motion
  * Auto-expands in RESEARCH mode with 100ms delay between items
+ * Supports click tracking for predictive CTA injection
  */
-export function FAQAccordion({ faqs, autoExpand = false, staggerDelay = 100 }: FAQAccordionProps) {
+export function FAQAccordion({ faqs, autoExpand = false, staggerDelay = 100, onFaqClick }: FAQAccordionProps) {
   const [openItems, setOpenItems] = useState<Set<string>>(new Set());
   const [announced, setAnnounced] = useState(false);
 
@@ -82,15 +84,28 @@ export function FAQAccordion({ faqs, autoExpand = false, staggerDelay = 100 }: F
   }, [autoExpand, faqs, staggerDelay, announced]);
 
   const toggleItem = (id: string) => {
+    // Check if item is currently closed (will be opened)
+    const willBeOpened = !openItems.has(id);
+    
     setOpenItems((prev) => {
       const next = new Set(prev);
-      if (next.has(id)) {
+      const wasOpen = next.has(id);
+      if (wasOpen) {
         next.delete(id);
       } else {
         next.add(id);
       }
       return next;
     });
+    
+    // Track FAQ click for predictive CTA injection (only count opens, not closes)
+    // Call outside state updater to avoid setState during render warning
+    if (willBeOpened && onFaqClick) {
+      // Use requestAnimationFrame to defer callback until after React's state update completes
+      requestAnimationFrame(() => {
+        onFaqClick(id);
+      });
+    }
   };
 
   return (
@@ -134,6 +149,7 @@ export function FAQAccordion({ faqs, autoExpand = false, staggerDelay = 100 }: F
                   exit="collapsed"
                   variants={contentVariants}
                   className="overflow-hidden"
+                  style={{ containIntrinsicSize: 'auto 100px' }}
                 >
                   <div className="px-6 pb-4 text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
                     {faq.answer}

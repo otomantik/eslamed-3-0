@@ -48,14 +48,20 @@ export default async function Page({
   
   const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
 
+  // In URGENT mode, PanicRecoveryUI renders its own minimal header
+  // In VIP mode, PremiumConciergeUI renders its own header
+  // In RESEARCH mode and default, use standard Navbar
+  const shouldShowNavbar = intentResult.mode !== 'CRITICAL_EMERGENCY' && intentResult.mode !== 'TRUST_SEEKER';
+
   return (
-    <ModeWrapper serverMode={intentResult.mode}>
-      <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-        {/* Global Emergency Alert Bar (only if not in PanicRecoveryUI) */}
-        {isEmergency && <GlobalAlertBar />}
-        
-        {/* Navbar (hidden in URGENT mode by PanicRecoveryUI) */}
-        <Navbar isEmergency={isEmergency} />
+    <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
+      {/* Global Emergency Alert Bar (only if not in PanicRecoveryUI) */}
+      {isEmergency && <GlobalAlertBar />}
+      
+      {/* Navbar (hidden in URGENT/VIP mode - they have their own headers) */}
+      {shouldShowNavbar && <Navbar isEmergency={isEmergency} />}
+
+      <ModeWrapper serverMode={intentResult.mode}>
 
         {/* Live Activity Ticker */}
         <Suspense fallback={<TickerSkeleton />}>
@@ -92,28 +98,28 @@ export default async function Page({
         <FloatingRescueBar intent={intentResult.mode} />
 
         {/* Footer (hidden in URGENT mode by PanicRecoveryUI) */}
-        <Footer />
+        {shouldShowNavbar && <Footer />}
 
-      {/* Debug Info (Development Only + Query Flag) */}
-      {process.env.NODE_ENV === 'development' && 
-       typeof resolvedParams.debug === 'string' && 
-       resolvedParams.debug === '1' && (
-        <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 text-xs rounded-lg font-mono z-50 max-w-sm shadow-2xl border border-slate-700">
-          <div className="font-bold mb-2 text-yellow-400">Intent Debug:</div>
-          <div className="space-y-1 mb-2">
-            <div><span className="text-slate-400">Mode:</span> <span className="text-white font-semibold">{intentResult.mode}</span></div>
-            <div><span className="text-slate-400">Score:</span> <span className="text-white">{intentResult.score}/100</span></div>
-            <div><span className="text-slate-400">District:</span> <span className="text-green-400 font-semibold">{intentResult.district || 'Not detected'}</span></div>
-            <div><span className="text-slate-400">Confidence:</span> <span className="text-white">{(intentResult.confidence * 100).toFixed(0)}%</span></div>
+        {/* Debug Info (Development Only + Query Flag) */}
+        {process.env.NODE_ENV === 'development' && 
+         typeof resolvedParams.debug === 'string' && 
+         resolvedParams.debug === '1' && (
+          <div className="fixed bottom-4 right-4 bg-black/90 text-white p-4 text-xs rounded-lg font-mono z-50 max-w-sm shadow-2xl border border-slate-700">
+            <div className="font-bold mb-2 text-yellow-400">Intent Debug:</div>
+            <div className="space-y-1 mb-2">
+              <div><span className="text-slate-400">Mode:</span> <span className="text-white font-semibold">{intentResult.mode}</span></div>
+              <div><span className="text-slate-400">Score:</span> <span className="text-white">{intentResult.score}/100</span></div>
+              <div><span className="text-slate-400">District:</span> <span className="text-green-400 font-semibold">{intentResult.district || 'Not detected'}</span></div>
+              <div><span className="text-slate-400">Confidence:</span> <span className="text-white">{(intentResult.confidence * 100).toFixed(0)}%</span></div>
+            </div>
+            <div className="text-slate-500 text-[10px] border-t border-slate-700 pt-2 mt-2">
+              <div>URL: {typeof resolvedParams.url === 'string' ? resolvedParams.url : 'N/A'}</div>
+              <div>Query: {typeof resolvedParams.q === 'string' ? resolvedParams.q : 'N/A'}</div>
+              <div>District Param: {typeof resolvedParams.district === 'string' ? resolvedParams.district : 'N/A'}</div>
+            </div>
           </div>
-          <div className="text-slate-500 text-[10px] border-t border-slate-700 pt-2 mt-2">
-            <div>URL: {typeof resolvedParams.url === 'string' ? resolvedParams.url : 'N/A'}</div>
-            <div>Query: {typeof resolvedParams.q === 'string' ? resolvedParams.q : 'N/A'}</div>
-            <div>District Param: {typeof resolvedParams.district === 'string' ? resolvedParams.district : 'N/A'}</div>
-          </div>
-        </div>
-      )}
-      </main>
-    </ModeWrapper>
+        )}
+      </ModeWrapper>
+    </main>
   );
 }

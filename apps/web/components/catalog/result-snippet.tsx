@@ -97,3 +97,4 @@ export function ResultSnippet({ item, mode, rank }: ResultSnippetProps) {
   );
 }
 
+

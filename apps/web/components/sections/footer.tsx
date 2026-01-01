@@ -1,6 +1,37 @@
+import { CheckCircle2 } from 'lucide-react';
+import Link from 'next/link';
+
 export function Footer() {
   return (
     <footer id="kurumsal" className="border-t border-slate-200 bg-white">
+      {/* Trust Badge Row */}
+      <div className="border-b border-slate-200 bg-slate-50 py-6">
+        <div className="container-wide">
+          <div className="flex flex-wrap items-center justify-center gap-8 opacity-70">
+            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
+              <span>ISO 13485</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
+              <span>CE Uygunluk</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
+              <span>ÜTS Kayıtlı</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
+              <span>15+ Yıl Deneyim</span>
+            </div>
+            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
+              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
+              <span>TSE Onaylı</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="container-wide py-12">
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
           <div>
@@ -82,34 +113,54 @@ export function Footer() {
                 <div className="font-medium text-slate-800">Destek</div>
                 <ul className="mt-2 space-y-2">
                   <li>
-                    <a href="/destek" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/destek" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Teknik destek ve hizmet sınırları">
                       Destek & Sınırlar
                     </a>
                   </li>
                   <li>
-                    <a href="/hizmetler" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/hizmetler" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Tüm hizmetlerimiz">
                       Hizmetler
                     </a>
                   </li>
                   <li>
-                    <a href="/iletisim" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/iletisim" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="İletişim bilgileri">
                       İletişim
                     </a>
                   </li>
                   <li>
-                    <a href="/istanbul" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/istanbul" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="İstanbul genelinde hizmetlerimiz">
                       İstanbul Hizmetleri
                     </a>
                   </li>
                   <li>
-                    <a href="/rehber/evde-bakim-ekipmanlari" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/rehber/evde-bakim-ekipmanlari" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Evde bakım ekipmanları rehberi">
                       Evde Bakım Rehberi
                     </a>
                   </li>
                   <li>
-                    <a href="/ekipmanlar" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                    <a href="/ekipmanlar" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Tüm medikal ekipman kataloğu">
                       Tüm Ekipmanlar
                     </a>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className="font-medium text-slate-800">Yerel Otorite</div>
+                <ul className="mt-2 space-y-2">
+                  <li>
+                    <Link href="/hizmetler/teknik-servis?district=kadikoy" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Kadıköy bölgesi teknik servis hizmetleri">
+                      Kadıköy Teknik Servis
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/hizmetler/oksijen-dolum?district=umraniye" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Ümraniye bölgesi oksijen dolum hizmetleri">
+                      Ümraniye Oksijen Dolum
+                    </Link>
+                  </li>
+                  <li>
+                    <Link href="/rehber/evde-bakim-ekipmanlari?district=besiktas" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Beşiktaş bölgesi evde bakım ekipmanları">
+                      Beşiktaş Evde Bakım
+                    </Link>
                   </li>
                 </ul>
               </div>

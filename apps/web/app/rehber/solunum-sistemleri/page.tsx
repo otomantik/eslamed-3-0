@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { RespiratoryChecklist } from '@/components/rehber/respiratory-checklist';
-import { BatteryCharging, Droplets, Filter, Megaphone, PlaySquare } from 'lucide-react';
+import { MedicalGlossary } from '@/components/rehber/medical-glossary';
+import { BatteryCharging, Droplets, Filter, Megaphone, PlaySquare, ArrowUpRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Solunum Sistemleri Rehberi | ESLAMED',
@@ -167,6 +169,51 @@ export default function SolunumSistemleriPage() {
               Filtre, cihazın hava akışını dengeler. Toz birikimi cihazın performansını düşürebilir ve arıza riskini artırabilir. Temizlik aralığı üretici talimatına göre değişir.
             </QuickActionCard>
           </div>
+
+          {/* Medical Glossary: LSI Terms for Semantic SEO */}
+          <MedicalGlossary
+            terms={[
+              {
+                term: 'Satürasyon',
+                definition:
+                  'Kandaki oksijen doygunluğu. Oksimetre cihazları ile ölçülür ve normal değer genellikle %95-100 arasındadır. Düşük satürasyon değerleri hekim değerlendirmesi gerektirir.',
+                externalUrl: 'https://www.who.int/health-topics/oxygen-therapy',
+                source: 'WHO',
+              },
+              {
+                term: 'Filtrasyon',
+                definition:
+                  'Oksijen konsantratörlerinde havadaki partiküllerin ve kirleticilerin temizlenmesi işlemi. Filtreler düzenli temizlenmeli ve periyodik olarak değiştirilmelidir.',
+                externalUrl: 'https://www.saglik.gov.tr/',
+                source: 'Sağlık Bakanlığı',
+              },
+              {
+                term: 'Konsantratör',
+                definition:
+                  'Ortam havasından oksijen konsantre eden tıbbi cihaz. Ev tipi kullanım için portatif ve sabit modeller mevcuttur. Klinik kullanım gereksinimleri hekim tarafından belirlenir.',
+              },
+              {
+                term: 'Nemlendirme',
+                definition:
+                  'Kuru oksijen gazının nemlendirilmesi işlemi. Cihazların nemlendirme haznesi saf veya arıtılmış su ile doldurulmalıdır. Kireçli su kullanımı cihazın ömrünü kısaltabilir.',
+              },
+            ]}
+          />
+
+          {/* Internal Linking: Service Cross-Reference */}
+          <section className="rounded-3xl border border-slate-200 bg-white p-8">
+            <h2 className="text-2xl font-semibold text-slate-900 mb-4">İlgili Hizmetler</h2>
+            <p className="text-slate-600 leading-relaxed mb-4" style={{ lineHeight: 1.8 }}>
+              Bu rehber, cihaz kullanımı ve bakımı için hazırlanmıştır. Oksijen dolum ve temin hizmeti için:
+            </p>
+            <Link
+              href="/hizmetler/oksijen-dolum"
+              className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 text-white px-6 text-base font-semibold hover:bg-emerald-700 transition-colors"
+            >
+              Oksijen Dolum Hizmeti
+              <ArrowUpRight className="w-5 h-5" strokeWidth={1.5} />
+            </Link>
+          </section>
         </div>
       </section>
 

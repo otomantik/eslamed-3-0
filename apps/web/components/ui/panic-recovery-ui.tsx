@@ -37,7 +37,7 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
         </nav>
 
       {/* Action-Oriented List - Above the fold */}
-      <section className="pt-20 pb-8">
+      <section className="pt-16 pb-8">
         <div className="container-wide">
           <div className="bg-white rounded-2xl border-2 border-red-200 p-6 mb-6">
             <div className="flex items-start gap-3 mb-4">
