@@ -47,9 +47,14 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
                   Medikal Çözüm Merkezi
                 </span>
               </div>
-              <span className="sm:hidden font-display font-bold text-lg tracking-tight text-slate-900">
-                ESLAMED
-              </span>
+              <div className="sm:hidden flex flex-col leading-tight">
+                <span className="font-display font-bold text-lg tracking-tight text-slate-900">
+                  ESLAMED
+                </span>
+                <span className="text-[10px] text-slate-500 font-normal">
+                  Medikal Çözüm Merkezi
+                </span>
+              </div>
             </Link>
 
             {/* NAVIGATION LINKS - Desktop */}
