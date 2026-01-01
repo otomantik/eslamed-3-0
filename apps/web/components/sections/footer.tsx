@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="border-t border-slate-200 bg-white">
+    <footer id="kurumsal" className="border-t border-slate-200 bg-white">
       <div className="container-wide py-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2">
           <div>
@@ -62,6 +62,10 @@ export function Footer() {
             <span>KVKK / Gizlilik</span>
             <span aria-hidden="true">·</span>
             <span>İşletme bilgileri</span>
+            <span aria-hidden="true">·</span>
+            <a href="/isletme-belgeleri" className="hover:underline underline-offset-4">
+              İşletme Belgeleri
+            </a>
           </div>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { CheckCircle2, ClipboardList, MapPin, ShieldCheck } from 'lucide-react';
+import { CheckCircle2, ClipboardList, HelpCircle, MessageCircle, ShieldCheck, MapPin } from 'lucide-react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
@@ -20,6 +20,21 @@ export const metadata: Metadata = {
 };
 
 export default function TabanlikPage() {
+  const faqItems = [
+    {
+      q: 'Her ayakkabıya uyar mı?',
+      a: 'Evet, tabanlıklarımız standart ayakkabı içlerine uyacak formda tasarlanır. Ancak en iyi sonuç için iç tabanı çıkabilen ayakkabılar tercih edilmelidir.',
+    },
+    {
+      q: 'Temizliği nasıl yapılır?',
+      a: 'Elde, ılık sabunlu su ve nemli bezle silinmelidir. Çamaşır makinesinde yıkanması veya kalorifer üzerinde kurutulması yapısını bozabilir.',
+    },
+    {
+      q: 'Alışma süreci ne kadar sürer?',
+      a: 'Vücudun yeni basış formuna alışması genellikle 1-2 hafta sürer. İlk günlerde birkaç saatlik kullanımlarla başlanması önerilir.',
+    },
+  ];
+
   const jsonLd = [
     {
       '@context': 'https://schema.org',
@@ -31,6 +46,7 @@ export default function TabanlikPage() {
         'Yürüme analizi ve biomekanik ölçümlerle kişiye özel tabanlık süreci. Teknik rehberlik ve süreç yönetimi; tanı ve tedavi kararı hekimlere aittir.',
       isPartOf: { '@id': 'https://eslamed.com/#website' },
       about: { '@id': 'https://eslamed.com/#business' },
+      specialty: 'Orthopedics',
       inLanguage: 'tr-TR',
     },
     {
@@ -48,6 +64,19 @@ export default function TabanlikPage() {
         addressCountry: 'TR',
       },
       areaServed: [{ '@type': 'AdministrativeArea', name: 'İstanbul' }],
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': 'https://eslamed.com/tabanlik#faq',
+      mainEntity: faqItems.map((x) => ({
+        '@type': 'Question',
+        name: x.q,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: x.a,
+        },
+      })),
     },
   ];
 
@@ -80,7 +109,8 @@ export default function TabanlikPage() {
               <div className="relative h-[280px] sm:h-[320px] lg:h-auto lg:min-h-[520px]">
                 {/* IMAGE: Real Orthopedic Analysis (placeholder) */}
                 <Image
-                  src="/assets/kisiye-ozel-tabanlik-analizi.webp"
+                  // Replace with /assets/kisiye-ozel-tabanlik-analizi.webp once uploaded.
+                  src="/assets/hero-bg.png"
                   alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed"
                   fill
                   className="object-cover"
@@ -122,6 +152,16 @@ export default function TabanlikPage() {
                 <p className="mt-4 text-sm text-slate-500 leading-relaxed">
                   Hekim planına uygun teknik süreç bilgilendirmesi. Tanı ve tedavi kararı hekimlere aittir.
                 </p>
+
+                <a
+                  href={`https://wa.me/905372425535?text=${encodeURIComponent(
+                    'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
+                  )}`}
+                  className="mt-6 min-h-[44px] inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary text-white px-6 py-3.5 text-base font-semibold hover:opacity-95 transition-opacity"
+                >
+                  <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
+                  WhatsApp üzerinden Uzmanımıza Sorun
+                </a>
               </div>
             </div>
           </div>
@@ -135,7 +175,7 @@ export default function TabanlikPage() {
             <h2 className="text-2xl font-semibold text-slate-900">
               Kişiye özel süreç, sakin ve ölçülü ilerleyiş
             </h2>
-            <p className="mt-3 text-slate-600 leading-relaxed" style={{ lineHeight: 1.6 }}>
+            <p className="mt-3 text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
               Amaç; hekim önerisiyle uyumlu ekipman kullanımını desteklemek ve teknik süreci netleştirmektir. Ölçüm ve üretim adımları,
               güvenli kullanım sınırları içinde planlanır.
             </p>
@@ -180,16 +220,94 @@ export default function TabanlikPage() {
       </section>
 
       {/* BOUNDARIES (What we don't do) */}
-      <section className="py-10">
+      <section className="py-10 bg-blue-50/40">
         <div className="container-wide">
           <aside role="note" aria-label="Sınırlar" className="rounded-2xl border border-slate-200 bg-white p-8">
             <h2 className="text-2xl font-semibold text-slate-900">Sınırlar</h2>
-            <ul className="mt-4 space-y-2 text-slate-600 leading-relaxed" style={{ lineHeight: 1.6 }}>
+            <ul className="mt-4 space-y-2 text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
               <li>Bu hizmet cerrahi müdahale değildir.</li>
               <li>Tanı koymaz, tedavi planlamaz; klinik kararların yerine geçmez.</li>
               <li>Acil bir durumdan şüpheleniyorsanız 112 ile iletişime geçin.</li>
             </ul>
+            <p className="mt-4 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+              Bu analiz bir tıbbi tanı değil, konfor ve destek odaklı bir yönlendirme hizmetidir. Şiddetli ağrılar için ortopedi hekimine danışılmalıdır.
+            </p>
           </aside>
+        </div>
+      </section>
+
+      {/* VISUAL PLACEHOLDERS */}
+      <section className="py-10">
+        <div className="container-wide">
+          <h2 className="text-2xl font-semibold text-slate-900">Görsel örnekler (yer tutucu)</h2>
+          <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <figure className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+              <div
+                role="img"
+                aria-label="Bilgisayarlı yürüme analizi süreci."
+                className="h-[240px] sm:h-[280px] bg-blue-50 flex items-center justify-center text-slate-500 font-semibold"
+              >
+                Belge Görseli Gelecek
+              </div>
+              <figcaption className="p-5 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                [PLACEHOLDER: Ayak Analizi Cihazı Üzerinde Ölçüm] — Bilgisayarlı yürüme analizi süreci.
+              </figcaption>
+            </figure>
+
+            <figure className="rounded-2xl border border-slate-200 bg-white overflow-hidden">
+              <div
+                role="img"
+                aria-label="Yüksek kaliteli medikal malzeme detayı."
+                className="h-[240px] sm:h-[280px] bg-blue-50 flex items-center justify-center text-slate-500 font-semibold"
+              >
+                Belge Görseli Gelecek
+              </div>
+              <figcaption className="p-5 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                [PLACEHOLDER: Kişiye Özel Üretilmiş Tabanlık Detayı] — Yüksek kaliteli medikal malzeme detayı.
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      {/* PRACTICAL KNOWLEDGE (FAQ) */}
+      <section className="py-12 bg-blue-50/40">
+        <div className="container-wide">
+          <div className="rounded-3xl border border-slate-200 bg-white p-8">
+            <h2 className="text-2xl font-semibold text-slate-900">
+              Kullanım ve Bakım Hakkında Merak Edilenler
+            </h2>
+            <div className="mt-6 space-y-4">
+              {faqItems.map((item) => (
+                <details
+                  key={item.q}
+                  className="group rounded-2xl border border-slate-200 bg-slate-50/50 px-5 py-4"
+                >
+                  <summary className="cursor-pointer list-none flex items-start justify-between gap-4">
+                    <span className="text-base font-semibold text-slate-900" style={{ lineHeight: 1.8 }}>
+                      {item.q}
+                    </span>
+                    <span className="text-slate-400 group-open:rotate-180 transition-transform" aria-hidden="true">
+                      ▼
+                    </span>
+                  </summary>
+                  <p className="mt-3 text-base text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                    {item.a}
+                  </p>
+                </details>
+              ))}
+            </div>
+
+            <a
+              href={`https://wa.me/905372425535?text=${encodeURIComponent(
+                'Merhaba, kişiye özel tabanlık kullanımı ve bakım süreci hakkında soru sormak istiyorum.'
+              )}`}
+              className="mt-8 min-h-[44px] inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
+            >
+              <HelpCircle className="w-5 h-5" strokeWidth={1.5} />
+              WhatsApp üzerinden Uzmanımıza Sorun
+            </a>
+          </div>
         </div>
       </section>
 
