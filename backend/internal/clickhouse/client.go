@@ -6,6 +6,7 @@ import (
 	"crypto/sha256"
 	"database/sql"
 	"encoding/hex"
+	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -13,7 +14,7 @@ import (
 	"sync"
 	"time"
 
-	_ "github.com/ClickHouse/clickhouse-go/v2"
+	ch "github.com/ClickHouse/clickhouse-go/v2"
 )
 
 // Client handles async batch insertion to ClickHouse
@@ -71,12 +72,14 @@ func NewClient(cfg Config) (*Client, error) {
 		return nil, fmt.Errorf("failed to open ClickHouse connection: %w", err)
 	}
 
-	// Test connection
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	// Test connection (with retries) and ensure database exists.
+	// This avoids crash loops during fresh deploys where ClickHouse is still starting
+	// or the database hasn't been created yet.
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	if err := conn.PingContext(ctx); err != nil {
+	if err := pingAndEnsureDB(ctx, conn, cfg); err != nil {
 		conn.Close()
-		return nil, fmt.Errorf("failed to ping ClickHouse: %w", err)
+		return nil, fmt.Errorf("failed to initialize ClickHouse client: %w", err)
 	}
 
 	client := &Client{
@@ -94,6 +97,81 @@ func NewClient(cfg Config) (*Client, error) {
 
 	log.Printf("ClickHouse client initialized: flush_size=%d, flush_interval=%v", cfg.FlushSize, cfg.FlushInterval)
 	return client, nil
+}
+
+func pingAndEnsureDB(ctx context.Context, conn *sql.DB, cfg Config) error {
+	var lastErr error
+	backoff := 500 * time.Millisecond
+
+	for {
+		// Small per-attempt timeout, bounded by the outer ctx.
+		attemptCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+		err := conn.PingContext(attemptCtx)
+		cancel()
+
+		if err == nil {
+			return nil
+		}
+		lastErr = err
+
+		// Handle "Database does not exist" on fresh volumes.
+		var ex *ch.Exception
+		if errors.As(err, &ex) && ex.Code == 81 {
+			if cfg.Database == "" {
+				return fmt.Errorf("clickhouse database is empty and ping returned code 81: %w", err)
+			}
+			if createErr := createDatabase(ctx, cfg); createErr != nil {
+				// keep retrying until ctx expires; ClickHouse might still be coming up
+				lastErr = fmt.Errorf("create database %q failed: %w (original ping error: %v)", cfg.Database, createErr, err)
+			} else {
+				// After creating DB, loop and ping again.
+				lastErr = nil
+			}
+		}
+
+		if ctx.Err() != nil {
+			if lastErr != nil {
+				return lastErr
+			}
+			return ctx.Err()
+		}
+
+		time.Sleep(backoff)
+		if backoff < 3*time.Second {
+			backoff *= 2
+		}
+	}
+}
+
+func createDatabase(ctx context.Context, cfg Config) error {
+	// Build a DSN WITHOUT selecting a database, so we can run CREATE DATABASE.
+	var adminDSN string
+	if strings.TrimSpace(cfg.Password) == "" {
+		adminDSN = fmt.Sprintf("clickhouse://%s?username=%s&dial_timeout=10s&compress=true&max_execution_time=60",
+			cfg.Addr, cfg.User)
+	} else {
+		adminDSN = fmt.Sprintf("clickhouse://%s:%s@%s?dial_timeout=10s&compress=true&max_execution_time=60",
+			cfg.User, cfg.Password, cfg.Addr)
+	}
+
+	adminConn, err := sql.Open("clickhouse", adminDSN)
+	if err != nil {
+		return fmt.Errorf("open admin connection failed: %w", err)
+	}
+	defer adminConn.Close()
+
+	// Best-effort ping before creating.
+	pingCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	_ = adminConn.PingContext(pingCtx)
+	cancel()
+
+	execCtx, cancel := context.WithTimeout(ctx, 10*time.Second)
+	defer cancel()
+	_, err = adminConn.ExecContext(execCtx, fmt.Sprintf("CREATE DATABASE IF NOT EXISTS %s", cfg.Database))
+	if err != nil {
+		return fmt.Errorf("exec create database failed: %w", err)
+	}
+	return nil
 }
 
 // NewClientFromEnv creates a client using environment variables
