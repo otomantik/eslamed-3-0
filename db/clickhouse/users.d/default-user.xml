@@ -1,0 +1,16 @@
+<clickhouse>
+  <users>
+    <default>
+      <!-- Allow connections from other containers on the Docker network.
+           Host ports are bound to 127.0.0.1 in production compose, so this doesn't expose ClickHouse publicly. -->
+      <networks>
+        <ip>127.0.0.1</ip>
+        <ip>::1</ip>
+        <!-- Docker bridge networks (covers typical 172.16/12 ranges). -->
+        <ip>172.16.0.0/12</ip>
+      </networks>
+    </default>
+  </users>
+</clickhouse>
+
+
