@@ -10,7 +10,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
     {
       id: 'repair',
       title: 'Teknik Servis',
-      description: '7/24 acil teknik destek. Arıza tespiti ve onarım.',
+      description: 'Arıza belirtisi, cihaz modeli ve kullanım koşullarına göre teknik değerlendirme yapılır. Uygunsa onarım süreci planlanır.',
       icon: Wrench,
       color: 'bg-red-500',
       iconColor: 'text-red-600',
@@ -19,7 +19,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
     {
       id: 'refill',
       title: 'Oksijen Dolum',
-      description: 'Kapınıza kadar oksijen tüpü dolum hizmeti.',
+      description: 'Dolum süreci; tüp tipi ve güvenlik kontrolüne göre yürütülür. Detaylar ihtiyaç ve lokasyona göre netleşir.',
       icon: Droplets,
       color: 'bg-blue-500',
       iconColor: 'text-blue-600',
@@ -28,7 +28,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
     {
       id: 'rental',
       title: 'Cihaz Kiralama',
-      description: 'Haftalık/aylık kiralama. Profesyonel kurulum.',
+      description: 'Süre ve cihaz tipi ihtiyaca göre belirlenir. Kurulum ve temel kullanım adımları teslimatta paylaşılır.',
       icon: Heart,
       color: 'bg-emerald-500',
       iconColor: 'text-emerald-600',
@@ -37,7 +37,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
     {
       id: 'sales',
       title: 'Cihaz Satışı',
-      description: 'Sıfır ve garantili 2. el cihazlar.',
+      description: 'Uygun ürün seçimi; model, kullanım koşulu ve tedarik durumuna göre netleştirilir.',
       icon: ShoppingCart,
       color: 'bg-purple-500',
       iconColor: 'text-purple-600',
@@ -46,7 +46,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
     {
       id: 'buyback',
       title: '2. El Alım',
-      description: 'Kullanılmış cihazlarınızı değerinde alıyoruz.',
+      description: 'Cihazın durumu ve modeline göre değerlendirme yapılır. Uygunluk ve süreç iletişimde netleşir.',
       icon: RefreshCw,
       color: 'bg-orange-500',
       iconColor: 'text-orange-600',
@@ -78,7 +78,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
             Hizmetlerimiz
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
-            Oksijen cihazı ihtiyaçlarınız için çözümler
+            Kapsam ve süreç netliği için kısa başlıklar
           </p>
         </div>
 

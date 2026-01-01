@@ -5,21 +5,21 @@ export function ServiceValueGrid() {
     {
       icon: Sparkles,
       title: 'Hijyen ve güvenlik',
-      description: 'Her kullanımdan sonra filtre değişimi ve profesyonel dezenfeksiyon. Steril teslimat.',
+      description: 'Teslimat öncesi temel temizlik ve parça kontrolü yapılır. Kullanım sırasında bakım adımları kurulumda netleştirilir.',
       iconColor: 'text-blue-600',
       bgColor: 'bg-blue-50',
     },
     {
       icon: Truck,
       title: 'Hızlı teslimat',
-      description: 'İstanbul geneli hızlı ve güvenli teslimat. Aynı gün içinde kapınızda.',
+      description: 'Teslimat planı; ilçe, stok ve operasyon durumuna göre netleştirilir. Gerekli bilgiler iletişimde doğrulanır.',
       iconColor: 'text-emerald-600',
       bgColor: 'bg-emerald-50',
     },
     {
       icon: ShieldCheck,
       title: 'Sürekli destek',
-      description: 'Arızada yedek cihaz değişimi. 7/24 teknik destek ve profesyonel kurulum.',
+      description: 'Teknik arıza bildirimi sonrası durum değerlendirilir. Kurulum ve kullanım yönlendirmesi, ihtiyaca göre adım adım yapılır.',
       iconColor: 'text-purple-600',
       bgColor: 'bg-purple-50',
     },
@@ -33,7 +33,7 @@ export function ServiceValueGrid() {
             Size nasıl yardımcı oluyoruz
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
-            Güvenilir medikal ekipman çözümleri sunuyoruz
+            Süreç; güvenlik, uygunluk ve operasyon planlaması üzerinden ilerler
           </p>
         </div>
 

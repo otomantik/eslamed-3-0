@@ -7,42 +7,65 @@ interface SmartFAQProps {
 
 export function SmartFAQ({ intent }: SmartFAQProps) {
   const faqs = [
+    // Foundation (always relevant)
     {
-      question: 'Oksijen cihazı kiralama ücreti ne kadar?',
-      answer: 'Haftalık kiralama 450 TL\'den başlar. Aylık paketlerde indirim uygulanır. Net fiyatlandırma.',
-      intentRelevant: ['PRICE_SENSITIVE', 'COMMERCIAL_RENTAL']
+      id: 'emergency',
+      question: 'Ne zaman acildir?',
+      answer:
+        'Ciddi nefes darlığı, bilinç değişikliği, göğüs ağrısı, morarma veya hızla kötüleşme varsa 112 ile iletişime geçin. Bu sayfadaki bilgiler acil sağlık hizmetlerinin yerine geçmez.',
+      intentRelevant: ['CRITICAL_EMERGENCY', 'TRUST_SEEKER', 'INFORMATION_SEEKER', 'PRICE_SENSITIVE', 'COMMERCIAL_RENTAL'],
     },
     {
-      question: 'Acil durumlarda ne kadar sürede ulaşırsınız?',
-      answer: '7/24 acil servis hattımız açık. İstanbul içi genellikle 30-45 dakika içinde yanınızdayız.',
-      intentRelevant: ['CRITICAL_EMERGENCY']
+      id: 'not-suitable',
+      question: 'Bu hizmet benim için uygun değilse ne olur?',
+      answer:
+        'Uygunluk; mevcut cihazınızın durumu, hekim önerisi ve kullanım koşullarına göre netleşir. Uygun değilse teknik olarak uygulanabilir alternatifleri konuşuruz; tıbbi karar yerine geçecek yönlendirme yapmayız.',
+      intentRelevant: ['TRUST_SEEKER', 'INFORMATION_SEEKER', 'PRICE_SENSITIVE', 'COMMERCIAL_RENTAL', 'CRITICAL_EMERGENCY'],
     },
     {
-      question: 'Cihazlarınız Sağlık Bakanlığı onaylı mı?',
-      answer: 'Evet, tüm cihazlarımız Sağlık Bakanlığı onaylıdır. Sterilizasyon sertifikalarımız mevcuttur.',
-      intentRelevant: ['TRUST_SEEKER']
+      id: 'who-decides',
+      question: 'Ne ihtiyacım olduğuna kim karar verir?',
+      answer:
+        'Tıbbi karar hekimindir. Biz; mevcut ekipmanı ve kullanım koşullarını teknik olarak değerlendirir, kurulumu ve güvenli kullanım adımlarını anlatırız.',
+      intentRelevant: ['TRUST_SEEKER', 'INFORMATION_SEEKER', 'CRITICAL_EMERGENCY', 'PRICE_SENSITIVE', 'COMMERCIAL_RENTAL'],
     },
     {
-      question: 'Oksijen tüpü dolum ne kadar sürer?',
-      answer: 'Kapınıza kadar gelip dolum yapıyoruz. İşlem yaklaşık 15-20 dakika sürer.',
-      intentRelevant: ['COMMERCIAL_RENTAL', 'PRICE_SENSITIVE']
+      id: 'after-contact',
+      question: 'İletişime geçtikten sonra süreç nasıl işler?',
+      answer:
+        'Kısa bir ihtiyaç ve durum özeti alırız (model, kullanım süresi, arıza belirtisi, adres). Uygunluğu ve teslimat/servis planını netleştirir, gerekli ise kurulum ve kullanım yönlendirmesi yaparız.',
+      intentRelevant: ['INFORMATION_SEEKER', 'TRUST_SEEKER', 'CRITICAL_EMERGENCY', 'PRICE_SENSITIVE', 'COMMERCIAL_RENTAL'],
+    },
+
+    // Intent-specific (kept short and bounded)
+    {
+      id: 'pricing',
+      question: 'Fiyat nasıl belirlenir?',
+      answer:
+        'Fiyat; cihaz tipi, süre ve hizmet kapsamına göre değişir. Net ücret için kısa bir ihtiyaç özetiyle bilgi veririz.',
+      intentRelevant: ['PRICE_SENSITIVE', 'COMMERCIAL_RENTAL'],
     },
     {
-      question: '2. el cihaz alım yapıyor musunuz?',
-      answer: 'Evet, kullanılmış cihazlarınızı değerinde alıyoruz. Ücretsiz ekspertiz hizmetimiz var.',
-      intentRelevant: ['PRICE_SENSITIVE', 'COMMERCIAL_RENTAL']
+      id: 'approved',
+      question: 'Cihaz ve sarf malzemeleriyle ilgili standartlar nedir?',
+      answer:
+        'Kullanılan ürünler ve süreçler; ürün kaynağı, seri/etiket bilgisi ve bakım kayıtlarıyla izlenebilir olmalıdır. Detaylar model ve kurulum koşuluna göre paylaşılır.',
+      intentRelevant: ['TRUST_SEEKER', 'INFORMATION_SEEKER'],
     },
     {
-      question: 'Cihaz nasıl kullanılır? Eğitim veriyor musunuz?',
-      answer: 'Kurulum sırasında detaylı kullanım eğitimi veriyoruz. Ayrıca video kılavuzlarımız var.',
-      intentRelevant: ['INFORMATION_SEEKER']
-    }
+      id: 'usage',
+      question: 'Kurulum ve kullanım yönlendirmesi veriyor musunuz?',
+      answer:
+        'Evet. Kurulum sırasında temel güvenlik adımlarını, filtre/nemlendirme gibi bakımı ve cihazın doğru kullanımını anlatırız. Klinik karar ve doz ayarı hekim tarafından belirlenmelidir.',
+      intentRelevant: ['INFORMATION_SEEKER', 'TRUST_SEEKER'],
+    },
   ];
 
-  // Filter FAQs based on intent
-  const relevantFaqs = faqs.filter(faq => 
-    faq.intentRelevant.includes(intent) || intent === 'COMMERCIAL_RENTAL'
-  ).slice(0, 6);
+  // Keep cognitive load stable: always show the foundation items first, then fill with intent-relevant items.
+  const foundationIds = new Set(['emergency', 'not-suitable', 'who-decides', 'after-contact']);
+  const foundation = faqs.filter((f) => foundationIds.has(f.id));
+  const intentSpecific = faqs.filter((f) => !foundationIds.has(f.id) && f.intentRelevant.includes(intent));
+  const relevantFaqs = [...foundation, ...intentSpecific].slice(0, 6);
 
   // Schema.org JSON-LD
   const faqSchema = {
@@ -62,7 +85,7 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
     '@context': 'https://schema.org',
     '@type': 'MedicalBusiness',
     name: 'Eslamed Medical',
-    description: 'Oksijen cihazı kiralama, dolum ve teknik servis hizmetleri',
+    description: 'Oksijen ekipmanı teknik destek, kurulum ve süreç yönlendirmesi',
     areaServed: {
       '@type': 'City',
       name: 'Istanbul'
@@ -88,7 +111,7 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
             Sık Sorulan Sorular
           </h2>
           <p className="text-base text-slate-600">
-            Size yardımcı olabileceğimiz konular
+            Süreç, güvenlik ve sınırlar hakkında kısa yanıtlar
           </p>
         </div>
 

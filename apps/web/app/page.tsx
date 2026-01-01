@@ -9,6 +9,7 @@ import { HyperLocalMap } from "@/components/sections/hyperlocal-map";
 import { LiveActivityTicker } from "@/components/sections/live-activity-ticker";
 import { FloatingRescueBar } from "@/components/sections/floating-rescue-bar";
 import { SmartFAQ } from "@/components/sections/smart-faq";
+import { Footer } from "@/components/sections/footer";
 import { Suspense } from "react";
 import { detectIntent } from "@/lib/intent/detector";
 
@@ -43,9 +44,6 @@ export default async function Page({
   // Detect intent
   const intentResult = await detectIntent(resolvedParams);
   
-  // Hide navbar in emergency mode
-  const hideNavbar = intentResult.mode === 'CRITICAL_EMERGENCY';
-
   const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
 
   return (
@@ -86,6 +84,9 @@ export default async function Page({
 
       {/* Floating Rescue Bar (Mobile) */}
       <FloatingRescueBar intent={intentResult.mode} />
+
+      {/* Footer */}
+      <Footer />
 
       {/* Debug Info (Development Only + Query Flag) */}
       {process.env.NODE_ENV === 'development' && 
