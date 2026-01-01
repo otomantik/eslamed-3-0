@@ -34,6 +34,18 @@ export function SearchModal() {
   const [fuse, setFuse] = useState<FuseLike | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
+  // If navbar triggered search before this chunk mounted, consume pending request.
+  useEffect(() => {
+    const pending = (window as any).__eslamed_search_pending as { prefill?: string } | undefined;
+    if (pending) {
+      setOpen(true);
+      if (typeof pending.prefill === 'string' && pending.prefill.trim()) {
+        setQ(pending.prefill);
+      }
+      (window as any).__eslamed_search_pending = undefined;
+    }
+  }, []);
+
   // Keyboard: Cmd/Ctrl + K
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {

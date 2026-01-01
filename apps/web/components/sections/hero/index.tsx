@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Phone, MessageCircle, MapPin, Clock, Activity, CheckCircle2, AlertTriangle } from 'lucide-react';
+import { Phone, MessageCircle, MapPin, Clock, Activity, CheckCircle2, AlertTriangle, ShieldCheck, Wind, HandHeart } from 'lucide-react';
 import type { IntentMode } from '@/lib/intent/detector';
 
 interface DynamicHeroProps {
@@ -12,7 +12,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
   const configs = {
     CRITICAL_EMERGENCY: {
       title: `Oksijen cihazınızda sorun mu var?`,
-      subtitle: `Teknik arıza durumunda, cihaz modeline ve kullanım koşullarına göre hızlı bir değerlendirme yaparız. ${district} bölgesinde planlama yapılır.`,
+      subtitle:
+        'Hekiminizin belirlediği tedavi planına uygun teknik cihazların seçimi ve kurulum süreçlerinde rehberlik sunuyoruz. Tüm süreç, cihazların teknik spesifikasyonları ve kullanım güvenliği sınırları içinde kalır.',
       cta: "Uzmanla Konuş",
       secondaryCta: "Konumumu Gönder",
       bgImage: "/assets/hero-bg.png",
@@ -32,7 +33,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     },
     TRUST_SEEKER: {
       title: `Evde medikal ekipman yönlendirme`,
-      subtitle: `${district} bölgesinde; solunum desteği, evde bakım ve ölçüm/takip ekipmanlarında uygunluk ve süreç netliği için sakin bir yönlendirme sunarız. Oksijen cihazları buna dahildir.`,
+      subtitle:
+        'Hekiminizin belirlediği tedavi planına uygun teknik cihazların seçimi ve kurulum süreçlerinde rehberlik sunuyoruz. Tüm süreç, cihazların teknik spesifikasyonları ve kullanım güvenliği sınırları içinde kalır.',
       cta: "Uzmanla Konuş",
       secondaryCta: "Nasıl Çalışıyoruz",
       bgImage: "/assets/hero-bg.png",
@@ -40,7 +42,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       titleColor: "text-white",
       subtitleColor: "text-blue-50",
       badge: {
-        text: "Sağlık Bakanlığı onaylı",
+        text: "ÜTS Kayıtlı & CE Belgeli Medikal Ekipman",
         icon: CheckCircle2,
         bg: "bg-blue-500/20 backdrop-blur-sm border border-blue-400/50",
         textColor: "text-blue-100",
@@ -52,7 +54,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     },
     PRICE_SENSITIVE: {
       title: `Şeffaf kapsam, net süreç`,
-      subtitle: `Fiyat; ekipman tipi, süre ve hizmet kapsamına göre belirlenir. Oksijen cihazları bir örnektir; evde bakım ve ölçüm/takip ekipmanları için de aynı netlik korunur.`,
+      subtitle:
+        'Hekiminizin belirlediği tedavi planına uygun teknik cihazların seçimi ve kurulum süreçlerinde rehberlik sunuyoruz. Tüm süreç, cihazların teknik spesifikasyonları ve kullanım güvenliği sınırları içinde kalır.',
       cta: "Fiyat Bilgisi Al",
       secondaryCta: "Detaylı Bilgi",
       bgImage: "/assets/hero-bg.png",
@@ -72,7 +75,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     },
     COMMERCIAL_RENTAL: {
       title: `${district} bölgesinde evde ekipman planlaması`,
-      subtitle: `Oksijen ekipmanları dahil; solunum desteği, evde bakım ve ölçüm/takip cihazlarında uygunluk ve kurulum adımları planlanır. Detaylar ihtiyaca göre netleşir.`,
+      subtitle:
+        'Hekiminizin belirlediği tedavi planına uygun teknik cihazların seçimi ve kurulum süreçlerinde rehberlik sunuyoruz. Tüm süreç, cihazların teknik spesifikasyonları ve kullanım güvenliği sınırları içinde kalır.',
       cta: "Uzmanla Konuş",
       secondaryCta: "Hizmetlerimiz",
       bgImage: "/assets/hero-bg.png",
@@ -92,7 +96,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     },
     INFORMATION_SEEKER: {
       title: `Evde kullanım ekipmanları hakkında`,
-      subtitle: `Hekim önerisi ve kullanım koşullarını temel alarak, uygun ekipman tipini ve süreci birlikte netleştiririz. Oksijen cihazları bu kapsamın bir parçasıdır.`,
+      subtitle:
+        'Hekiminizin belirlediği tedavi planına uygun teknik cihazların seçimi ve kurulum süreçlerinde rehberlik sunuyoruz. Tüm süreç, cihazların teknik spesifikasyonları ve kullanım güvenliği sınırları içinde kalır.',
       cta: "Uzmanla Konuş",
       secondaryCta: "Bilgi Al",
       bgImage: "/assets/hero-bg.png",
@@ -114,6 +119,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
 
   const config = configs[intent];
   const BadgeIcon = config.badge.icon;
+  const showComplianceBar = intent === 'TRUST_SEEKER' || intent === 'INFORMATION_SEEKER';
 
   return (
     <section className={`relative min-h-[90vh] flex items-center overflow-hidden ${intent === 'CRITICAL_EMERGENCY' ? 'pt-32' : 'pt-24 sm:pt-20'}`}>
@@ -121,11 +127,13 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       <div className="absolute inset-0 z-0">
         <Image
           src={config.bgImage}
-          alt="Medical Background"
+          alt="Evde medikal cihaz kurulumu ve teknik süreç yönetimi - Eslamed İstanbul"
           fill
           className="object-cover"
+          sizes="100vw"
           priority
           fetchPriority="high"
+          loading="eager"
         />
         <div className={`absolute inset-0 ${config.bgOverlay}`} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
@@ -143,6 +151,13 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
             />
             {config.badge.text}
           </div>
+
+          {/* Compliance Bar (quiet, authority signal) */}
+          {showComplianceBar && (
+            <div className="text-xs text-white/80 bg-white/10 border border-white/15 rounded-lg px-3 py-2 backdrop-blur-sm max-w-xl">
+              T.C. Sağlık Bakanlığı ÜTS Kayıtlı | Yetkili Teknik Destek Merkezi
+            </div>
+          )}
 
           {/* Headline */}
           <h1 className={`text-3xl sm:text-4xl lg:text-5xl font-display font-semibold leading-[1.2] ${config.titleColor} max-w-xl`}>
@@ -172,12 +187,16 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
             </a>
           </div>
 
+          <p className="text-xs text-white/75 max-w-xl">
+            Kiralama ve satış süreçlerimiz medikal standartlara uygundur.
+          </p>
+
           {/* Trust Indicators */}
           {intent === 'TRUST_SEEKER' && (
             <div className="flex items-center gap-6 pt-4">
               <div className="flex items-center gap-2 text-blue-100">
                 <Clock className="w-4 h-4" strokeWidth={1.5} />
-                <span className="text-sm">30-45 dk teslimat</span>
+                <span className="text-sm">İstanbul genelinde 2 tam yetkili mobil ekip ile hızlı ve planlı operasyon süreci</span>
               </div>
               <div className="flex items-center gap-2 text-blue-100">
                 <MapPin className="w-4 h-4" strokeWidth={1.5} />
@@ -189,11 +208,57 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
 
         {/* Right Column - Product/Visual */}
         <div className="hidden lg:block relative h-[600px] w-full">
-          <div className="absolute inset-0 flex items-center justify-center border-2 border-white/20 rounded-3xl bg-white/10 backdrop-blur-md">
-            <p className="text-white/60 font-bold text-center text-lg">
-              [ÜRÜN GÖRSELİ]<br />
-              <span className="text-sm">(Habaş Tüp / Konsantratör)</span>
-            </p>
+          <div className="absolute inset-0 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md p-8">
+            <div className="flex items-start justify-between gap-6">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-white/10 border border-white/15 flex items-center justify-center">
+                  <ShieldCheck className="w-6 h-6 text-white/90" strokeWidth={1.5} />
+                </div>
+                <div>
+                  <div className="text-white font-semibold leading-tight">Süreç & uygunluk odağı</div>
+                  <div className="text-white/70 text-xs mt-1">Ev tipi cihaz kurulumu · teknik değerlendirme</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/10 border border-white/15">
+                <span className="relative flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-400"></span>
+                </span>
+                <span className="text-white/90 text-xs font-semibold">2 Tam Yetkili Mobil Ekip</span>
+              </div>
+            </div>
+
+            <div className="mt-8 grid grid-cols-3 gap-4">
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                  <Wind className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                </div>
+                <div className="mt-3 text-white font-semibold text-sm">Solunum</div>
+                <div className="mt-1 text-white/70 text-xs leading-relaxed">Kurulum ve kullanım süreci</div>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                  <Activity className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                </div>
+                <div className="mt-3 text-white font-semibold text-sm">Ölçüm</div>
+                <div className="mt-1 text-white/70 text-xs leading-relaxed">Cihaz seçimi ve teknik destek</div>
+              </div>
+              <div className="rounded-2xl border border-white/15 bg-white/10 p-4">
+                <div className="w-10 h-10 rounded-xl bg-white/10 border border-white/15 flex items-center justify-center">
+                  <HandHeart className="w-5 h-5 text-white/90" strokeWidth={1.5} />
+                </div>
+                <div className="mt-3 text-white font-semibold text-sm">Bakım</div>
+                <div className="mt-1 text-white/70 text-xs leading-relaxed">Uygunluk ve süreç yönetimi</div>
+              </div>
+            </div>
+
+            <div className="mt-8 rounded-2xl border border-white/15 bg-white/10 p-4">
+              <div className="text-white/90 text-sm font-semibold">İstanbul genelinde kapsama</div>
+              <div className="mt-1 text-white/70 text-xs leading-relaxed">
+                İlçe bazlı planlama; cihaz tipi, kullanım koşulu ve hekim önerisi doğrultusunda netleştirilir.
+              </div>
+            </div>
           </div>
         </div>
       </div>
