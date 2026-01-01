@@ -81,6 +81,14 @@ html {
   overflow: hidden;
 }
 
+/* High-contrast focus rings for URGENT mode (Cognitive Accessibility) */
+.focus-ring-urgent:focus,
+.focus-ring-urgent:focus-visible {
+  outline: 4px solid #f97316 !important; /* Orange-500 */
+  outline-offset: 2px !important;
+  border-radius: 4px;
+}
+
 /* Focus visible for accessibility */
 *:focus-visible {
   outline: 2px solid oklch(0.55 0.25 255);

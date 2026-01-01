@@ -2,18 +2,28 @@
 
 import { X, MessageCircle, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { SmartDwellTracker } from './smart-dwell-tracker';
+import { useState } from 'react';
 
 interface RequestQuoteSidebarProps {
   onClose: () => void;
 }
 
 /**
- * RequestQuoteSidebar: RESEARCH mode - Appears after 15s dwell time
+ * RequestQuoteSidebar: RESEARCH mode - Appears after smart dwell time
  */
 export function RequestQuoteSidebar({ onClose }: RequestQuoteSidebarProps) {
+  const [show, setShow] = useState(false);
   return (
-    <AnimatePresence>
-      <motion.div
+    <>
+      <SmartDwellTracker
+        initialDelay={15000}
+        idleThreshold={3000}
+        onShow={() => setShow(true)}
+      />
+      <AnimatePresence>
+        {show && (
+          <motion.div
         initial={{ x: '100%' }}
         animate={{ x: 0 }}
         exit={{ x: '100%' }}
@@ -60,7 +70,9 @@ export function RequestQuoteSidebar({ onClose }: RequestQuoteSidebarProps) {
           </div>
         </div>
       </motion.div>
+        )}
     </AnimatePresence>
+    </>
   );
 }
 

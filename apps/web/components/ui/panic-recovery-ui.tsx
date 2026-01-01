@@ -3,35 +3,38 @@
 import { motion } from 'framer-motion';
 import { Phone, Home, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
+import { FocusTrap } from './focus-trap';
 
 /**
  * PanicRecoveryUI: URGENT mode - Minimal navigation, action-focused
  * Removes Header/Footer, shows only critical actions
+ * Implements focus trapping for keyboard navigation
  */
 export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-surface)' }}>
-      {/* Minimal Top Bar - Only Home + Emergency Call */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-sm">
-        <div className="container-wide flex items-center justify-between h-14">
-          <Link
-            href="/"
-            className="min-h-[48px] inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-red-600 transition-colors"
-            aria-label="Ana sayfaya dön"
-          >
-            <Home className="w-5 h-5" strokeWidth={1.5} />
-            <span className="hidden sm:inline">ESLAMED</span>
-          </Link>
-          <a
-            href="tel:+905372425535"
-            className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-heartbeat"
-            aria-label="Acil durum için hemen ara"
-          >
-            <Phone className="w-5 h-5" strokeWidth={2} />
-            <span>Hemen Ara</span>
-          </a>
-        </div>
-      </nav>
+    <FocusTrap enabled={true}>
+      <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-surface)' }}>
+        {/* Minimal Top Bar - Only Home + Emergency Call */}
+        <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-sm">
+          <div className="container-wide flex items-center justify-between h-14">
+            <Link
+              href="/"
+              className="min-h-[48px] inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-red-600 transition-colors focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2 rounded"
+              aria-label="Ana sayfaya dön"
+            >
+              <Home className="w-5 h-5" strokeWidth={1.5} />
+              <span className="hidden sm:inline">ESLAMED</span>
+            </Link>
+            <a
+              href="tel:+905372425535"
+              className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-heartbeat focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2"
+              aria-label="Acil durum için hemen ara"
+            >
+              <Phone className="w-5 h-5" strokeWidth={2} />
+              <span>Hemen Ara</span>
+            </a>
+          </div>
+        </nav>
 
       {/* Action-Oriented List - Above the fold */}
       <section className="pt-20 pb-8">
@@ -116,7 +119,8 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
           {children}
         </div>
       </section>
-    </div>
+      </div>
+    </FocusTrap>
   );
 }
 

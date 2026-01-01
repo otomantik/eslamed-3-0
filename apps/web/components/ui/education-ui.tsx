@@ -32,14 +32,7 @@ export function EducationUI({ children }: { children: React.ReactNode }) {
     });
   }, []);
 
-  // Dwell time detection: Show sidebar after 15 seconds
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowSidebar(true);
-    }, 15000);
-
-    return () => clearTimeout(timer);
-  }, []);
+  // SmartDwellTracker is now handled inside RequestQuoteSidebar component
 
   return (
     <div className="min-h-screen bg-slate-50">

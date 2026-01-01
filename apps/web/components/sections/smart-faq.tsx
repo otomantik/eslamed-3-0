@@ -1,5 +1,8 @@
+'use client';
+
 import { CheckCircle2 } from 'lucide-react';
 import type { IntentMode } from '@/lib/intent/detector';
+import { FAQAccordion } from '@/components/ui/faq-accordion';
 
 interface SmartFAQProps {
   intent: IntentMode;
@@ -100,23 +103,16 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-4">
-          {relevantFaqs.map((faq, index) => (
-            <details
-              key={index}
-              className="group bg-slate-50 rounded-xl border border-slate-200 overflow-hidden transition-all hover:border-slate-300"
-            >
-              <summary className="px-6 py-4 cursor-pointer font-semibold text-slate-900 flex items-center justify-between list-none">
-                <span>{faq.question}</span>
-                <span className="text-slate-400 group-open:text-slate-600 transition-transform group-open:rotate-180">
-                  ▼
-                </span>
-              </summary>
-              <div className="px-6 pb-4 text-slate-600 leading-relaxed">
-                {faq.answer}
-              </div>
-            </details>
-          ))}
+        <div className="max-w-3xl mx-auto">
+          <FAQAccordion
+            faqs={relevantFaqs.map((faq) => ({
+              id: faq.id,
+              question: faq.question,
+              answer: faq.answer,
+            }))}
+            autoExpand={intent === 'INFORMATION_SEEKER'}
+            staggerDelay={100}
+          />
         </div>
       </div>
     </section>
