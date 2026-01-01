@@ -45,11 +45,20 @@ export function IntentProvider({
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // Extract mode from URL searchParams (e.g., ?mode=URGENT)
+    // Extract mode from URL searchParams (e.g., ?mode=URGENT or ?mode=urgent)
     const modeParam = searchParams.get('mode');
     const districtParam = searchParams.get('district');
 
     if (modeParam) {
+      // User-friendly aliases
+      const modeAliases: Record<string, IntentMode> = {
+        'urgent': 'CRITICAL_EMERGENCY',
+        'research': 'INFORMATION_SEEKER',
+        'vip': 'TRUST_SEEKER',
+        'price': 'PRICE_SENSITIVE',
+        'rental': 'COMMERCIAL_RENTAL',
+      };
+
       const validModes: IntentMode[] = [
         'CRITICAL_EMERGENCY',
         'TRUST_SEEKER',
@@ -57,8 +66,12 @@ export function IntentProvider({
         'COMMERCIAL_RENTAL',
         'INFORMATION_SEEKER',
       ];
-      if (validModes.includes(modeParam as IntentMode)) {
-        setMode(modeParam as IntentMode);
+
+      // Check alias first, then direct mode
+      const normalizedMode = modeAliases[modeParam.toLowerCase()] || modeParam.toUpperCase();
+      
+      if (validModes.includes(normalizedMode as IntentMode)) {
+        setMode(normalizedMode as IntentMode);
       }
     }
 
@@ -71,13 +84,24 @@ export function IntentProvider({
       const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
       sessionStorage.setItem('eslamed_session_id', sessionId);
 
+      // Resolve final mode for logging
+      const modeAliases: Record<string, IntentMode> = {
+        'urgent': 'CRITICAL_EMERGENCY',
+        'research': 'INFORMATION_SEEKER',
+        'vip': 'TRUST_SEEKER',
+        'price': 'PRICE_SENSITIVE',
+        'rental': 'COMMERCIAL_RENTAL',
+      };
+      const finalMode = modeAliases[modeParam.toLowerCase()] || modeParam.toUpperCase();
+
       // Fire-and-forget logging
       fetch('/api/demand_logs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'intent_switch',
-          mode: modeParam,
+          mode: finalMode,
+          originalParam: modeParam,
           district: districtParam || null,
           sessionId,
           timestamp: new Date().toISOString(),

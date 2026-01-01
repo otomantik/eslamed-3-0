@@ -4,6 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
 import { StickySupport } from "@/components/ui/sticky-support";
+import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -133,8 +134,12 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <Tracker />
         </Suspense>
-        {children}
-        <StickySupport />
+        <Suspense fallback={null}>
+          <IntentProviderWrapper>
+            {children}
+            <StickySupport />
+          </IntentProviderWrapper>
+        </Suspense>
       </body>
     </html>
   );
