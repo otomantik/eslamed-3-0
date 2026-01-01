@@ -40,7 +40,7 @@ export function ProductShowcase() {
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4">
-            Ekipman kapsamı
+            Öne Çıkan Medikal Destek Grupları
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
             Solunum desteği, evde bakım ve ölçüm/takip kategorilerinde örnek ürünler
@@ -67,7 +67,7 @@ export function ProductShowcase() {
         {/* Product Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredProducts.map((product) => (
-            <div
+            <article
               key={product.id}
               className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-lg transition-shadow"
             >
@@ -91,7 +91,7 @@ export function ProductShowcase() {
                 <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
                 Bilgi Al
               </a>
-            </div>
+            </article>
           ))}
         </div>
       </div>

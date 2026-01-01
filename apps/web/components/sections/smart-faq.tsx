@@ -93,7 +93,7 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4 flex items-center justify-center gap-2">
             <CheckCircle2 className="w-8 h-8 text-emerald-500" strokeWidth={1.5} />
-            Sık Sorulan Sorular
+            Teknik Destek ve Bilgi Merkezi (SSS)
           </h2>
           <p className="text-base text-slate-600">
             Süreç, güvenlik ve sınırlar hakkında kısa yanıtlar

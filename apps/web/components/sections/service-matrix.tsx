@@ -75,10 +75,10 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4">
-            Hizmetlerimiz
+            Hizmetler
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
-            Kapsam ve süreç netliği için kısa başlıklar
+            Kapsam ve süreç netliği için kısa başlıklar (ekipman uygunluğu, ev tipi cihaz kurulumu ve teknik destek)
           </p>
         </div>
 
@@ -91,11 +91,15 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
               : '';
 
             return (
-              <a
+              <article
                 key={service.id}
-                href={service.href}
                 className={`group relative bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 border-2 border-slate-200 hover:border-slate-300 transition-all hover:shadow-xl hover:-translate-y-1 ${colSpan}`}
               >
+                <a
+                  href={service.href}
+                  aria-label={`${service.title} detayları`}
+                  className="absolute inset-0 rounded-2xl"
+                />
                 <div className={`${service.color} w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
                   <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
                 </div>
@@ -108,7 +112,7 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
                 <div className="mt-4 text-sm font-semibold text-slate-900 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                   Detaylar →
                 </div>
-              </a>
+              </article>
             );
           })}
         </div>

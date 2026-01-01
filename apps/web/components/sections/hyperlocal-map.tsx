@@ -27,14 +27,14 @@ export function HyperLocalMap({ district }: HyperLocalMapProps) {
   const coords = districtCoords[district] || districtCoords['Istanbul'];
 
   return (
-    <section className="py-20 bg-slate-50">
+    <address className="not-italic py-20 bg-slate-50">
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-bold text-slate-900 mb-4">
-            {district} Bölgesinde Hizmet Veriyoruz
+            {district} Bölgesinde Operasyon Kapsamı
           </h2>
           <p className="text-lg text-slate-600">
-            En yakın mobil ekibimizin konumunu görüntüleyin
+            Bölge bilgisi ve planlama, iletişim sırasında netleştirilir.
           </p>
         </div>
 
@@ -49,9 +49,6 @@ export function HyperLocalMap({ district }: HyperLocalMapProps) {
                 <MapPin className="w-16 h-16 text-red-500 mx-auto mb-4 animate-bounce" strokeWidth={1.5} />
                 <p className="text-slate-600 font-semibold text-lg">
                   Harita Yükleniyor...
-                </p>
-                <p className="text-slate-500 text-sm mt-2">
-                  {district} - {coords.lat.toFixed(4)}, {coords.lng.toFixed(4)}
                 </p>
               </div>
             ) : (
@@ -75,20 +72,22 @@ export function HyperLocalMap({ district }: HyperLocalMapProps) {
           <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:w-80 bg-white/95 backdrop-blur-md rounded-xl p-4 shadow-xl border border-slate-200">
             <h3 className="font-bold text-slate-900 mb-2 flex items-center gap-2">
               <MapPin className="w-4 h-4 text-red-500" strokeWidth={1.5} />
-              Mobil Ekip Konumu
+              Bölge Notu
             </h3>
             <p className="text-sm text-slate-600 mb-1">
               <strong>{district}</strong> bölgesinde aktif
             </p>
             <p className="text-xs text-slate-500">
-              Tahmini varış süresi: <strong className="text-emerald-600">15-30 dakika</strong>
+              Planlama ve süre; trafik ve saha koşullarına göre değişebilir.
             </p>
           </div>
         </div>
       </div>
-    </section>
+    </address>
   );
 }
+
+
 
 
 
