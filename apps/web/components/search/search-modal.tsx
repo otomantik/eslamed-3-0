@@ -11,6 +11,7 @@ import {
 import { logSearchTelemetry } from '@/lib/search/search-telemetry';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
 import { HelpCard } from '@/components/search/help-card';
+import { useIntent } from '@/context/IntentContext';
 
 type FuseLike = {
   search: (q: string) => Array<{ item: SearchItem; score?: number }>;
@@ -163,12 +164,61 @@ export function SearchModal() {
     };
   }, [open, items, fuse, q]);
 
+  const { mode } = useIntent();
+
   const results = useMemo(() => {
     const nq = normalizeQuery(q);
     if (!nq || !fuse) return [];
 
     const raw = fuse.search(nq).map((r) => r.item);
     let limited = raw.slice(0, searchConfig.maxResults);
+
+    // Mode-based prioritization (Deep Masking v3)
+    if (mode === 'CRITICAL_EMERGENCY') {
+      // URGENT: Prioritize "Teknik Servis", "Oksijen Dolum", "Hızlı Teslimat"
+      const urgentKeywords = ['teknik servis', 'servis', 'arıza', 'oksijen dolum', 'dolum', 'hızlı teslimat', 'acil'];
+      limited = [...limited].sort((a, b) => {
+        const aUrgent = urgentKeywords.some((kw) => 
+          a.title.toLowerCase().includes(kw) || 
+          a.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        const bUrgent = urgentKeywords.some((kw) => 
+          b.title.toLowerCase().includes(kw) || 
+          b.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        return Number(bUrgent) - Number(aUrgent);
+      });
+      // Also prioritize isUrgent flag
+      limited = [...limited].sort((a, b) => Number(Boolean(b.isUrgent)) - Number(Boolean(a.isUrgent)));
+    } else if (mode === 'INFORMATION_SEEKER') {
+      // RESEARCH: Prioritize "Rehber", "Nasıl Yapılır", "Belgeler"
+      const researchKeywords = ['rehber', 'nasıl', 'yapılır', 'belge', 'belgeler', 'kılavuz', 'kullanım'];
+      limited = [...limited].sort((a, b) => {
+        const aResearch = a.kind === 'guide' || researchKeywords.some((kw) => 
+          a.title.toLowerCase().includes(kw) || 
+          a.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        const bResearch = b.kind === 'guide' || researchKeywords.some((kw) => 
+          b.title.toLowerCase().includes(kw) || 
+          b.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        return Number(bResearch) - Number(aResearch);
+      });
+    } else if (mode === 'TRUST_SEEKER') {
+      // VIP: Prioritize "Kişiye Özel", "Tabanlık", "VIP Hizmetler"
+      const vipKeywords = ['kişiye özel', 'tabanlık', 'tabanlik', 'vip', 'özel', 'premium'];
+      limited = [...limited].sort((a, b) => {
+        const aVip = a.kind === 'vip' || vipKeywords.some((kw) => 
+          a.title.toLowerCase().includes(kw) || 
+          a.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        const bVip = b.kind === 'vip' || vipKeywords.some((kw) => 
+          b.title.toLowerCase().includes(kw) || 
+          b.tags.some((tag) => tag.toLowerCase().includes(kw))
+        );
+        return Number(bVip) - Number(aVip);
+      });
+    }
 
     // VIP pinning: always show Kişiye Özel Tabanlık for ortho intent (even if fuzzy misses)
     if (items && isOrthopedicIntent(nq)) {
@@ -179,11 +229,8 @@ export function SearchModal() {
       }
     }
 
-    // Urgent prioritization: respiratory items first (panic-proof)
-    limited = [...limited].sort((a, b) => Number(Boolean(b.isUrgent)) - Number(Boolean(a.isUrgent)));
-
     return limited;
-  }, [q, fuse, items]);
+  }, [q, fuse, items, mode]);
 
   // Log term + 0-results (debounced)
   useEffect(() => {

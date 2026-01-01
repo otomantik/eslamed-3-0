@@ -15,12 +15,21 @@
   --color-ui-bg: oklch(0.98 0.01 240);
   --color-ui-surface: oklch(1.00 0.00 0);
 
+  /* INTENT-BASED THEMING (Deep Masking v3) */
+  --primary-brand: var(--color-brand-primary);
+  --bg-surface: var(--color-ui-bg);
+  --text-primary: oklch(0.20 0.02 240);
+  --accent-urgent: #DC2626;
+  --accent-vip: #B8860B;
+
   /* TYPOGRAPHY */
   --font-sans: "Inter", sans-serif;
   --font-display: "Outfit", sans-serif;
+  --font-premium: "Playfair Display", serif; /* VIP mode serif font */
 
   /* ANIMATIONS */
   --animate-pulse-fast: pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-heartbeat: heartbeat 1.5s ease-in-out infinite;
 }
 
 /* CUSTOM UTILITIES */
@@ -42,9 +51,34 @@
   animation: marquee 30s linear infinite;
 }
 
+/* Heartbeat animation for URGENT mode */
+@keyframes heartbeat {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+.animate-heartbeat {
+  animation: heartbeat 1.5s ease-in-out infinite;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
+}
+
+/* Aria-live region for mode announcements */
+#aria-live-announcements {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
 
 /* Focus visible for accessibility */

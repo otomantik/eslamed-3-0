@@ -1,0 +1,122 @@
+'use client';
+
+import { motion } from 'framer-motion';
+import { Phone, Home, AlertCircle } from 'lucide-react';
+import Link from 'next/link';
+
+/**
+ * PanicRecoveryUI: URGENT mode - Minimal navigation, action-focused
+ * Removes Header/Footer, shows only critical actions
+ */
+export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-surface)' }}>
+      {/* Minimal Top Bar - Only Home + Emergency Call */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-sm">
+        <div className="container-wide flex items-center justify-between h-14">
+          <Link
+            href="/"
+            className="min-h-[48px] inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-red-600 transition-colors"
+            aria-label="Ana sayfaya dön"
+          >
+            <Home className="w-5 h-5" strokeWidth={1.5} />
+            <span className="hidden sm:inline">ESLAMED</span>
+          </Link>
+          <a
+            href="tel:+905372425535"
+            className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-heartbeat"
+            aria-label="Acil durum için hemen ara"
+          >
+            <Phone className="w-5 h-5" strokeWidth={2} />
+            <span>Hemen Ara</span>
+          </a>
+        </div>
+      </nav>
+
+      {/* Action-Oriented List - Above the fold */}
+      <section className="pt-20 pb-8">
+        <div className="container-wide">
+          <div className="bg-white rounded-2xl border-2 border-red-200 p-6 mb-6">
+            <div className="flex items-start gap-3 mb-4">
+              <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" strokeWidth={2} />
+              <div>
+                <h2 className="text-xl font-bold text-slate-900 mb-2">
+                  Acil Durumda Ne Yapmalıyım?
+                </h2>
+                <p className="text-slate-700" style={{ lineHeight: 1.8 }}>
+                  Aşağıdaki adımları sırayla takip edin. Teknik destek ekibimiz size yardımcı olacaktır.
+                </p>
+              </div>
+            </div>
+
+            <ol className="space-y-4">
+              {[
+                {
+                  step: '1',
+                  title: 'Cihazı Güvenli Şekilde Kapatın',
+                  description: 'Elektrik bağlantısını kesin ve cihazı kapatın. Güvenlik önceliklidir.',
+                },
+                {
+                  step: '2',
+                  title: 'Hemen Arayın',
+                  description: 'Telefon veya WhatsApp üzerinden teknik destek ekibimize ulaşın.',
+                },
+                {
+                  step: '3',
+                  title: 'Durumu Açıklayın',
+                  description: 'Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
+                },
+              ].map((item) => (
+                <motion.li
+                  key={item.step}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: parseFloat(item.step) * 0.1 }}
+                  className="flex items-start gap-4 p-4 bg-red-50 rounded-xl border border-red-100"
+                >
+                  <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center font-bold">
+                    {item.step}
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">{item.title}</h3>
+                    <p className="text-sm text-slate-700" style={{ lineHeight: 1.8 }}>
+                      {item.description}
+                    </p>
+                  </div>
+                </motion.li>
+              ))}
+            </ol>
+
+            {/* SOS Buttons with Heartbeat Animation */}
+            <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <motion.a
+                href="tel:+905372425535"
+                className="min-h-[56px] inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-lg transition-colors animate-heartbeat"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                aria-label="Telefon ile acil destek al"
+              >
+                <Phone className="w-6 h-6" strokeWidth={2} />
+                <span>Telefon: 0537 242 55 35</span>
+              </motion.a>
+              <motion.a
+                href="https://wa.me/905372425535?text=Acil%20teknik%20destek%20ihtiyacım%20var"
+                className="min-h-[56px] inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg transition-colors animate-heartbeat"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                aria-label="WhatsApp ile acil destek al"
+              >
+                <AlertCircle className="w-6 h-6" strokeWidth={2} />
+                <span>WhatsApp Destek</span>
+              </motion.a>
+            </div>
+          </div>
+
+          {/* Main Content */}
+          {children}
+        </div>
+      </section>
+    </div>
+  );
+}
+

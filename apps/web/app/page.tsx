@@ -13,6 +13,7 @@ import { TrustSafetyBridge } from "@/components/sections/trust-safety-bridge";
 import { Footer } from "@/components/sections/footer";
 import { Suspense } from "react";
 import { detectIntent } from "@/lib/intent/detector";
+import { ModeWrapper } from "@/components/ui/mode-wrapper";
 
 // Skeleton components for Suspense
 function MapSkeleton() {
@@ -48,49 +49,50 @@ export default async function Page({
   const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
 
   return (
-    <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      {/* Global Emergency Alert Bar */}
-      {isEmergency && <GlobalAlertBar />}
-      
-      {/* Navbar */}
-      <Navbar isEmergency={isEmergency} />
+    <ModeWrapper serverMode={intentResult.mode}>
+      <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
+        {/* Global Emergency Alert Bar (only if not in PanicRecoveryUI) */}
+        {isEmergency && <GlobalAlertBar />}
+        
+        {/* Navbar (hidden in URGENT mode by PanicRecoveryUI) */}
+        <Navbar isEmergency={isEmergency} />
 
-      {/* Live Activity Ticker */}
-      <Suspense fallback={<TickerSkeleton />}>
-        <LiveActivityTicker />
-      </Suspense>
+        {/* Live Activity Ticker */}
+        <Suspense fallback={<TickerSkeleton />}>
+          <LiveActivityTicker />
+        </Suspense>
 
-      {/* Dynamic Hero */}
-      <DynamicHero intent={intentResult.mode} district={intentResult.district} />
+        {/* Dynamic Hero */}
+        <DynamicHero intent={intentResult.mode} district={intentResult.district} />
 
-      {/* Brand Trust Ticker */}
-      <BrandTrustTicker />
+        {/* Brand Trust Ticker */}
+        <BrandTrustTicker />
 
-      {/* Service Value Grid */}
-      <ServiceValueGrid />
+        {/* Service Value Grid */}
+        <ServiceValueGrid />
 
-      {/* Product Showcase */}
-      <ProductShowcase />
+        {/* Product Showcase */}
+        <ProductShowcase />
 
-      {/* Service Matrix */}
-      <ServiceMatrix intent={intentResult.mode} />
+        {/* Service Matrix */}
+        <ServiceMatrix intent={intentResult.mode} />
 
-      {/* HyperLocal Map */}
-      <Suspense fallback={<MapSkeleton />}>
-        <HyperLocalMap district={intentResult.district || 'Istanbul'} />
-      </Suspense>
+        {/* HyperLocal Map */}
+        <Suspense fallback={<MapSkeleton />}>
+          <HyperLocalMap district={intentResult.district || 'Istanbul'} />
+        </Suspense>
 
-      {/* Trust & Safety Bridge (before FAQ) */}
-      <TrustSafetyBridge />
+        {/* Trust & Safety Bridge (before FAQ) */}
+        <TrustSafetyBridge />
 
-      {/* Smart FAQ */}
-      <SmartFAQ intent={intentResult.mode} />
+        {/* Smart FAQ */}
+        <SmartFAQ intent={intentResult.mode} />
 
-      {/* Floating Rescue Bar (Mobile) */}
-      <FloatingRescueBar intent={intentResult.mode} />
+        {/* Floating Rescue Bar (Mobile) */}
+        <FloatingRescueBar intent={intentResult.mode} />
 
-      {/* Footer */}
-      <Footer />
+        {/* Footer (hidden in URGENT mode by PanicRecoveryUI) */}
+        <Footer />
 
       {/* Debug Info (Development Only + Query Flag) */}
       {process.env.NODE_ENV === 'development' && 
@@ -111,6 +113,7 @@ export default async function Page({
           </div>
         </div>
       )}
-    </main>
+      </main>
+    </ModeWrapper>
   );
 }

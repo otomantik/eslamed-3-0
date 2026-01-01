@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Inter } from "next/font/google";
+import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
 import { StickySupport } from "@/components/ui/sticky-support";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
+import { IntentThemeProvider } from "@/context/theme-provider";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -14,6 +15,12 @@ const plusJakarta = Plus_Jakarta_Sans({
 
 const inter = Inter({
   variable: "--font-sans",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-premium",
   subsets: ["latin"],
   display: "swap",
 });
@@ -129,15 +136,20 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${plusJakarta.variable} ${inter.variable} antialiased`}
+        className={`${plusJakarta.variable} ${inter.variable} ${playfair.variable} antialiased`}
       >
+        {/* Aria-live region for mode announcements */}
+        <div id="aria-live-announcements" aria-live="polite" aria-atomic="true" />
+        
         <Suspense fallback={null}>
           <Tracker />
         </Suspense>
         <Suspense fallback={null}>
           <IntentProviderWrapper>
-            {children}
-            <StickySupport />
+            <IntentThemeProvider>
+              {children}
+              <StickySupport />
+            </IntentThemeProvider>
           </IntentProviderWrapper>
         </Suspense>
       </body>
