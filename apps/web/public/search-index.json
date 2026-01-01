@@ -9,6 +9,24 @@
     "whatsappText": "Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum."
   },
   {
+    "id": "rehber-solunum-sistemleri",
+    "title": "Solunum Sistemleri Rehberi",
+    "category": "Tıbbi Rehber",
+    "tags": ["rehber", "solunum", "oksijen", "filtre", "bakım", "elektrik kesintisi", "cihaz ötüyor"],
+    "synonyms": ["elektrik kesildi", "elektrik kesintisi", "cihaz ötüyor", "cihaz otuyor", "oksijen filtresi", "filtre nasıl temizlenir", "su bitti", "nemlendirici su", "saf su", "oksijen cihazı"],
+    "href": "/rehber/solunum-sistemleri",
+    "whatsappText": "Merhaba, solunum cihazım için teknik kontrol ve elektrik kesintisi planı hakkında bilgi almak istiyorum."
+  },
+  {
+    "id": "rehber-olcum-cihazlari",
+    "title": "Ölçüm Cihazları Rehberi (Tansiyon)",
+    "category": "Tıbbi Rehber",
+    "tags": ["rehber", "tansiyon", "ölçüm", "takip", "hata", "kalibrasyon"],
+    "synonyms": ["tansiyon hata veriyor", "tansiyon ölçümü", "dogru tansiyon olcumu", "doğru tansiyon ölçümü", "manşet", "kural", "kalibrasyon", "konuşmadan ölç", "5 dakika dinlen", "mesane"],
+    "href": "/rehber/olcum-cihazlari",
+    "whatsappText": "Merhaba, tansiyon ölçümü ve cihaz hatası/kalibrasyon hakkında bilgi almak istiyorum."
+  },
+  {
     "id": "tansiyon-aleti",
     "title": "Tansiyon Aleti",
     "category": "Tanı & Ölçüm",
