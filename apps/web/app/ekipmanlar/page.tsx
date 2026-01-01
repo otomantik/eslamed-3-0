@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
+import { Suspense } from 'react';
 import { Navbar } from '@/components/layout/navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { CatalogExplorer } from '@/components/catalog/catalog-explorer';
+import { CatalogSkeleton } from '@/components/catalog/skeleton';
 
 export const metadata: Metadata = {
   title: 'Tüm Ekipmanlar | ESLAMED',
@@ -67,7 +69,9 @@ export default function EkipmanlarPage() {
 
       <section className="py-10">
         <div className="container-wide">
-          <CatalogExplorer />
+          <Suspense fallback={<CatalogSkeleton />}>
+            <CatalogExplorer />
+          </Suspense>
         </div>
       </section>
 

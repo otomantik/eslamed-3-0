@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import {
   Activity,
   Bed,
@@ -29,6 +30,7 @@ function makeWhatsAppLink(title: string) {
 }
 
 export function CatalogExplorer() {
+  const params = useSearchParams();
   const [raw, setRaw] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
@@ -98,6 +100,29 @@ export function CatalogExplorer() {
   const activeCategory = useMemo(() => {
     return equipmentCategories.find((c) => c.id === activeCategoryId) || equipmentCategories[0];
   }, [equipmentCategories, activeCategoryId]);
+
+  // Support pre-applied filters from links (e.g. /ekipmanlar?filter=kiralik&category=solunum)
+  useEffect(() => {
+    if (loading) return;
+    if (!equipmentCategories.length) return;
+
+    const filterParam = (params.get('filter') || '').toLowerCase();
+    const catParamRaw = (params.get('category') || '').toLowerCase();
+
+    if (filterParam === 'kurulum' || filterParam === 'kiralik' || filterParam === 'vip' || filterParam === 'all') {
+      setActiveFilter(filterParam as any);
+    }
+
+    if (catParamRaw) {
+      const normalizedCat = catParamRaw.replace(/\s+/g, '-');
+      const found =
+        equipmentCategories.find((c) => c.id === normalizedCat) ||
+        equipmentCategories.find((c) => c.label.toLowerCase() === catParamRaw) ||
+        equipmentCategories.find((c) => c.label.toLowerCase().replace(/\s+/g, '-') === normalizedCat);
+      if (found) setActiveCategoryId(found.id);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [loading, equipmentCategories.length]);
 
   const filteredItems = useMemo(() => {
     const base = activeCategory?.items || [];

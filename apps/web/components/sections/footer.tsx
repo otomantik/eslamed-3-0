@@ -87,6 +87,11 @@ export function Footer() {
                     </a>
                   </li>
                   <li>
+                    <a href="/hizmetler" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
+                      Hizmetler
+                    </a>
+                  </li>
+                  <li>
                     <a href="/iletisim" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       İletişim
                     </a>
