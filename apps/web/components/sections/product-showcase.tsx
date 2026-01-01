@@ -76,6 +76,7 @@ export function ProductShowcase() {
         <section
           aria-label="Kişiye Özel Tabanlık"
           className="mb-10"
+          id="vip-hizmetler"
         >
           <div
             className="rounded-3xl border border-slate-200 bg-slate-50/50 shadow-sm overflow-hidden"
