@@ -68,29 +68,37 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
   const relevantFaqs = [...foundation, ...intentSpecific].slice(0, 6);
 
   // Schema.org JSON-LD
+  // Keep this stable (YMYL-safe): only publish the always-shown foundation items to avoid intent-variant mismatch.
   const faqSchema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: relevantFaqs.map(faq => ({
+    mainEntity: foundation.map((faq) => ({
       '@type': 'Question',
       name: faq.question,
       acceptedAnswer: {
         '@type': 'Answer',
-        text: faq.answer
-      }
-    }))
+        text: faq.answer,
+      },
+    })),
   };
 
   const medicalBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'MedicalBusiness',
-    name: 'Eslamed Medical',
-    description: 'Oksijen ekipmanı teknik destek, kurulum ve süreç yönlendirmesi',
+    name: 'Eslamed',
+    description: 'Evde kullanım için medikal ekipman seçimi ve süreç yönlendirmesi (solunum desteği, evde bakım, ölçüm ve takip). Tanı/tedavi kararı yerine geçmez.',
     areaServed: {
       '@type': 'City',
       name: 'Istanbul'
     },
-    telephone: '+905372425535'
+    telephone: '+905372425535',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Alemdağ Mah. Atabey Caddesi 19/BA',
+      addressLocality: 'Çekmeköy',
+      addressRegion: 'İstanbul',
+      addressCountry: 'TR'
+    }
   };
 
   return (

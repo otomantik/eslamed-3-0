@@ -17,8 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Eslamed Medical - Oksijen Cihazı Servisi | 7/24 Acil Destek",
-  description: "İstanbul'un en hızlı oksijen cihazı kiralama, dolum ve teknik servis hizmeti. Sağlık Bakanlığı onaylı, 30-45 dakika içinde kapınızda.",
+  title: "Eslamed | Evde Medikal Ekipman Yönlendirme",
+  description:
+    "Evde kullanım için medikal ekipman seçimi ve süreç yönlendirmesi. Oksijen cihazları bir örnektir; evde bakım ve ölçüm/takip ekipmanlarını da kapsar.",
 };
 
 export default function RootLayout({

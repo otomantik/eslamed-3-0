@@ -12,7 +12,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
   const configs = {
     CRITICAL_EMERGENCY: {
       title: `Oksijen cihazınızda sorun mu var?`,
-      subtitle: `Acil teknik servis ekibimiz ${district} bölgesinde. Size yardımcı olmak için buradayız.`,
+      subtitle: `Teknik arıza durumunda, cihaz modeline ve kullanım koşullarına göre hızlı bir değerlendirme yaparız. ${district} bölgesinde planlama yapılır.`,
       cta: "Uzmanla Konuş",
       secondaryCta: "Konumumu Gönder",
       bgImage: "/assets/hero-bg.png",
@@ -31,8 +31,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       pulse: true
     },
     TRUST_SEEKER: {
-      title: `Güvenilir medikal çözümler`,
-      subtitle: `${district} bölgesinde yüzlerce aileye hizmet veriyoruz. Sağlık Bakanlığı onaylı, steril teslimat.`,
+      title: `Evde medikal ekipman yönlendirme`,
+      subtitle: `${district} bölgesinde; solunum desteği, evde bakım ve ölçüm/takip ekipmanlarında uygunluk ve süreç netliği için sakin bir yönlendirme sunarız. Oksijen cihazları buna dahildir.`,
       cta: "Uzmanla Konuş",
       secondaryCta: "Nasıl Çalışıyoruz",
       bgImage: "/assets/hero-bg.png",
@@ -51,8 +51,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       pulse: false
     },
     PRICE_SENSITIVE: {
-      title: `Şeffaf fiyatlandırma`,
-      subtitle: `Oksijen cihazı kiralama ve dolum hizmetlerinde net fiyatlar. Gizli ücret yok.`,
+      title: `Şeffaf kapsam, net süreç`,
+      subtitle: `Fiyat; ekipman tipi, süre ve hizmet kapsamına göre belirlenir. Oksijen cihazları bir örnektir; evde bakım ve ölçüm/takip ekipmanları için de aynı netlik korunur.`,
       cta: "Fiyat Bilgisi Al",
       secondaryCta: "Detaylı Bilgi",
       bgImage: "/assets/hero-bg.png",
@@ -71,8 +71,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       pulse: false
     },
     COMMERCIAL_RENTAL: {
-      title: `${district} bölgesinde oksijen çözümleri`,
-      subtitle: `Habaş ve Philips marka cihazlar. Kapınıza teslim, profesyonel kurulum ve sürekli destek.`,
+      title: `${district} bölgesinde evde ekipman planlaması`,
+      subtitle: `Oksijen ekipmanları dahil; solunum desteği, evde bakım ve ölçüm/takip cihazlarında uygunluk ve kurulum adımları planlanır. Detaylar ihtiyaca göre netleşir.`,
       cta: "Uzmanla Konuş",
       secondaryCta: "Hizmetlerimiz",
       bgImage: "/assets/hero-bg.png",
@@ -91,8 +91,8 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       pulse: false
     },
     INFORMATION_SEEKER: {
-      title: `Oksijen cihazları hakkında`,
-      subtitle: `Uzman ekibimizden ücretsiz danışmanlık alabilirsiniz. Size en uygun çözümü birlikte bulalım.`,
+      title: `Evde kullanım ekipmanları hakkında`,
+      subtitle: `Hekim önerisi ve kullanım koşullarını temel alarak, uygun ekipman tipini ve süreci birlikte netleştiririz. Oksijen cihazları bu kapsamın bir parçasıdır.`,
       cta: "Uzmanla Konuş",
       secondaryCta: "Bilgi Al",
       bgImage: "/assets/hero-bg.png",
@@ -100,7 +100,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       titleColor: "text-white",
       subtitleColor: "text-slate-100",
       badge: {
-        text: "Ücretsiz danışmanlık",
+        text: "Süreç yönlendirmesi",
         icon: CheckCircle2,
         bg: "bg-slate-500/20 backdrop-blur-sm border border-slate-400/50",
         textColor: "text-slate-100",
@@ -157,7 +157,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
           {/* CTAs */}
           <div className="flex flex-col sm:flex-row gap-3 pt-6">
             <a
-              href="tel:05555555555"
+              href="tel:+905372425535"
               className={`${config.ctaBg} text-white px-8 py-4 rounded-lg font-semibold text-base transition-colors flex items-center justify-center gap-2 ${config.pulse ? 'animate-pulse' : ''}`}
             >
               <Phone className="w-5 h-5" strokeWidth={1.5} />

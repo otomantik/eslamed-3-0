@@ -40,10 +40,10 @@ export function ProductShowcase() {
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4">
-            Ürünlerimiz
+            Ekipman kapsamı
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
-            Sağlık Bakanlığı onaylı medikal ekipmanlar
+            Solunum desteği, evde bakım ve ölçüm/takip kategorilerinde örnek ürünler
           </p>
         </div>
 
