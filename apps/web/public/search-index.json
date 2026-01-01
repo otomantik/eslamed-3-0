@@ -1,0 +1,28 @@
+[
+  {
+    "id": "kisiye-ozel-tabanlik",
+    "title": "Kişiye Özel Tabanlık",
+    "category": "Ortopedi",
+    "tags": ["ortopedi", "ortopedik", "tabanlık", "ayak", "postür", "yürüme"],
+    "synonyms": ["tabanlik", "tabanlk", "insol", "insole", "ortopedik tabanlık", "kişiye özel tabanlik"],
+    "whatsappText": "Merhaba, Kişiye Özel Tabanlık hakkında bilgi almak istiyorum."
+  },
+  {
+    "id": "tansiyon-aleti",
+    "title": "Tansiyon Aleti",
+    "category": "Tanı & Ölçüm",
+    "tags": ["tansiyon", "ölçüm", "takip"],
+    "synonyms": ["omron", "tansiyon olcer", "tansiyon ölçer", "kan basıncı", "kan basinci"],
+    "whatsappText": "Merhaba, tansiyon aleti hakkında bilgi almak istiyorum."
+  },
+  {
+    "id": "oksijen-konsantratoru",
+    "title": "Oksijen Konsantratörü",
+    "category": "Solunum",
+    "tags": ["solunum", "oksijen", "konsantratör", "kurulum"],
+    "synonyms": ["oksijen konsantratoru", "concentrator", "konsantrator", "oksijen cihazı", "oksijen cihazi"],
+    "whatsappText": "Merhaba, oksijen konsantratörü hakkında bilgi almak istiyorum."
+  }
+]
+
+
