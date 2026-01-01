@@ -34,17 +34,20 @@ export function ProductShowcase() {
   )}`;
   const categoryVisuals: Record<ProductTab, { src: string; alt: string; label: string }> = {
     respiratory: {
-      src: '/assets/ev-tipi-solunum-destek-unitesi-kurulumu.webp',
+      // Fallback image: replace with a real WebP when available under /public/assets/
+      src: '/assets/hero-bg.png',
       alt: 'Ev tipi solunum destek ünitesi kurulumu',
       label: 'Solunum destek grubunda kurulum ve teknik kullanım adımları',
     },
     diagnostic: {
-      src: '/assets/dijital-tibbi-olcum-cihazlari-teknik-destegi.webp',
+      // Fallback image: replace with a real WebP when available under /public/assets/
+      src: '/assets/hero-bg.png',
       alt: 'Dijital tıbbi ölçüm cihazları teknik desteği',
       label: 'Tanı ve ölçüm grubunda cihaz seçimi ve teknik destek süreci',
     },
     homecare: {
-      src: '/assets/evde-medikal-bakim-ekipmanlari.webp',
+      // Fallback image: replace with a real WebP when available under /public/assets/
+      src: '/assets/hero-bg.png',
       alt: 'Evde bakım ekipmanları uygunluk değerlendirmesi',
       label: 'Evde bakım grubunda ekipman uygunluğu ve kullanım koşulları',
     },
@@ -82,7 +85,8 @@ export function ProductShowcase() {
               {/* Left: image (full-bleed) */}
               <div className="relative w-full lg:w-1/2 h-64 sm:h-72 lg:h-auto lg:min-h-[420px]">
                 <Image
-                  src="/assets/kisiye-ozel-tabanlik-analizi.webp"
+                  // Fallback image: replace with /assets/kisiye-ozel-tabanlik-analizi.webp when uploaded.
+                  src="/assets/hero-bg.png"
                   alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed"
                   fill
                   className="object-cover"
