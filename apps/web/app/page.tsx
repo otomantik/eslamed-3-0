@@ -48,6 +48,50 @@ export default async function Page({
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
+      <script
+        type="application/ld+json"
+        // GBP-less trust infrastructure: no reviews/ratings/sameAs until verified integration exists.
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'MedicalBusiness',
+            '@id': 'https://eslamed.com/#business',
+            name: 'Eslamed',
+            url: 'https://eslamed.com/',
+            description:
+              'Eslamed, evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi sağlar (solunum desteği, evde bakım, ölçüm/takip). Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.',
+            address: {
+              '@type': 'PostalAddress',
+              streetAddress: 'Alemdağ Mah. Atabey Caddesi 19/BA',
+              addressLocality: 'Çekmeköy',
+              addressRegion: 'İstanbul',
+              addressCountry: 'TR',
+            },
+            telephone: '+905372425535',
+            areaServed: {
+              '@type': 'AdministrativeArea',
+              name: 'İstanbul',
+            },
+            availableService: [
+              {
+                '@type': 'Service',
+                name: 'Ekipman uygunluğu ve süreç yönlendirmesi',
+                serviceType: 'Guided medical equipment matching',
+              },
+              {
+                '@type': 'Service',
+                name: 'Kurulum ve güvenli kullanım adımları',
+                serviceType: 'Installation & usage guidance',
+              },
+              {
+                '@type': 'Service',
+                name: 'Teknik değerlendirme ve destek süreci',
+                serviceType: 'Technical support process',
+              },
+            ],
+          }),
+        }}
+      />
       {/* Global Emergency Alert Bar */}
       {isEmergency && <GlobalAlertBar />}
       

@@ -17,9 +17,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Eslamed | Evde Medikal Ekipman Yönlendirme",
+  title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
   description:
-    "Evde kullanım için medikal ekipman seçimi ve süreç yönlendirmesi. Oksijen cihazları bir örnektir; evde bakım ve ölçüm/takip ekipmanlarını da kapsar.",
+    "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek.",
 };
 
 export default function RootLayout({

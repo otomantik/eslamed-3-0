@@ -82,34 +82,11 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
     })),
   };
 
-  const medicalBusinessSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'MedicalBusiness',
-    name: 'Eslamed',
-    description: 'Evde kullanım için medikal ekipman seçimi ve süreç yönlendirmesi (solunum desteği, evde bakım, ölçüm ve takip). Tanı/tedavi kararı yerine geçmez.',
-    areaServed: {
-      '@type': 'City',
-      name: 'Istanbul'
-    },
-    telephone: '+905372425535',
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: 'Alemdağ Mah. Atabey Caddesi 19/BA',
-      addressLocality: 'Çekmeköy',
-      addressRegion: 'İstanbul',
-      addressCountry: 'TR'
-    }
-  };
-
   return (
     <section className="py-20 bg-white">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalBusinessSchema) }}
       />
 
       <div className="container-wide">
