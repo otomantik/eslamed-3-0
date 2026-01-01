@@ -15,7 +15,9 @@ import { normalizeSearchIndex } from '@/lib/search/index-loader';
 import { CatalogSkeleton } from '@/components/catalog/skeleton';
 import { VirtualizedCatalog } from './virtualized-catalog';
 import { useIntent } from '@/context/IntentContext';
-import { filterByCategoryAndMode, sortByIntentWeight } from '@/lib/search/intent-ranking';
+import { filterByCategoryAndMode, sortByIntentWeight, fuzzySearchWithIntent } from '@/lib/search/intent-ranking';
+import { GhostCard } from './ghost-card';
+import { EmptyState } from './empty-state';
 
 type FilterKey = 'kurulum' | 'kiralik' | 'vip';
 
@@ -133,8 +135,58 @@ export function CatalogExplorer() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, equipmentCategories.length, mode]);
 
-  // Intent-based filtering and ranking
+  // Intent-based filtering and ranking with fuzzy search
+  const [fuzzyResults, setFuzzyResults] = useState<SearchItem[]>([]);
+  const [isFuzzySearching, setIsFuzzySearching] = useState(false);
+
+  const query = params.get('query');
+
+  // Fuzzy search effect (async)
+  useEffect(() => {
+    if (!query || query.trim().length === 0 || !mode) {
+      setFuzzyResults([]);
+      setIsFuzzySearching(false);
+      return;
+    }
+
+    setIsFuzzySearching(true);
+    let cancelled = false;
+
+    (async () => {
+      const base = activeCategory?.items || [];
+      
+      // Apply filter
+      let filtered = activeFilter === 'all' 
+        ? base 
+        : base.filter((x) => (x.filters || []).includes(activeFilter));
+
+      // Apply category filter from URL
+      const categoryParam = params.get('category');
+      if (categoryParam && categoryParam !== 'all') {
+        filtered = filterByCategoryAndMode(filtered, categoryParam, mode);
+      }
+
+      // Perform fuzzy search
+      const results = await fuzzySearchWithIntent(filtered, query, mode);
+      
+      if (!cancelled) {
+        setFuzzyResults(results.map((r) => r.item));
+        setIsFuzzySearching(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [query, mode, activeCategory, activeFilter, params]);
+
+  // Intent-based filtering and ranking (non-fuzzy)
   const filteredItems = useMemo(() => {
+    // If fuzzy search is active, use fuzzy results
+    if (query && query.trim().length > 0 && mode && fuzzyResults.length > 0) {
+      return fuzzyResults;
+    }
+
     const base = activeCategory?.items || [];
     
     // Apply filter
@@ -148,21 +200,21 @@ export function CatalogExplorer() {
       filtered = filterByCategoryAndMode(filtered, categoryParam, mode);
     }
 
-    // Sort by intent weight if mode is active
+    // Sort by intent weight if mode is active (no query)
     if (mode) {
       filtered = sortByIntentWeight(filtered, mode);
     }
 
     return filtered;
-  }, [activeCategory, activeFilter, mode, params]);
+  }, [activeCategory, activeFilter, mode, params, query, fuzzyResults]);
 
   // Ghost loading on filter/category change (perceived performance)
   useEffect(() => {
-    if (loading) return;
+    if (loading || isFuzzySearching) return;
     setGhostLoading(true);
     const t = window.setTimeout(() => setGhostLoading(false), 220);
     return () => window.clearTimeout(t);
-  }, [activeCategoryId, activeFilter, loading, mode]);
+  }, [activeCategoryId, activeFilter, loading, mode, isFuzzySearching]);
 
   // Log no-result queries
   useEffect(() => {
@@ -271,27 +323,24 @@ export function CatalogExplorer() {
         {ghostLoading ? (
           <div className="p-6 space-y-3">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="h-[88px] rounded-2xl border border-slate-200 bg-slate-50 animate-pulse" />
+              <GhostCard key={i} />
             ))}
           </div>
         ) : filteredItems.length === 0 ? (
-          <div className="p-8 text-center">
-            <p className="text-slate-600 mb-4">Bu filtreler için sonuç bulunamadı.</p>
-            <button
-              onClick={() => {
-                setActiveCategoryId('all');
-                setActiveFilter('all');
-              }}
-              className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors"
-            >
-              Filtreleri Temizle
-            </button>
-          </div>
+          <EmptyState
+            query={params.get('query') || undefined}
+            category={activeCategoryId !== 'all' ? activeCategoryId : undefined}
+            onClearFilters={() => {
+              setActiveCategoryId('all');
+              setActiveFilter('all');
+            }}
+          />
         ) : (
           <VirtualizedCatalog
             items={filteredItems}
-            onItemClick={(item) => {
-              // Log item click for analytics
+            mode={mode}
+            onItemClick={(item, rank) => {
+              // Log item click with rank position for analytics
               fetch('/api/demand_logs', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -301,6 +350,8 @@ export function CatalogExplorer() {
                   itemTitle: item.title,
                   category: item.category,
                   mode: mode || null,
+                  rank: rank || null,
+                  query: params.get('query') || null,
                   timestamp: new Date().toISOString(),
                 }),
                 keepalive: true,

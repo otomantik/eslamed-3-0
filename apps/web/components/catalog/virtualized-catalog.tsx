@@ -3,10 +3,13 @@
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useRef } from 'react';
 import type { SearchItem } from '@/lib/search/search-config';
+import type { IntentMode } from '@/lib/intent/detector';
+import { ResultSnippet } from './result-snippet';
 
 interface VirtualizedCatalogProps {
   items: SearchItem[];
-  onItemClick?: (item: SearchItem) => void;
+  mode?: IntentMode;
+  onItemClick?: (item: SearchItem, rank: number) => void;
 }
 
 function makeWhatsAppLink(title: string) {
@@ -18,8 +21,9 @@ function makeWhatsAppLink(title: string) {
 /**
  * VirtualizedCatalog: High-performance rendering for 2500+ items
  * Uses @tanstack/react-virtual for 60fps scrolling
+ * Includes mode-specific result snippets
  */
-export function VirtualizedCatalog({ items, onItemClick }: VirtualizedCatalogProps) {
+export function VirtualizedCatalog({ items, mode, onItemClick }: VirtualizedCatalogProps) {
   const parentRef = useRef<HTMLDivElement>(null);
 
   const virtualizer = useVirtualizer({
@@ -44,6 +48,7 @@ export function VirtualizedCatalog({ items, onItemClick }: VirtualizedCatalogPro
       >
         {virtualizer.getVirtualItems().map((virtualRow) => {
           const item = items[virtualRow.index]!;
+          const rank = virtualRow.index + 1; // Rank position for analytics
           return (
             <div
               key={virtualRow.key}
@@ -71,6 +76,10 @@ export function VirtualizedCatalog({ items, onItemClick }: VirtualizedCatalogPro
                 <div className="min-w-0 flex-1">
                   <div className="text-base font-semibold text-slate-900 truncate">{item.title}</div>
                   <div className="text-sm text-slate-600 truncate">{item.category}</div>
+                  
+                  {/* Mode-specific result snippets */}
+                  {mode && <ResultSnippet item={item} mode={mode} rank={rank} />}
+                  
                   {item.tags && item.tags.length > 0 && (
                     <div className="mt-1 flex flex-wrap gap-1">
                       {item.tags.slice(0, 2).map((tag, idx) => (
@@ -87,7 +96,7 @@ export function VirtualizedCatalog({ items, onItemClick }: VirtualizedCatalogPro
 
                 <a
                   href={makeWhatsAppLink(item.title)}
-                  onClick={() => onItemClick?.(item)}
+                  onClick={() => onItemClick?.(item, rank)}
                   className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors flex-shrink-0"
                   aria-label={`${item.title} hakkında WhatsApp ile iletişime geç`}
                 >

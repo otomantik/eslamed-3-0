@@ -7,6 +7,12 @@ export interface IntentWeights {
   vip: number;
 }
 
+export interface FuzzySearchResult {
+  item: SearchItem;
+  score: number; // Combined score: (1 - fuseScore) * intentWeight
+  rank: number; // Final position after sorting
+}
+
 /**
  * Get intent weight for a specific mode
  */
@@ -67,5 +73,67 @@ export function filterByCategoryAndMode(
   }
 
   return filtered;
+}
+
+/**
+ * Fuzzy search with intent-aware ranking
+ * Combines Fuse.js score with intent_weight for final ordering
+ * Note: This function must be called from a client component (Fuse.js is client-only)
+ */
+export async function fuzzySearchWithIntent(
+  items: SearchItem[],
+  query: string,
+  mode: IntentMode
+): Promise<FuzzySearchResult[]> {
+  if (!query || query.trim().length === 0) {
+    // No query: just sort by intent weight
+    return items.map((item, index) => ({
+      item,
+      score: getIntentWeight(item, mode),
+      rank: index + 1,
+    }));
+  }
+
+  // Dynamic import Fuse.js (client-only)
+  const Fuse = (await import('fuse.js')).default;
+
+  // Initialize Fuse.js
+  const fuse = new Fuse(items, {
+    keys: ['title', 'category', 'tags', 'synonyms'],
+    threshold: 0.3,
+    minMatchCharLength: 2,
+    includeScore: true,
+    ignoreLocation: true,
+  });
+
+  // Perform fuzzy search
+  const fuseResults = fuse.search(query);
+
+  // Combine Fuse score with intent weight
+  const combinedResults: FuzzySearchResult[] = fuseResults.map((result, index) => {
+    const item = result.item;
+    const fuseScore = result.score || 1; // Lower is better in Fuse.js (0 = perfect match)
+    const intentWeight = getIntentWeight(item, mode);
+
+    // Final score: (1 - fuseScore) * intentWeight
+    // Higher score = better match
+    const combinedScore = (1 - fuseScore) * intentWeight;
+
+    return {
+      item,
+      score: combinedScore,
+      rank: index + 1, // Will be updated after sorting
+    };
+  });
+
+  // Sort by combined score (descending)
+  combinedResults.sort((a, b) => b.score - a.score);
+
+  // Update ranks after sorting
+  combinedResults.forEach((result, index) => {
+    result.rank = index + 1;
+  });
+
+  return combinedResults;
 }
 
