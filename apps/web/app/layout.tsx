@@ -17,9 +17,49 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://eslamed.com"),
   title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
   description:
     "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek.",
+  icons: {
+    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+    shortcut: [{ url: "/favicon.ico" }],
+  },
+  manifest: "/manifest.webmanifest",
+  appleWebApp: {
+    title: "ESLAMED",
+    capable: true,
+    statusBarStyle: "default",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://eslamed.com/",
+    siteName: "ESLAMED",
+    title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
+    description:
+      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "ESLAMED - Evde Medikal Ekipman Yönlendirme",
+      },
+    ],
+    locale: "tr_TR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
+    description:
+      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.",
+    images: ["/twitter-image"],
+  },
+};
+
+export const viewport = {
+  themeColor: "#2563EB",
 };
 
 export default function RootLayout({
@@ -45,10 +85,20 @@ export default function RootLayout({
       addressCountry: 'TR',
     },
     telephone: '+905372425535',
-    areaServed: {
-      '@type': 'AdministrativeArea',
-      name: 'İstanbul',
-    },
+    knowsAbout: ['ÜTS Kayıtlı Cihazlar', 'CE Belgeli Medikal Donanımlar', 'Evde Sağlık Ekipmanları'],
+    areaServed: [
+      { '@type': 'AdministrativeArea', name: 'İstanbul' },
+      { '@type': 'AdministrativeArea', name: 'Çekmeköy' },
+      { '@type': 'AdministrativeArea', name: 'Ümraniye' },
+      { '@type': 'AdministrativeArea', name: 'Üsküdar' },
+      { '@type': 'AdministrativeArea', name: 'Kadıköy' },
+      { '@type': 'AdministrativeArea', name: 'Ataşehir' },
+      { '@type': 'AdministrativeArea', name: 'Maltepe' },
+      { '@type': 'AdministrativeArea', name: 'Kartal' },
+      { '@type': 'AdministrativeArea', name: 'Pendik' },
+      { '@type': 'AdministrativeArea', name: 'Sancaktepe' },
+      { '@type': 'AdministrativeArea', name: 'Sultanbeyli' },
+    ],
     availableService: [
       {
         '@type': 'Service',
