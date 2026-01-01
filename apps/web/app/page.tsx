@@ -9,6 +9,7 @@ import { HyperLocalMap } from "@/components/sections/hyperlocal-map";
 import { LiveActivityTicker } from "@/components/sections/live-activity-ticker";
 import { FloatingRescueBar } from "@/components/sections/floating-rescue-bar";
 import { SmartFAQ } from "@/components/sections/smart-faq";
+import { TrustSafetyBridge } from "@/components/sections/trust-safety-bridge";
 import { Footer } from "@/components/sections/footer";
 import { Suspense } from "react";
 import { detectIntent } from "@/lib/intent/detector";
@@ -48,7 +49,6 @@ export default async function Page({
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      <h1 className="sr-only">Evde Medikal Ekipman Yönlendirme ve Süreç Yönetimi</h1>
       {/* Global Emergency Alert Bar */}
       {isEmergency && <GlobalAlertBar />}
       
@@ -62,17 +62,6 @@ export default async function Page({
 
       {/* Dynamic Hero */}
       <DynamicHero intent={intentResult.mode} district={intentResult.district} />
-
-      {/* Medical disclaimer (visible legal boundary, non-promotional) */}
-      <aside role="note" className="bg-slate-50">
-        <div className="container-wide">
-          <div className="mx-auto max-w-3xl border border-slate-200 bg-white/80 backdrop-blur-sm rounded-xl px-5 py-4">
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-              Bu sayfa tıbbi tanı veya tedavi amacı taşımaz. Tanı, tedavi ve cihaz kullanımına ilişkin klinik kararlar hekimlere aittir. Biz; ekipman uygunluğu, ev tipi cihaz kurulumu ve güvenli kullanım adımlarında süreç yönlendirmesi sağlar, teknik değerlendirme sürecini netleştiririz.
-            </p>
-          </div>
-        </div>
-      </aside>
 
       {/* Brand Trust Ticker */}
       <BrandTrustTicker />
@@ -90,6 +79,9 @@ export default async function Page({
       <Suspense fallback={<MapSkeleton />}>
         <HyperLocalMap district={intentResult.district || 'Istanbul'} />
       </Suspense>
+
+      {/* Trust & Safety Bridge (before FAQ) */}
+      <TrustSafetyBridge />
 
       {/* Smart FAQ */}
       <SmartFAQ intent={intentResult.mode} />
