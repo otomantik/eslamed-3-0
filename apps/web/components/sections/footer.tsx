@@ -62,17 +62,17 @@ export function Footer() {
                 <div className="font-medium text-slate-800">Kurumsal</div>
                 <ul className="mt-2 space-y-2">
                   <li>
-                    <a href="/isletme-belgeleri" className="hover:underline underline-offset-4">
+                    <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       İşletme Belgeleri
                     </a>
                   </li>
                   <li>
-                    <a href="/kvkk" className="hover:underline underline-offset-4">
+                    <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       KVKK
                     </a>
                   </li>
                   <li>
-                    <a href="/gizlilik" className="hover:underline underline-offset-4">
+                    <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       Gizlilik
                     </a>
                   </li>
@@ -82,22 +82,22 @@ export function Footer() {
                 <div className="font-medium text-slate-800">Destek</div>
                 <ul className="mt-2 space-y-2">
                   <li>
-                    <a href="/destek" className="hover:underline underline-offset-4">
+                    <a href="/destek" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       Destek & Sınırlar
                     </a>
                   </li>
                   <li>
-                    <a href="/iletisim" className="hover:underline underline-offset-4">
+                    <a href="/iletisim" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       İletişim
                     </a>
                   </li>
                   <li>
-                    <a href="/rehber/evde-bakim-ekipmanlari" className="hover:underline underline-offset-4">
+                    <a href="/rehber/evde-bakim-ekipmanlari" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       Evde Bakım Rehberi
                     </a>
                   </li>
                   <li>
-                    <a href="/ekipmanlar" className="hover:underline underline-offset-4">
+                    <a href="/ekipmanlar" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
                       Tüm Ekipmanlar
                     </a>
                   </li>
@@ -110,15 +110,15 @@ export function Footer() {
         <div className="mt-10 flex flex-col gap-2 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
           <div>© {new Date().getFullYear()} Eslamed</div>
           <div className="flex gap-3">
-            <a href="/kvkk" className="hover:underline underline-offset-4">
+            <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
               KVKK
             </a>
             <span aria-hidden="true">·</span>
-            <a href="/gizlilik" className="hover:underline underline-offset-4">
+            <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
               Gizlilik
             </a>
             <span aria-hidden="true">·</span>
-            <a href="/isletme-belgeleri" className="hover:underline underline-offset-4">
+            <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
               İşletme Belgeleri
             </a>
           </div>

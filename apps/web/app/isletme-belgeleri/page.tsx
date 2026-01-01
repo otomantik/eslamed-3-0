@@ -123,7 +123,7 @@ export default function IsletmeBelgeleriPage() {
 
                     <a
                       href="#dogrulama"
-                      className="min-h-[44px] inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
+                      className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
                     >
                       <HelpCircle className="w-4 h-4" strokeWidth={1.5} />
                       Nasıl doğrulanır?

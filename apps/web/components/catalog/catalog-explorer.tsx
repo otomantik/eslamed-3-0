@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import type { SearchItem } from '@/lib/search/search-config';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
+import { CatalogSkeleton } from '@/components/catalog/skeleton';
 
 type FilterKey = 'kurulum' | 'kiralik' | 'vip';
 
@@ -123,17 +124,7 @@ export function CatalogExplorer() {
   const paddingBottom = Math.max(0, (totalRows - endIndex) * rowHeight);
 
   if (loading) {
-    return (
-      <div className="rounded-3xl border border-slate-200 bg-white p-8">
-        <div className="h-6 w-56 bg-slate-200 rounded animate-pulse" />
-        <div className="mt-4 h-4 w-80 bg-slate-200 rounded animate-pulse" />
-        <div className="mt-8 grid grid-cols-2 lg:grid-cols-4 gap-4">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className="h-24 rounded-2xl border border-slate-200 bg-slate-50 animate-pulse" />
-          ))}
-        </div>
-      </div>
-    );
+    return <CatalogSkeleton />;
   }
 
   return (
@@ -198,7 +189,7 @@ export function CatalogExplorer() {
                 key={f.id}
                 type="button"
                 onClick={() => setActiveFilter(f.id)}
-                className={`min-h-[44px] rounded-xl border px-5 text-sm font-semibold transition-colors ${
+                className={`min-h-[48px] rounded-xl border px-5 text-sm font-semibold transition-colors ${
                   active ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-900 hover:bg-slate-50'
                 }`}
               >
@@ -235,7 +226,7 @@ export function CatalogExplorer() {
                   </div>
                   <a
                     href={makeWhatsAppLink(it.title)}
-                    className="min-h-[44px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors flex-shrink-0"
+                    className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-5 text-sm font-semibold hover:bg-slate-800 transition-colors flex-shrink-0"
                   >
                     WhatsApp
                   </a>

@@ -137,13 +137,13 @@ export default function TabanlikPage() {
                     href={`https://wa.me/905372425535?text=${encodeURIComponent(
                       'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
                     )}`}
-                    className="min-h-[44px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
+                    className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
                   >
                     Randevu Al / Detaylı Bilgi
                   </a>
                   <a
                     href="tel:+905372425535"
-                    className="min-h-[44px] inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
+                    className="min-h-[48px] inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
                   >
                     Telefonla Sor
                   </a>
@@ -157,7 +157,7 @@ export default function TabanlikPage() {
                   href={`https://wa.me/905372425535?text=${encodeURIComponent(
                     'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
                   )}`}
-                  className="mt-6 min-h-[44px] inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary text-white px-6 py-3.5 text-base font-semibold hover:opacity-95 transition-opacity"
+                  className="mt-6 min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary text-white px-6 py-3.5 text-base font-semibold hover:opacity-95 transition-opacity"
                 >
                   <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
                   WhatsApp üzerinden Uzmanımıza Sorun
@@ -302,7 +302,7 @@ export default function TabanlikPage() {
               href={`https://wa.me/905372425535?text=${encodeURIComponent(
                 'Merhaba, kişiye özel tabanlık kullanımı ve bakım süreci hakkında soru sormak istiyorum.'
               )}`}
-              className="mt-8 min-h-[44px] inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
+              className="mt-8 min-h-[48px] inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
             >
               <HelpCircle className="w-5 h-5" strokeWidth={1.5} />
               WhatsApp üzerinden Uzmanımıza Sorun
@@ -342,7 +342,7 @@ export default function TabanlikPage() {
             <div className="mt-6">
               <a
                 href="#dogrulama"
-                className="inline-flex min-h-[44px] items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
+                className="inline-flex min-h-[48px] items-center justify-center rounded-xl border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
               >
                 Nasıl doğrulanır?
               </a>

@@ -10,6 +10,7 @@ import {
 } from '@/lib/search/search-config';
 import { logSearchTelemetry } from '@/lib/search/search-telemetry';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
+import { HelpCard } from '@/components/search/help-card';
 
 type FuseLike = {
   search: (q: string) => Array<{ item: SearchItem; score?: number }>;
@@ -21,6 +22,56 @@ type OpenSearchDetail = {
 
 function buildWhatsAppUrl(text: string) {
   return `https://wa.me/905372425535?text=${encodeURIComponent(text)}`;
+}
+
+function foldTR(s: string) {
+  return (s || '')
+    .toLowerCase()
+    .replaceAll('ı', 'i')
+    .replaceAll('İ', 'i')
+    .replaceAll('ğ', 'g')
+    .replaceAll('ş', 's')
+    .replaceAll('ö', 'o')
+    .replaceAll('ü', 'u')
+    .replaceAll('ç', 'c');
+}
+
+function foldWithMap(original: string) {
+  const map: number[] = [];
+  let folded = '';
+  for (let i = 0; i < (original || '').length; i++) {
+    const ch = original[i]!;
+    const f = foldTR(ch);
+    folded += f;
+    // 1:1 mapping (all folds above are single chars)
+    map.push(i);
+  }
+  return { folded, map };
+}
+
+function HighlightedText({ text, query }: { text: string; query: string }) {
+  const tokens = normalizeQuery(query).split(' ').filter((t) => t.length >= 2);
+  if (tokens.length === 0) return <>{text}</>;
+
+  const { folded, map } = foldWithMap(text);
+  for (const tok of tokens) {
+    const idx = folded.indexOf(tok);
+    if (idx >= 0) {
+      const startOrig = map[idx] ?? 0;
+      const endOrig = (map[idx + tok.length - 1] ?? startOrig) + 1;
+      const before = text.slice(0, startOrig);
+      const mid = text.slice(startOrig, endOrig);
+      const after = text.slice(endOrig);
+      return (
+        <>
+          {before}
+          <mark className="rounded bg-amber-100 px-1 text-slate-900">{mid}</mark>
+          {after}
+        </>
+      );
+    }
+  }
+  return <>{text}</>;
 }
 
 async function loadIndex(): Promise<{ items: SearchItem[]; totalProducts: number }> {
@@ -36,6 +87,7 @@ export function SearchModal() {
   const [totalProducts, setTotalProducts] = useState<number>(2500);
   const [fuse, setFuse] = useState<FuseLike | null>(null);
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const lastDemandLoggedRef = useRef<string>('');
 
   // If navbar triggered search before this chunk mounted, consume pending request.
   useEffect(() => {
@@ -146,6 +198,24 @@ export function SearchModal() {
     return () => window.clearTimeout(t);
   }, [q, results.length, open]);
 
+  // Demand logging: record 0-result terms (mock endpoint for now)
+  useEffect(() => {
+    if (!open) return;
+    const nq = normalizeQuery(q);
+    if (!nq) return;
+    if (!fuse) return;
+    if (results.length !== 0) return;
+    if (lastDemandLoggedRef.current === nq) return;
+    lastDemandLoggedRef.current = nq;
+
+    fetch('/api/demand_logs', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ term: nq, source: 'search-modal', ts: Date.now() }),
+      keepalive: true,
+    }).catch(() => {});
+  }, [open, q, results.length, fuse]);
+
   if (!open) return null;
 
   const nq = normalizeQuery(q);
@@ -176,7 +246,7 @@ export function SearchModal() {
           />
           <button
             onClick={() => setOpen(false)}
-            className="w-9 h-9 rounded-lg border border-slate-200 hover:bg-slate-50 flex items-center justify-center"
+            className="w-12 h-12 rounded-xl border border-slate-200 hover:bg-slate-50 flex items-center justify-center"
             aria-label="Kapat"
           >
             <X className="w-4 h-4 text-slate-600" strokeWidth={1.5} />
@@ -190,10 +260,12 @@ export function SearchModal() {
         <div className="max-h-[60vh] overflow-auto p-2">
           {showEmpty && (
             <div className="p-4 text-sm text-slate-600">
-              Sonuç bulunamadı. İsterseniz WhatsApp üzerinden sorabilirsiniz.
+              <div className="text-sm text-slate-700" style={{ lineHeight: 1.8 }}>
+                Sonuç bulunamadı. İsterseniz WhatsApp üzerinden sorabilirsiniz.
+              </div>
               <div className="mt-3">
                 <a
-                  className="inline-flex items-center justify-center gap-2 rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50"
+                  className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl border border-slate-200 px-4 text-sm text-slate-700 hover:bg-slate-50"
                   href={buildWhatsAppUrl(`Merhaba, \"${q}\" hakkında bilgi almak istiyorum.`)}
                   target="_blank"
                   rel="noreferrer"
@@ -208,6 +280,9 @@ export function SearchModal() {
                   <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
                   WhatsApp ile sor
                 </a>
+              </div>
+              <div className="mt-4">
+                <HelpCard term={q} />
               </div>
             </div>
           )}
@@ -225,12 +300,14 @@ export function SearchModal() {
                   guides.map((it) => (
                     <div key={it.id} className="p-3 rounded-xl hover:bg-slate-50 flex items-center justify-between gap-4">
                       <div className="min-w-0">
-                        <div className="text-sm font-semibold text-slate-900 truncate">{it.title}</div>
+                        <div className="text-sm font-semibold text-slate-900 truncate">
+                          <HighlightedText text={it.title} query={q} />
+                        </div>
                         <div className="text-xs text-slate-500">{it.category}</div>
                       </div>
                       <a
                         href={it.href || '#'}
-                        className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
+                        className="min-h-[48px] rounded-xl border border-slate-200 px-4 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
                         onClick={() =>
                           logSearchTelemetry({
                             term: nq,
@@ -265,7 +342,7 @@ export function SearchModal() {
                       <div key={it.id} className="p-3 rounded-xl hover:bg-slate-50 flex items-center justify-between gap-4">
                         <div className="min-w-0">
                           <div className="text-sm font-semibold text-slate-900 truncate">
-                            {it.title}{' '}
+                            <HighlightedText text={it.title} query={q} />{' '}
                             {vip && (
                               <span className="ml-2 text-[10px] uppercase tracking-wider text-slate-500 border border-slate-200 rounded px-1.5 py-0.5 align-middle">
                                 Öncelikli
@@ -283,7 +360,7 @@ export function SearchModal() {
                           {hasPage ? (
                             <a
                               href={it.href}
-                              className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
+                              className="min-h-[48px] rounded-xl border border-slate-200 px-4 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
                               onClick={() =>
                                 logSearchTelemetry({
                                   term: nq,
@@ -301,7 +378,7 @@ export function SearchModal() {
                               href={buildWhatsAppUrl(it.whatsappText)}
                               target="_blank"
                               rel="noreferrer"
-                              className="rounded-lg border border-slate-200 px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
+                              className="min-h-[48px] rounded-xl border border-slate-200 px-4 text-sm text-slate-700 hover:bg-slate-50 inline-flex items-center gap-2"
                               onClick={() =>
                                 logSearchTelemetry({
                                   term: nq,

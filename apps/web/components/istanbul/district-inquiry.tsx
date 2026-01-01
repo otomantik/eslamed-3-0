@@ -34,7 +34,7 @@ export function DistrictInquiry({
           id="district"
           value={district}
           onChange={(e) => setDistrict(e.target.value)}
-          className="min-h-[44px] rounded-xl border border-slate-200 bg-white px-4 text-base text-slate-900"
+          className="min-h-[48px] rounded-xl border border-slate-200 bg-white px-4 text-base text-slate-900"
         >
           <optgroup label="Anadolu Yakası">
             {options.Anadolu.map((d) => (
@@ -50,7 +50,7 @@ export function DistrictInquiry({
 
         <a
           href={href}
-          className="min-h-[44px] inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 text-base font-semibold hover:bg-slate-800 transition-colors"
+          className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 text-base font-semibold hover:bg-slate-800 transition-colors"
         >
           <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
           Bölgem için servis süresi öğrenin

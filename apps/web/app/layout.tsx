@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Inter } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
+import { StickySupport } from "@/components/ui/sticky-support";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -133,6 +134,7 @@ export default function RootLayout({
           <Tracker />
         </Suspense>
         {children}
+        <StickySupport />
       </body>
     </html>
   );
