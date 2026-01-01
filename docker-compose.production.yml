@@ -105,6 +105,7 @@ networks:
   eslamed-network:
     name: eslamed-network
     driver: bridge
+    external: false
 
 volumes:
   clickhouse_data:
