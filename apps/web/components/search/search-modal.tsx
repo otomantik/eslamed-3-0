@@ -270,6 +270,41 @@ export function SearchModal() {
   const guides = results.filter((r) => r.kind === 'guide');
   const equipment = results.filter((r) => (r.kind || 'equipment') === 'equipment' || r.kind === 'vip');
 
+  // Top searches based on mode
+  const topSearches = useMemo(() => {
+    if (mode === 'PRICE_SENSITIVE') {
+      return [
+        { label: 'Kiralama Fiyatları', query: 'kiralama fiyat' },
+        { label: 'Oksijen Tüpü Fiyat', query: 'oksijen tüpü fiyat' },
+        { label: 'Cihaz Kiralama', query: 'cihaz kiralama' },
+      ];
+    } else if (mode === 'CRITICAL_EMERGENCY') {
+      return [
+        { label: 'Acil Oksijen Desteği', query: 'acil oksijen' },
+        { label: '7/24 Teknik Destek', query: 'teknik destek' },
+        { label: 'Acil Servis', query: 'acil servis' },
+      ];
+    } else if (mode === 'TRUST_SEEKER') {
+      return [
+        { label: 'Kişiye Özel Tabanlık', query: 'tabanlık' },
+        { label: 'ÜTS Kayıtlı Cihazlar', query: 'üts kayıtlı' },
+        { label: 'Güvenilir Hizmetler', query: 'güvenilir' },
+      ];
+    } else if (mode === 'COMMERCIAL_RENTAL') {
+      return [
+        { label: 'Cihaz Kiralama Süreci', query: 'kiralama süreci' },
+        { label: 'Sözleşme ve Kurulum', query: 'sözleşme kurulum' },
+        { label: 'İşletme Hizmetleri', query: 'işletme' },
+      ];
+    } else {
+      return [
+        { label: 'Oksijen Konsantratörü', query: 'oksijen konsantratörü' },
+        { label: 'Tansiyon Ölçüm Cihazı', query: 'tansiyon ölçüm' },
+        { label: 'Evde Bakım Ekipmanları', query: 'evde bakım' },
+      ];
+    }
+  }, [mode]);
+
   return (
     <div
       role="dialog"
@@ -303,6 +338,24 @@ export function SearchModal() {
         <div className="px-4 py-3 border-b border-slate-200 text-xs text-slate-500">
           Şu an {totalProducts.toLocaleString('tr-TR')} ürün içinde arıyorsunuz
         </div>
+
+        {/* Top Searches - Show when query is empty */}
+        {!nq && (
+          <div className="px-4 py-3 border-b border-slate-200">
+            <div className="text-xs font-semibold text-slate-700 mb-2">Popüler Aramalar</div>
+            <div className="flex flex-wrap gap-2">
+              {topSearches.map((search, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setQ(search.query)}
+                  className="px-3 py-1.5 text-xs rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+                >
+                  {search.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="max-h-[60vh] overflow-auto p-2">
           {showEmpty && (

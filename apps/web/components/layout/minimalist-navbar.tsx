@@ -10,7 +10,7 @@ import { Home, Phone } from 'lucide-react';
  */
 export function MinimalistNavbar() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-200 shadow-sm">
+    <nav className="fixed top-12 left-0 right-0 z-50 bg-white/95 backdrop-blur-sm border-b border-red-200 shadow-sm h-16">
       <div className="container-wide">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}

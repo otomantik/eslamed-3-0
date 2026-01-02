@@ -27,7 +27,7 @@ export function BrandTrustTicker() {
           Güvenilir medikal markalarla çalışıyoruz
         </p>
         <div className="relative overflow-hidden">
-          <div className="flex items-center gap-12 animate-marquee" style={{ animationDuration: '40s' }}>
+          <div className="flex items-center gap-12 animate-marquee" style={{ animationDuration: '40s', willChange: 'transform' }}>
             {brands.map((brand, index) => (
               <div
                 key={index}

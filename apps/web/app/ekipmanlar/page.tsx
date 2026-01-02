@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { CatalogExplorer } from '@/components/catalog/catalog-explorer';
 import { CatalogSkeleton } from '@/components/catalog/skeleton';
 import { CatalogSchemaGenerator } from '@/components/catalog/catalog-schema-generator';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'Tüm Ekipmanlar | ESLAMED',
@@ -14,7 +15,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/ekipmanlar' },
 };
 
-export default function EkipmanlarPage() {
+export default async function EkipmanlarPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/ekipmanlar' });
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
       {/* Dynamic JSON-LD schemas generated client-side */}
@@ -22,7 +29,7 @@ export default function EkipmanlarPage() {
         <CatalogSchemaGenerator />
       </Suspense>
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

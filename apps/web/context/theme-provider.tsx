@@ -34,11 +34,11 @@ export function IntentThemeProvider({ children }: IntentThemeProviderProps) {
         break;
       }
       case 'TRUST_SEEKER': {
-        // VIP: Gold + Luxury Dark
-        root.style.setProperty('--primary-brand', '#B8860B'); // Gold
-        root.style.setProperty('--bg-surface', '#111827'); // Luxury Dark
-        root.style.setProperty('--text-primary', '#F9FAFB'); // Light text
-        root.style.setProperty('--accent-vip', '#B8860B');
+        // VIP: Blue (Medical Trust) - Changed from Gold
+        root.style.setProperty('--primary-brand', '#2563EB'); // Blue-600
+        root.style.setProperty('--bg-surface', '#EFF6FF'); // Blue-50
+        root.style.setProperty('--text-primary', '#1E293B'); // Slate-800
+        root.style.setProperty('--accent-vip', '#2563EB'); // Blue-600 (was #B8860B)
         break;
       }
       case 'INFORMATION_SEEKER': {

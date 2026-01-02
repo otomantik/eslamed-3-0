@@ -37,7 +37,7 @@
   @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }
 
-/* Marquee Animation for Live Ticker */
+/* Marquee Animation for Live Ticker - Infinite seamless loop */
 @keyframes marquee {
   0% {
     transform: translateX(0);
@@ -45,6 +45,14 @@
   100% {
     transform: translateX(-50%);
   }
+}
+
+/* Ensure marquee container doesn't break layout */
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marquee 20s linear infinite;
 }
 
 /* Fade-in animation for FAB tooltip */
@@ -83,10 +91,39 @@
   animation: heartbeat 1.5s ease-in-out infinite;
 }
 
+/* Fade-in-up animation for section reveals */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.4s ease-out forwards;
+  opacity: 0;
+}
+
+/* Intersection Observer will add this class */
+.section-visible {
+  opacity: 1;
+}
+
 /* Smooth scrolling */
 html {
   scroll-behavior: smooth;
 }
+
+/* Safe area support for mobile devices */
+body {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Z-index management: Content (0) < BottomNav (40) < WhatsApp (50) < Modals (60) */
 
 /* Aria-live region for mode announcements */
 #aria-live-announcements {

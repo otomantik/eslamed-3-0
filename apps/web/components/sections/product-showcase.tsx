@@ -35,20 +35,20 @@ export function ProductShowcase() {
   const categoryVisuals: Record<ProductTab, { src: string; alt: string; label: string }> = {
     respiratory: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.png',
-      alt: 'Ev tipi solunum destek ünitesi kurulumu',
+      src: '/assets/hero-bg.webp',
+      alt: 'Ev tipi solunum destek ünitesi kurulumu - Oksijen konsantratörü teknik desteği İstanbul',
       label: 'Solunum destek grubunda kurulum ve teknik kullanım adımları',
     },
     diagnostic: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.png',
-      alt: 'Dijital tıbbi ölçüm cihazları teknik desteği',
+      src: '/assets/hero-bg.webp',
+      alt: 'Dijital tıbbi ölçüm cihazları teknik desteği - Tansiyon ölçüm cihazı kurulumu Eslamed',
       label: 'Tanı ve ölçüm grubunda cihaz seçimi ve teknik destek süreci',
     },
     homecare: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.png',
-      alt: 'Evde bakım ekipmanları uygunluk değerlendirmesi',
+      src: '/assets/hero-bg.webp',
+      alt: 'Evde bakım ekipmanları uygunluk değerlendirmesi - Hasta yatağı ve mobilite ekipmanları İstanbul',
       label: 'Evde bakım grubunda ekipman uygunluğu ve kullanım koşulları',
     },
   };
@@ -87,8 +87,8 @@ export function ProductShowcase() {
               <div className="relative w-full lg:w-1/2 h-64 sm:h-72 lg:h-auto lg:min-h-[420px]">
                 <Image
                   // Fallback image: replace with /assets/kisiye-ozel-tabanlik-analizi.webp when uploaded.
-                  src="/assets/hero-bg.png"
-                  alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed"
+                  src="/assets/hero-bg.webp"
+                  alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed Çekmeköy"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -113,7 +113,7 @@ export function ProductShowcase() {
                     >
                       Kişiye Özel Tabanlık Analizi &amp; Çözümleri
                     </h2>
-                    <p className="mt-3 text-slate-600 leading-relaxed">
+                    <p className="mt-3 text-slate-600" style={{ lineHeight: 1.8 }}>
                       Yürüme analizi ve biomekanik ölçümlerle size özel tabanlık çözümleri sunuyoruz. Ayak sağlığınız için uzman desteği alın.
                     </p>
                   </div>
@@ -158,7 +158,8 @@ export function ProductShowcase() {
           {filteredProducts.map((product) => (
             <article
               key={product.id}
-              className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-lg transition-shadow"
+              className="bg-white border border-slate-200 rounded-xl p-6 hover:shadow-md hover:-translate-y-0.5 transition-all hover:border-slate-300"
+              style={{ willChange: 'transform' }}
             >
               {/* Category visual (SEO/accessibility-ready). Image files can be added later without code changes. */}
               <div className="aspect-square bg-slate-100 rounded-lg mb-4 overflow-hidden relative">
@@ -178,7 +179,7 @@ export function ProductShowcase() {
               </div>
 
               {/* Product Name */}
-              <h3 className="font-semibold text-slate-900 mb-4 text-sm leading-relaxed">
+              <h3 className="font-semibold text-slate-900 mb-4 text-sm" style={{ lineHeight: 1.8 }}>
                 {product.name}
               </h3>
 

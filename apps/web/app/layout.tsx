@@ -4,6 +4,7 @@ import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
 import { MobileFAB } from "@/components/ui/mobile-fab";
+import { BottomNav } from "@/components/ui/bottom-nav";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 import { IntentThemeProvider } from "@/context/theme-provider";
 
@@ -94,6 +95,8 @@ export default function RootLayout({
       addressCountry: 'TR',
     },
     telephone: '+905372425535',
+    openingHours: 'Mo-Su 00:00-24:00',
+    priceRange: '$$',
     knowsAbout: ['ÜTS Kayıtlı Cihazlar', 'CE Belgeli Medikal Donanımlar', 'Evde Sağlık Ekipmanları'],
     areaServed: [
       { '@type': 'AdministrativeArea', name: 'İstanbul' },
@@ -216,6 +219,7 @@ export default function RootLayout({
           <IntentProviderWrapper>
             <IntentThemeProvider>
               {children}
+              <BottomNav />
               <MobileFAB />
             </IntentThemeProvider>
           </IntentProviderWrapper>

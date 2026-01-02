@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { MapPinned, MessageCircle, Phone, Navigation } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'İletişim | ESLAMED',
@@ -12,7 +13,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/iletisim' },
 };
 
-export default function IletisimPage() {
+export default async function IletisimPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/iletisim' });
   const lat = 41.036201;
   const lng = 29.1826;
 
@@ -49,7 +56,7 @@ export default function IletisimPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

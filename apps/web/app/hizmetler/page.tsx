@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import { Wrench, Droplets, Recycle, ShoppingBag, BadgePercent, Clock, ShieldCheck, Truck, Users } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { ServiceCard } from '@/components/services/service-card';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'Hizmetler | ESLAMED',
@@ -20,10 +21,17 @@ const COLORS = {
   orange: '#F97316',
 };
 
-export default function HizmetlerHubPage() {
+export default async function HizmetlerHubPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/hizmetler' });
+
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

@@ -1,84 +1,108 @@
 'use client';
 
-import { Calendar, Home, UserCheck, Sparkles } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, FileText, Award } from 'lucide-react';
 import Link from 'next/link';
 
 /**
- * PremiumConciergeUI: VIP mode - Serif fonts, premium copy, home visit focus
+ * PremiumConciergeUI: VIP mode - Trust indicators and premium content
+ * Hero is now outside, this only wraps content sections
  */
 export function PremiumConciergeUI({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-surface)', color: 'var(--text-primary)' }}>
-      {/* Premium Header */}
-      <header className="border-b" style={{ borderColor: 'rgba(184, 134, 11, 0.2)' }}>
-        <div className="container-wide py-6">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold" style={{ fontFamily: 'var(--font-premium)', color: 'var(--accent-vip)' }}>
-                ESLAMED VIP Danışmanlık
-              </h1>
-              <p className="text-sm mt-1 opacity-80">Kişiye Özel Medikal Çözümler</p>
-            </div>
-            <Link
-              href="/tabanlik"
-              className="min-h-[48px] inline-flex items-center gap-2 px-4 py-2 rounded-lg border"
-              style={{ borderColor: 'var(--accent-vip)', color: 'var(--accent-vip)' }}
-            >
-              <Sparkles className="w-5 h-5" strokeWidth={1.5} />
-              <span>VIP Hizmetler</span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
-      {/* Premium CTA Section */}
-      <section className="py-12">
+    <div className="bg-blue-50">
+      {/* Trust Indicators Section - Mode-specific */}
+      <section className="py-16 bg-white border-b border-blue-100">
         <div className="container-wide">
-          <div className="bg-gradient-to-br from-amber-900/20 to-amber-800/10 rounded-3xl p-8 border" style={{ borderColor: 'var(--accent-vip)' }}>
-            <div className="max-w-2xl">
-              <h2 className="text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-premium)', color: 'var(--accent-vip)' }}>
-                Özel Danışmanlık Randevusu Planla
-              </h2>
-              <p className="text-lg mb-6 opacity-90" style={{ lineHeight: 1.8 }}>
-                Evde ziyaret, yürüme analizi ve kişiye özel çözümler için uzman ekibimizle iletişime geçin.
-              </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-                <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                  <Home className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: 'var(--accent-vip)' }} strokeWidth={1.5} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Evde Ziyaret</h3>
-                    <p className="text-sm opacity-80">Çekmeköy merkezli, İstanbul genelinde evde hizmet</p>
-                  </div>
-                </div>
-                <div className="flex items-start gap-3 p-4 bg-white/5 rounded-xl">
-                  <UserCheck className="w-6 h-6 flex-shrink-0 mt-1" style={{ color: 'var(--accent-vip)' }} strokeWidth={1.5} />
-                  <div>
-                    <h3 className="font-semibold mb-1">Yürüme Analizi</h3>
-                    <p className="text-sm opacity-80">Bilgisayarlı analiz ile kişiye özel tabanlık</p>
-                  </div>
-                </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <ShieldCheck className="w-6 h-6 text-white" strokeWidth={1.5} />
               </div>
-
-              <a
-                href="https://wa.me/905372425535?text=VIP%20danışmanlık%20randevusu%20almak%20istiyorum"
-                className="min-h-[56px] inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-lg transition-all hover:scale-105"
-                style={{ backgroundColor: 'var(--accent-vip)', color: '#111827' }}
-                aria-label="VIP danışmanlık randevusu planla"
-              >
-                <Calendar className="w-6 h-6" strokeWidth={2} />
-                <span>Randevu Planla</span>
-              </a>
+              <div>
+                <h3 className="font-semibold text-slate-900 mb-1">ÜTS Kayıtlı</h3>
+                <p className="text-sm text-slate-600">T.C. Sağlık Bakanlığı kayıtlı</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <CheckCircle2 className="w-6 h-6 text-white" strokeWidth={1.5} />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 mb-1">CE Belgeli</h3>
+                <p className="text-sm text-slate-600">Avrupa standartlarına uygun</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <Award className="w-6 h-6 text-white" strokeWidth={1.5} />
+              </div>
+              <div>
+                <h3 className="font-semibold text-slate-900 mb-1">15+ Yıl Deneyim</h3>
+                <p className="text-sm text-slate-600">Sektörde güvenilir geçmiş</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
+              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                <FileText className="w-6 h-6 text-white" strokeWidth={1.5} />
+              </div>
+              <div>
+                <Link href="/isletme-belgeleri" className="font-semibold text-slate-900 mb-1 hover:text-blue-600 transition-colors block">
+                  İşletme Belgeleri
+                </Link>
+                <p className="text-sm text-slate-600">Tüm belgeleri görüntüle</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Main Content with Premium Typography */}
-      <div className="container-wide pb-12">
-        <div style={{ fontFamily: 'var(--font-sans)' }}>
-          {children}
+      {/* VIP Consultation Card - Experimental floating card */}
+      <section className="py-12 -mt-8 relative z-10">
+        <div className="container-wide">
+          <div className="max-w-4xl mx-auto">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-3xl p-8 md:p-12 shadow-2xl transform hover:scale-[1.01] transition-transform duration-300">
+              <div className="grid md:grid-cols-2 gap-8 items-center">
+                <div>
+                  <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+                    Özel Danışmanlık Randevusu
+                  </h2>
+                  <p className="text-blue-50 text-lg mb-6 leading-relaxed">
+                    Evde ziyaret, yürüme analizi ve kişiye özel çözümler için uzman ekibimizle iletişime geçin.
+                  </p>
+                  <a
+                    href="https://wa.me/905372425535?text=VIP%20danışmanlık%20randevusu%20almak%20istiyorum"
+                    className="inline-flex items-center gap-3 px-8 py-4 bg-white text-blue-600 rounded-xl font-semibold text-lg hover:bg-blue-50 transition-colors shadow-lg"
+                  >
+                    <span>Randevu Planla</span>
+                  </a>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="text-2xl font-bold text-white mb-1">2</div>
+                    <div className="text-blue-100 text-sm">Tam Yetkili Mobil Ekip</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="text-2xl font-bold text-white mb-1">24/7</div>
+                    <div className="text-blue-100 text-sm">Destek Hattı</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="text-2xl font-bold text-white mb-1">100%</div>
+                    <div className="text-blue-100 text-sm">Güvenilir Süreç</div>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <div className="text-2xl font-bold text-white mb-1">15+</div>
+                    <div className="text-blue-100 text-sm">Yıl Deneyim</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+      </section>
+
+      {/* Main Content */}
+      <div className="container-wide pb-12">
+        {children}
       </div>
     </div>
   );

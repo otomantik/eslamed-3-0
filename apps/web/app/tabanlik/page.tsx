@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { CheckCircle2, ClipboardList, HelpCircle, MessageCircle, ShieldCheck, MapPin } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'Kişiye Özel Tabanlık | ESLAMED',
@@ -19,7 +20,13 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TabanlikPage() {
+export default async function TabanlikPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/tabanlik' });
   const faqItems = [
     {
       q: 'Her ayakkabıya uyar mı?',
@@ -87,7 +94,7 @@ export default function TabanlikPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

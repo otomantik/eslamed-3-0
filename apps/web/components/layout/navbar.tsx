@@ -73,14 +73,14 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
       <header 
         className={`fixed w-full z-50 border-b border-slate-200 shadow-sm transition-all duration-300 ease-out ${isEmergency ? 'top-12' : 'top-0'} ${
           isScrolled 
-            ? 'backdrop-blur-md bg-white/90 h-14' 
+            ? 'backdrop-blur-md bg-white/90 h-16' 
             : 'bg-white h-16'
         }`}
         style={{ willChange: 'height, background-color' }}
       >
         <div className="container-wide">
           {/* Top Row: Logo + Navigation + CTA */}
-          <div className={`flex items-center justify-between gap-3 transition-all duration-300 ${isScrolled ? 'h-14' : 'h-16'}`}>
+          <div className="flex items-center justify-between gap-2 h-16">
             {/* LOGO */}
             <Link href="/" className="flex items-center gap-2 flex-shrink-0">
               <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-2xl">
@@ -104,53 +104,60 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
               </div>
             </Link>
 
-            {/* NAVIGATION LINKS - Desktop with Playfair Display */}
-            <nav className="hidden lg:flex items-center gap-8 flex-1 justify-center">
+            {/* NAVIGATION LINKS - Desktop */}
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-4 flex-shrink-0">
               <Link 
                 href="/rehber/solunum-sistemleri" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Oksijen konsantratörü ve solunum destek sistemleri"
               >
                 Oksijen
               </Link>
               <Link 
                 href="/rehber/evde-bakim-ekipmanlari" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Evde bakım ekipmanları ve hasta yatakları"
               >
                 Evde Bakım
               </Link>
               <Link 
                 href="/ekipmanlar" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Tüm medikal ekipman kataloğu"
               >
                 Ekipmanlar
               </Link>
               <Link 
                 href="/hizmetler" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Teknik servis, kiralama ve satış hizmetleri"
               >
                 Hizmetler
               </Link>
               <Link 
                 href="/tabanlik" 
-                className="text-slate-700 hover:text-brand-primary font-medium text-sm transition-colors"
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 style={{ fontFamily: 'var(--font-premium)' }}
                 title="Kişiye özel tabanlık analizi ve çözümleri"
               >
                 VIP Tabanlık
               </Link>
+              <Link 
+                href="/iletisim" 
+                className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
+                title="İletişim bilgileri ve adres"
+              >
+                İletişim
+              </Link>
             </nav>
 
-            {/* SEARCH - Desktop Only (XL) */}
-            <div className="hidden xl:flex items-center flex-1 max-w-xs">
+            {/* SEARCH - Desktop Only (2XL) */}
+            <div className="hidden 2xl:flex items-center flex-shrink-0 w-56 ml-2">
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" strokeWidth={1.5} />
                 <input
                   type="text"
-                  placeholder="İsterseniz arayabilirsiniz..."
+                  placeholder="Ara..."
                   readOnly
                   onFocus={() => {
                     setSearchEnabled(true);
@@ -164,7 +171,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
                       window.setTimeout(() => openSearch(e.key), 50);
                     }
                   }}
-                  className="w-full pl-10 pr-4 py-2 border border-slate-200 rounded-lg text-sm bg-slate-50 text-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition-colors"
+                  className="w-full pl-9 pr-3 py-1.5 border border-slate-200 rounded-lg text-xs bg-slate-50 text-slate-600 focus:outline-none focus:ring-1 focus:ring-brand-primary focus:border-brand-primary focus:bg-white transition-colors"
                 />
               </div>
             </div>
@@ -185,11 +192,12 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
             {/* ACIL DESTEK BUTTON - Desktop */}
             <Link
               href="tel:+905372425535"
-              className="hidden lg:flex min-h-[48px] items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg transition-colors font-semibold text-sm flex-shrink-0 shadow-sm"
+              className="hidden lg:flex min-h-[40px] items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-3 xl:px-4 py-2 rounded-lg transition-colors font-semibold text-xs xl:text-sm flex-shrink-0 shadow-sm"
               title="Acil teknik destek için hemen arayın"
             >
-              <Phone className="w-5 h-5" strokeWidth={2} />
-              <span>Acil Destek</span>
+              <Phone className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={2} />
+              <span className="hidden xl:inline">Acil Destek</span>
+              <span className="xl:hidden">Acil</span>
             </Link>
           </div>
 

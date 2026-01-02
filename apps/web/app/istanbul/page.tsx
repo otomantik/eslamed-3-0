@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
 import { BadgeCheck, MapPin } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { ServiceTimeline } from '@/components/istanbul/service-timeline';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { DistrictInquiry } from '@/components/istanbul/district-inquiry';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: "İstanbul Medikal Destek | ESLAMED",
@@ -47,7 +48,14 @@ const districts: { label: string; region: 'Anadolu' | 'Avrupa' }[] = [
   { label: 'Beylikdüzü', region: 'Avrupa' },
 ];
 
-export default function IstanbulPage() {
+export default async function IstanbulPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/istanbul' });
+
   // Provided coordinates (Çekmeköy): 41° 2´ 10.3236" , 29° 10´ 57.3600"
   const cekmekoyLat = 41.036201;
   const cekmekoyLng = 29.1826;
@@ -159,7 +167,7 @@ export default function IstanbulPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localSchema) }}
       />
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

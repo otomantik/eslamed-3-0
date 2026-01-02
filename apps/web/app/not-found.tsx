@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Home, LifeBuoy, LayoutGrid, Search } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { routeDictionary } from '@/lib/routes/route-dictionary';
 import { SearchModal } from '@/components/search/search-modal';
@@ -41,7 +41,7 @@ export default function NotFound() {
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      <Navbar />
+      <ModeAwareNavbar />
 
       <section className="pt-28 sm:pt-24 pb-12">
         <div className="container-wide">

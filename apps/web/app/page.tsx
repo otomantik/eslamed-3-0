@@ -1,20 +1,24 @@
-import { Navbar } from "@/components/layout/navbar";
-import { MinimalistNavbar } from "@/components/layout/minimalist-navbar";
-import { GlobalAlertBar } from "@/components/sections/global-alert-bar";
+import { ModeAwareNavbar } from "@/components/layout/mode-aware-navbar";
 import { BrandTrustTicker } from "@/components/sections/brand-trust-ticker";
+import { SEOAnchorSection } from "@/components/sections/seo-anchor-section";
 import { ProductShowcase } from "@/components/sections/product-showcase";
 import { ServiceValueGrid } from "@/components/sections/service-value-grid";
 import { DynamicHero } from "@/components/sections/hero/index";
 import { ServiceMatrix } from "@/components/sections/service-matrix";
 import { HyperLocalMap } from "@/components/sections/hyperlocal-map";
-import { FloatingRescueBar } from "@/components/sections/floating-rescue-bar";
 import { SmartFAQ } from "@/components/sections/smart-faq";
 import { TrustSafetyBridge } from "@/components/sections/trust-safety-bridge";
 import { WallOfTrust } from "@/components/sections/wall-of-trust";
 import { Footer } from "@/components/sections/footer";
+import { PageFeedback } from "@/components/ui/page-feedback";
 import { Suspense } from "react";
 import { detectIntent } from "@/lib/intent/detector";
 import { ModeWrapper } from "@/components/ui/mode-wrapper";
+import { EmergencySteps } from "@/components/sections/mode-specific/emergency-steps";
+import { PriceTable } from "@/components/sections/mode-specific/price-table";
+import { GuideCategories } from "@/components/sections/mode-specific/guide-categories";
+import { RentalProcess } from "@/components/sections/mode-specific/rental-process";
+import { InteractiveStats } from "@/components/sections/mode-specific/interactive-stats";
 
 // Skeleton components for Suspense
 function MapSkeleton() {
@@ -54,27 +58,29 @@ export default async function Page({
   const shouldShowNavbar = intentResult.mode !== 'TRUST_SEEKER';
 
   return (
-    <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      {/* Global Emergency Alert Bar (only if not in PanicRecoveryUI) */}
-      {isEmergency && <GlobalAlertBar />}
-      
-      {/* MinimalistNavbar for CRITICAL_EMERGENCY, Standard Navbar for others */}
-      {isEmergency ? (
-        <MinimalistNavbar />
-      ) : shouldShowNavbar ? (
-        <Navbar isEmergency={isEmergency} />
-      ) : null}
+    <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900 pb-16 lg:pb-0">
+      {/* Mode-aware navbar - handles all modes correctly */}
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
+      {/* Hero - ALWAYS OUTSIDE ModeWrapper */}
+      <DynamicHero intent={intentResult.mode} district={intentResult.district} />
+
+      {/* SEO Anchor Section - Split layout (content + trust wall) */}
+      <SEOAnchorSection />
+
+      {/* Mode-specific content wrapper */}
       <ModeWrapper serverMode={intentResult.mode}>
-
-        {/* Dynamic Hero */}
-        <DynamicHero intent={intentResult.mode} district={intentResult.district} />
-
-        {/* Brand Trust Ticker */}
-        <BrandTrustTicker />
+        {/* Mode-specific sections */}
+        {intentResult.mode === 'CRITICAL_EMERGENCY' && <EmergencySteps />}
+        {intentResult.mode === 'PRICE_SENSITIVE' && <PriceTable />}
+        {intentResult.mode === 'INFORMATION_SEEKER' && <GuideCategories />}
+        {intentResult.mode === 'COMMERCIAL_RENTAL' && <RentalProcess />}
+        
+        {/* Interactive Stats - All modes */}
+        <InteractiveStats />
 
         {/* Service Value Grid */}
-        <ServiceValueGrid />
+        <ServiceValueGrid intent={intentResult.mode} />
 
         {/* Product Showcase */}
         <ProductShowcase />
@@ -82,7 +88,7 @@ export default async function Page({
         {/* Service Matrix */}
         <ServiceMatrix intent={intentResult.mode} />
 
-        {/* Wall of Trust (Google Ratings + Testimonials) - Between Services and Maps */}
+        {/* Wall of Trust (Google Ratings + Testimonials) */}
         <WallOfTrust />
 
         {/* HyperLocal Map */}
@@ -96,11 +102,16 @@ export default async function Page({
         {/* Smart FAQ */}
         <SmartFAQ intent={intentResult.mode} />
 
-        {/* Floating Rescue Bar (Mobile) */}
-        <FloatingRescueBar intent={intentResult.mode} />
+        {/* Brand Trust Ticker - Final trust seal before footer */}
+        <BrandTrustTicker />
+
+        {/* Page Feedback - Above footer */}
+        <PageFeedback />
 
         {/* Footer (hidden in URGENT mode by PanicRecoveryUI) */}
         {shouldShowNavbar && <Footer />}
+
+        {/* Floating Rescue Bar removed - replaced by BottomNav */}
 
         {/* Debug Info (Development Only + Query Flag) */}
         {process.env.NODE_ENV === 'development' && 

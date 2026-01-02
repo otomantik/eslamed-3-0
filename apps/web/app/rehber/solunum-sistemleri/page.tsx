@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { RespiratoryChecklist } from '@/components/rehber/respiratory-checklist';
 import { MedicalGlossary } from '@/components/rehber/medical-glossary';
 import { BatteryCharging, Droplets, Filter, Megaphone, PlaySquare, ArrowUpRight } from 'lucide-react';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'Solunum Sistemleri Rehberi | ESLAMED',
@@ -15,7 +16,13 @@ export const metadata: Metadata = {
   alternates: { canonical: '/rehber/solunum-sistemleri' },
 };
 
-export default function SolunumSistemleriPage() {
+export default async function SolunumSistemleriPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/rehber/solunum-sistemleri' });
   const emergencySpeakableId = 'rehber-elektrik-kesintisi';
 
   const howToCleanFilter = {
@@ -65,7 +72,7 @@ export default function SolunumSistemleriPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify([howToCleanFilter, speakable]) }}
       />
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

@@ -15,19 +15,22 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
     <FocusTrap enabled={true}>
       <div className="min-h-screen" style={{ backgroundColor: 'var(--bg-surface)' }}>
         {/* Minimal Top Bar - Only Home + Emergency Call */}
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-sm">
-          <div className="container-wide flex items-center justify-between h-14">
+        {/* Positioned at top-12 to account for GlobalAlertBar (48px) */}
+        <nav className="fixed top-12 left-0 right-0 z-50 bg-white border-b border-red-200 shadow-sm h-16">
+          <div className="container-wide flex items-center justify-between h-16">
             <Link
               href="/"
-              className="min-h-[48px] inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-red-600 transition-colors focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2 rounded"
+              className="min-h-[48px] inline-flex items-center gap-2 text-slate-900 font-semibold hover:text-red-600 transition-colors focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-offset-2 rounded"
               aria-label="Ana sayfaya dön"
             >
-              <Home className="w-5 h-5" strokeWidth={1.5} />
+              <div className="w-8 h-8 bg-red-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                E
+              </div>
               <span className="hidden sm:inline">ESLAMED</span>
             </Link>
             <a
               href="tel:+905372425535"
-              className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-heartbeat focus:outline-none focus:ring-4 focus:ring-orange-500 focus:ring-offset-2"
+              className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-pulse focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-offset-2"
               aria-label="Acil durum için hemen ara"
             >
               <Phone className="w-5 h-5" strokeWidth={2} />
@@ -36,10 +39,10 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
           </div>
         </nav>
 
-      {/* Action-Oriented List - Above the fold */}
-      <section className="pt-16 pb-8">
+      {/* Action-Oriented List - Hero altında */}
+      <section className="py-12 bg-red-50">
         <div className="container-wide">
-          <div className="bg-white rounded-2xl border-2 border-red-200 p-6 mb-6">
+          <div className="bg-white rounded-2xl border-2 border-red-200 p-6 mb-6 shadow-lg">
             <div className="flex items-start gap-3 mb-4">
               <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" strokeWidth={2} />
               <div>

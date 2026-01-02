@@ -1,6 +1,13 @@
 # MODE SAYFALARI RAPORU
 ## Intent Mode'ları ve Sayfa İçerikleri
 
+> **🎨 Renk Paleti (v4.7 - Production Ready):**
+> - **CRITICAL_EMERGENCY** → RED (`bg-red-*`, `text-red-*`)
+> - **TRUST_SEEKER** → BLUE (`bg-blue-*`, `text-blue-*`) - Medical trust
+> - **PRICE_SENSITIVE** → AMBER (`bg-amber-*`, `text-amber-*`) - Value/price
+> - **COMMERCIAL_RENTAL** → SLATE (`bg-slate-*`, `text-slate-*`) - Business/neutral
+> - **INFORMATION_SEEKER** → SLATE (`bg-slate-*`, `text-slate-*`) - Educational
+
 ---
 
 ## 📋 MODE LİSTESİ
@@ -107,6 +114,7 @@ Sistemde 5 farklı Intent Mode bulunmaktadır:
     pulse: false
   },
   ctaBg: "bg-blue-600 hover:bg-blue-700",
+  sectionBg: "bg-blue-50", // Service Matrix & Service Value Grid
   pulse: false
 }
 ```
@@ -139,18 +147,19 @@ Sistemde 5 farklı Intent Mode bulunmaktadır:
   cta: "Fiyat Bilgisi Al",
   secondaryCta: "Detaylı Bilgi",
   bgImage: "/assets/hero-bg.png",
-  bgOverlay: "bg-gradient-to-r from-emerald-900/70 via-emerald-800/60 to-transparent",
+  bgOverlay: "bg-gradient-to-r from-amber-900/70 via-amber-800/60 to-transparent",
   titleColor: "text-white",
-  subtitleColor: "text-emerald-50",
+  subtitleColor: "text-amber-50",
   badge: {
     text: "450 TL'den başlayan fiyatlar",
     icon: Activity,
-    bg: "bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/50",
-    textColor: "text-emerald-100",
-    iconColor: "text-emerald-500",
+    bg: "bg-amber-500/20 backdrop-blur-sm border border-amber-400/50",
+    textColor: "text-amber-100",
+    iconColor: "text-amber-500",
     pulse: false
   },
-  ctaBg: "bg-emerald-600 hover:bg-emerald-700",
+  ctaBg: "bg-amber-600 hover:bg-amber-700",
+  sectionBg: "bg-amber-50", // Service Matrix & Service Value Grid
   pulse: false
 }
 ```

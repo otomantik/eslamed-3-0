@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
+import { detectIntent } from '@/lib/intent/detector';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
@@ -47,7 +48,7 @@ export default function OlcumCihazlariPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify([howToMeasureBp, speakable]) }}
       />
 
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

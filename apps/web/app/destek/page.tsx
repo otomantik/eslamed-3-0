@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { PhoneCall, Wrench, Home, Clock } from 'lucide-react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { BoundaryCard } from '@/components/support/boundary-card';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { detectIntent } from '@/lib/intent/detector';
 
 export const metadata: Metadata = {
   title: 'Destek & Sınırlar | ESLAMED',
@@ -13,10 +14,16 @@ export const metadata: Metadata = {
   alternates: { canonical: '/destek' },
 };
 
-export default function DestekPage() {
+export default async function DestekPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent({ ...resolvedParams, url: '/destek' });
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      <Navbar />
+      <ModeAwareNavbar serverMode={intentResult.mode} />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import { Star, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { Testimonials } from './testimonials';
 
@@ -9,10 +10,37 @@ import { Testimonials } from './testimonials';
  * Placement: Between Services and Maps
  */
 export function WallOfTrust() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('section-visible');
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       {/* Google Rating & Trust Badges Banner */}
-      <section className="py-16 bg-gradient-to-b from-emerald-50 to-white">
+      <section 
+        ref={sectionRef}
+        className="py-16 bg-gradient-to-b from-emerald-50 to-white animate-fade-in-up"
+        style={{ willChange: 'opacity, transform' }}
+      >
         <div className="container-wide">
           <div className="max-w-4xl mx-auto">
             {/* Google Rating Banner */}
