@@ -26,7 +26,7 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://eslamed.com"),
+  metadataBase: new URL("https://www.eslamed.com"),
   title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
   description:
     "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek. 4.9 yıldız, 73+ doğrulanmış yorum.",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://eslamed.com/",
+    url: "https://www.eslamed.com/",
     siteName: "ESLAMED",
     title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
     description:
@@ -79,11 +79,11 @@ export default function RootLayout({
   const medicalBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'MedicalBusiness',
-    '@id': 'https://eslamed.com/#business',
+    '@id': 'https://www.eslamed.com/#business',
     name: 'Eslamed',
-    url: 'https://eslamed.com/',
-    image: 'https://eslamed.com/assets/hero-bg.png',
-    logo: 'https://eslamed.com/assets/hero-bg.png',
+    url: 'https://www.eslamed.com/',
+    image: 'https://www.eslamed.com/assets/hero-bg.png',
+    logo: 'https://www.eslamed.com/assets/hero-bg.png',
     description:
       'Eslamed, evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi sağlar (solunum desteği, evde bakım, ölçüm/takip). Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.',
     address: {

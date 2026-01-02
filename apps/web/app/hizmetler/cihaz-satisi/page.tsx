@@ -19,11 +19,11 @@ export default function CihazSatisiPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://eslamed.com/hizmetler/cihaz-satisi#service',
+    '@id': 'https://www.eslamed.com/hizmetler/cihaz-satisi#service',
     name: 'Cihaz Satışı',
     description:
       'Evde kullanım için cihaz satış sürecinde ihtiyaç odaklı eşleştirme ve teknik kullanım uyumu kontrolü. Tanı/tedavi sunmaz.',
-    provider: { '@id': 'https://eslamed.com/#business' },
+    provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 

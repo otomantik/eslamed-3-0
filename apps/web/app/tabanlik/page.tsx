@@ -39,22 +39,22 @@ export default function TabanlikPage() {
     {
       '@context': 'https://schema.org',
       '@type': 'MedicalWebPage',
-      '@id': 'https://eslamed.com/tabanlik#webpage',
-      url: 'https://eslamed.com/tabanlik',
+      '@id': 'https://www.eslamed.com/tabanlik#webpage',
+      url: 'https://www.eslamed.com/tabanlik',
       name: 'Kişiye Özel Tabanlık | ESLAMED',
       description:
         'Yürüme analizi ve biomekanik ölçümlerle kişiye özel tabanlık süreci. Teknik rehberlik ve süreç yönetimi; tanı ve tedavi kararı hekimlere aittir.',
-      isPartOf: { '@id': 'https://eslamed.com/#website' },
-      about: { '@id': 'https://eslamed.com/#business' },
+      isPartOf: { '@id': 'https://www.eslamed.com/#website' },
+      about: { '@id': 'https://www.eslamed.com/#business' },
       specialty: 'Orthopedics',
       inLanguage: 'tr-TR',
     },
     {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      '@id': 'https://eslamed.com/#business',
+      '@id': 'https://www.eslamed.com/#business',
       name: 'Eslamed',
-      url: 'https://eslamed.com/',
+      url: 'https://www.eslamed.com/',
       telephone: '+905372425535',
       address: {
         '@type': 'PostalAddress',
@@ -68,7 +68,7 @@ export default function TabanlikPage() {
     {
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
-      '@id': 'https://eslamed.com/tabanlik#faq',
+      '@id': 'https://www.eslamed.com/tabanlik#faq',
       mainEntity: faqItems.map((x) => ({
         '@type': 'Question',
         name: x.q,

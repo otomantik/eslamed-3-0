@@ -17,11 +17,11 @@ export default function IkinciElAlimPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://eslamed.com/hizmetler/ikinci-el-alim#service',
+    '@id': 'https://www.eslamed.com/hizmetler/ikinci-el-alim#service',
     name: '2. El Alım',
     description:
       'İkinci el medikal cihazlarda model doğrulama, teknik değerleme ve yenileme/yeniden kullanım planı. Tanı/tedavi sunmaz; donanım kapsamındadır.',
-    provider: { '@id': 'https://eslamed.com/#business' },
+    provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 

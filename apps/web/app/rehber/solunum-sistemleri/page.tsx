@@ -51,7 +51,7 @@ export default function SolunumSistemleriPage() {
   const speakable = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    url: 'https://eslamed.com/rehber/solunum-sistemleri',
+    url: 'https://www.eslamed.com/rehber/solunum-sistemleri',
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: [`#${emergencySpeakableId}`],

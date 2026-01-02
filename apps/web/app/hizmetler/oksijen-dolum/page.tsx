@@ -19,11 +19,11 @@ export default function OksijenDolumPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://eslamed.com/hizmetler/oksijen-dolum#service',
+    '@id': 'https://www.eslamed.com/hizmetler/oksijen-dolum#service',
     name: 'Oksijen Dolum',
     description:
       'Oksijen tüpü temin/dolum süreçlerinde güvenlik standartlarına uygun kontrol adımları ve İstanbul içi planlı hızlı lojistik.',
-    provider: { '@id': 'https://eslamed.com/#business' },
+    provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 

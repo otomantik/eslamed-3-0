@@ -19,11 +19,11 @@ export default function CihazKiralamaPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://eslamed.com/hizmetler/cihaz-kiralama#service',
+    '@id': 'https://www.eslamed.com/hizmetler/cihaz-kiralama#service',
     name: 'Cihaz Kiralama',
     description:
       'Evde kullanım için cihaz kiralama sürecinde hijyen hazırlığı, teknik kontrol ve esnek süre/koşul planlama yaklaşımı.',
-    provider: { '@id': 'https://eslamed.com/#business' },
+    provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 

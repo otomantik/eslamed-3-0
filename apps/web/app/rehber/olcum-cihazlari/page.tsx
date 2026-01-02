@@ -33,7 +33,7 @@ export default function OlcumCihazlariPage() {
   const speakable = {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
-    url: 'https://eslamed.com/rehber/olcum-cihazlari',
+    url: 'https://www.eslamed.com/rehber/olcum-cihazlari',
     speakable: {
       '@type': 'SpeakableSpecification',
       cssSelector: [`#${speakableId}`],

@@ -17,11 +17,11 @@ export default function TeknikServisPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://eslamed.com/hizmetler/teknik-servis#service',
+    '@id': 'https://www.eslamed.com/hizmetler/teknik-servis#service',
     name: 'Teknik Servis',
     description:
       'Medikal cihazlarda teknik ön değerlendirme, arıza analizi ve onarım planlama süreci. Tanı/tedavi sunmaz; yalnızca donanım ve mekanik/elektriksel kapsam.',
-    provider: { '@id': 'https://eslamed.com/#business' },
+    provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 

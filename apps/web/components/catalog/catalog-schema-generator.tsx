@@ -23,7 +23,7 @@ export function CatalogSchemaGenerator() {
       const normalized = normalizeSearchIndex(raw);
       
       const category = params.get('category') || 'all';
-      const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://eslamed.com/ekipmanlar';
+      const currentUrl = typeof window !== 'undefined' ? window.location.href : 'https://www.eslamed.com/ekipmanlar';
       
       // Filter items by category if specified
       let items: SearchItem[] = normalized.items.filter((i) => (i.kind || 'equipment') === 'equipment');

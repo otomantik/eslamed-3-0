@@ -23,9 +23,9 @@ export default function IletisimPage() {
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://eslamed.com/#business',
+    '@id': 'https://www.eslamed.com/#business',
     name: 'Eslamed',
-    url: 'https://eslamed.com/',
+    url: 'https://www.eslamed.com/',
     telephone: '+905372425535',
     address: {
       '@type': 'PostalAddress',

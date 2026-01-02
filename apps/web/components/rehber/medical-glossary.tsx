@@ -33,7 +33,7 @@ export function MedicalGlossary({ terms, title = 'Terimler ve Kavramlar' }: Medi
       // Generate unique anchor ID: term-{lowercase-sanitized-term} (e.g., #term-saturation)
       const termSlug = item.term.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
       const termId = `#term-${termSlug}`;
-      const baseUrl = typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : 'https://eslamed.com';
+      const baseUrl = typeof window !== 'undefined' ? `${window.location.origin}${window.location.pathname}` : 'https://www.eslamed.com';
       
       return {
         '@type': 'DefinedTerm',

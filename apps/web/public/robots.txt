@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Disallow old Bodis/Parking paths
+Disallow: /layouts/
+Disallow: /tabs/
+Disallow: /panel-bar-dark/
+
+# Disallow API routes (internal use only)
+Disallow: /api/
+
+# Allow sitemap
+Sitemap: https://www.eslamed.com/sitemap.xml
+

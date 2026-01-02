@@ -57,9 +57,9 @@ export default function IstanbulPage() {
   const localSchema: any = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://eslamed.com/#business',
+    '@id': 'https://www.eslamed.com/#business',
     name: 'Eslamed',
-    url: 'https://eslamed.com/',
+    url: 'https://www.eslamed.com/',
     telephone: '+905372425535',
     address: {
       '@type': 'PostalAddress',
@@ -120,26 +120,26 @@ export default function IstanbulPage() {
     department: [
       {
         '@type': 'Department',
-        '@id': 'https://eslamed.com/#department/teknik-servis',
+        '@id': 'https://www.eslamed.com/#department/teknik-servis',
         name: 'Teknik Servis',
-        url: 'https://eslamed.com/hizmetler/teknik-servis',
-        sameAs: 'https://eslamed.com/hizmetler/teknik-servis#service', // Entity graph: links to Service schema @id
+        url: 'https://www.eslamed.com/hizmetler/teknik-servis',
+        sameAs: 'https://www.eslamed.com/hizmetler/teknik-servis#service', // Entity graph: links to Service schema @id
         description: 'Medikal cihazlarda teknik ön değerlendirme, arıza analizi ve onarım planlama süreci.',
       },
       {
         '@type': 'Department',
-        '@id': 'https://eslamed.com/#department/oksijen-dolum',
+        '@id': 'https://www.eslamed.com/#department/oksijen-dolum',
         name: 'Oksijen Dolum',
-        url: 'https://eslamed.com/hizmetler/oksijen-dolum',
-        sameAs: 'https://eslamed.com/hizmetler/oksijen-dolum#service', // Entity graph: links to Service schema @id
+        url: 'https://www.eslamed.com/hizmetler/oksijen-dolum',
+        sameAs: 'https://www.eslamed.com/hizmetler/oksijen-dolum#service', // Entity graph: links to Service schema @id
         description: 'Oksijen tüpü temin/dolum süreçlerinde güvenlik standartlarına uygun kontrol adımları ve İstanbul içi planlı hızlı lojistik.',
       },
       {
         '@type': 'Department',
-        '@id': 'https://eslamed.com/#department/cihaz-kiralama',
+        '@id': 'https://www.eslamed.com/#department/cihaz-kiralama',
         name: 'Medikal Ekipman Kiralama',
-        url: 'https://eslamed.com/hizmetler/cihaz-kiralama',
-        sameAs: 'https://eslamed.com/hizmetler/cihaz-kiralama#service', // Entity graph: links to Service schema @id
+        url: 'https://www.eslamed.com/hizmetler/cihaz-kiralama',
+        sameAs: 'https://www.eslamed.com/hizmetler/cihaz-kiralama#service', // Entity graph: links to Service schema @id
         description: 'Evde kullanım için cihaz kiralama sürecinde hijyen hazırlığı, teknik kontrol ve esnek süre/koşul planlama yaklaşımı.',
       },
     ],

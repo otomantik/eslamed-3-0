@@ -17,7 +17,7 @@ export function generateCatalogSchema({
   currentUrl,
   totalProducts,
 }: CatalogSchemaOptions) {
-  const baseUrl = 'https://eslamed.com';
+  const baseUrl = 'https://www.eslamed.com';
   const breadcrumbs = [
     { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${baseUrl}/` },
     { '@type': 'ListItem', position: 2, name: 'Tüm Ekipmanlar', item: `${baseUrl}/ekipmanlar` },
