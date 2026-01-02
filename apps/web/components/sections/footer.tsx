@@ -1,212 +1,81 @@
-'use client';
-
-import { useState } from 'react';
-import { CheckCircle2, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
-import { FeedbackForm } from '@/components/forms/feedback-form';
+import { ShieldCheck, Phone, MapPin, Clock } from 'lucide-react';
 
 export function Footer() {
-  const [feedbackOpen, setFeedbackOpen] = useState(false);
-
   return (
-    <>
-      <footer id="kurumsal" className="border-t border-slate-200 bg-white">
-      {/* Trust Badge Row */}
-      <div className="border-b border-slate-200 bg-slate-50 py-6">
-        <div className="container-wide">
-          <div className="flex flex-wrap items-center justify-center gap-8 opacity-70">
-            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
-              <span>ISO 13485</span>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
-              <span>CE Uygunluk</span>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
-              <span>ÜTS Kayıtlı</span>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
-              <span>15+ Yıl Deneyim</span>
-            </div>
-            <div className="flex items-center gap-2 text-slate-600 text-sm font-medium">
-              <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
-              <span>TSE Onaylı</span>
+    <footer id="kurumsal" className="bg-slate-50 border-t border-slate-200 pt-16 pb-8 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+          
+          {/* Section A: Kapsam */}
+          <div className="space-y-4">
+            <h4 className="font-serif text-slate-900 font-semibold tracking-tight">Kapsam</h4>
+            <div className="space-y-3 text-sm text-slate-600 leading-relaxed">
+              <p>Evde medikal ekipman kullanım süreçlerinde, cihaz seçimi ve teknik hazırlık aşamalarında rehberlik sunar.</p>
+              <p className="border-t border-slate-200 pt-3 italic text-slate-500">
+                Doğrudan tıbbi teşhis, tedavi veya ilaç tavsiyesi sunulmaz; süreçler hekim yönlendirmesiyle yürütülmelidir.
+              </p>
             </div>
           </div>
-        </div>
-      </div>
 
-      <div className="container-wide py-12">
-        <div className="grid grid-cols-1 gap-10 lg:grid-cols-3">
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Kapsam</h3>
-            <div className="mt-4 space-y-6 text-sm leading-relaxed text-slate-600">
-              <div>
-                <div className="font-medium text-slate-800">Ne yaparız</div>
-                <p className="mt-1">
-                  Oksijen konsantratörü ve ilgili ekipmanlarda kurulum, kullanım yönlendirmesi, planlı teslimat ve teknik destek
-                  süreçlerini yürütürüz.
-                </p>
+          {/* Section B: Sorumluluk & Şeffaflık */}
+          <div className="space-y-4">
+            <h4 className="font-serif text-slate-900 font-semibold tracking-tight">Sorumluluk & Şeffaflık</h4>
+            <div className="space-y-3 text-sm text-slate-600">
+              <div className="flex items-start gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 mt-1 shrink-0" />
+                <p>Kullanılan tüm teknik cihazlar ÜTS kayıtlı ve CE standartlarına uygundur.</p>
               </div>
-              <div>
-                <div className="font-medium text-slate-800">Ne yapmayız</div>
-                <p className="mt-1">
-                  Tanı koymayız, tedavi planlamayız ve tıbbi karar yerine geçecek yönlendirme yapmayız. Acil tıbbi durumda iletişim
-                  kanallarımız, acil sağlık hizmetlerinin yerine geçmez.
-                </p>
+              <div className="flex items-start gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-600 mt-1 shrink-0" />
+                <p>Verileriniz KVKK kapsamında korunmakta ve tıbbi gizlilik esas alınmaktadır.</p>
               </div>
             </div>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Sorumluluk & şeffaflık</h3>
-            <div className="mt-4 space-y-6 text-sm leading-relaxed text-slate-600">
-              <div>
-                <div className="font-medium text-slate-800">Tıbbi sorumluluk notu</div>
-                <p className="mt-1">
-                  Belirtileriniz hızla artıyorsa, bilinç değişikliği, ciddi nefes darlığı veya göğüs ağrısı gibi durumlarda{" "}
-                  <span className="font-medium text-slate-800">112</span> ile iletişime geçin.
-                </p>
-              </div>
-
-              <div>
-                <div className="font-medium text-slate-800">Gizlilik & veri</div>
-                <p className="mt-1">
-                  Ziyaret verileri yalnızca hizmetin sürekliliği ve hata tespiti için sınırlı ve ölçülü şekilde işlenir. Tıbbi
-                  içerikli kişisel verileri bu sayfa üzerinden paylaşmamanızı öneririz.
-                </p>
-              </div>
-
-              <div>
-                <div className="font-medium text-slate-800">İletişim</div>
-                <p className="mt-1">
-                  Telefon / WhatsApp: <span className="font-mono text-slate-800">+90 537 242 55 35</span>
-                  <br />
-                  Adres: Alemdağ Mah. Atabey Caddesi 19/BA, Çekmeköy/İstanbul
-                  <br />
-                  Çalışma saatleri: talebe göre planlama (detaylar iletişimde netleşir)
-                </p>
-              </div>
-            </div>
+          {/* Section C: İletişim */}
+          <div className="space-y-4">
+            <h4 className="font-serif text-slate-900 font-semibold tracking-tight">İletişim</h4>
+            <ul className="space-y-3 text-sm text-slate-600">
+              <li className="flex items-center gap-2">
+                <Phone className="w-4 h-4 text-slate-400" />
+                <span>Planlı Teknik Destek & Bilgi Hattı</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <MapPin className="w-4 h-4 text-slate-400" />
+                <span>İstanbul Genel Operasyon Merkezi</span>
+              </li>
+              <li className="flex items-center gap-2 italic text-slate-500">
+                <Clock className="w-4 h-4" />
+                <span>Lojistik süreçler talebe göre planlanır.</span>
+              </li>
+            </ul>
           </div>
 
-          <div>
-            <h3 className="text-sm font-semibold text-slate-900">Kısa bağlantılar</h3>
-            <div className="mt-4 grid grid-cols-1 gap-6 text-sm text-slate-600">
-              <div>
-                <div className="font-medium text-slate-800">Kurumsal</div>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-                      İşletme Belgeleri
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-                      KVKK
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-                      Gizlilik
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-medium text-slate-800">Destek</div>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <a href="/destek" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Teknik destek ve hizmet sınırları">
-                      Destek & Sınırlar
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/hizmetler" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Tüm hizmetlerimiz">
-                      Hizmetler
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/iletisim" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="İletişim bilgileri">
-                      İletişim
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/istanbul" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="İstanbul genelinde hizmetlerimiz">
-                      İstanbul Hizmetleri
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/rehber/evde-bakim-ekipmanlari" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Evde bakım ekipmanları rehberi">
-                      Evde Bakım Rehberi
-                    </a>
-                  </li>
-                  <li>
-                    <a href="/ekipmanlar" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Tüm medikal ekipman kataloğu">
-                      Tüm Ekipmanlar
-                    </a>
-                  </li>
-                </ul>
-              </div>
-              <div>
-                <div className="font-medium text-slate-800">Yerel Otorite</div>
-                <ul className="mt-2 space-y-2">
-                  <li>
-                    <Link href="/hizmetler/teknik-servis?district=kadikoy" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Kadıköy bölgesi teknik servis hizmetleri">
-                      Kadıköy Teknik Servis
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/hizmetler/oksijen-dolum?district=umraniye" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Ümraniye bölgesi oksijen dolum hizmetleri">
-                      Ümraniye Oksijen Dolum
-                    </Link>
-                  </li>
-                  <li>
-                    <Link href="/rehber/evde-bakim-ekipmanlari?district=besiktas" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4" title="Beşiktaş bölgesi evde bakım ekipmanları">
-                      Beşiktaş Evde Bakım
-                    </Link>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          {/* Section D: Kısa Bağlantılar */}
+          <div className="space-y-4">
+            <h4 className="font-serif text-slate-900 font-semibold tracking-tight">Kurumsal</h4>
+            <ul className="space-y-2 text-sm text-slate-600">
+              <li><Link href="/isletme-belgeleri" className="hover:underline transition-all">İşletme Belgeleri</Link></li>
+              <li><Link href="/kvkk" className="hover:underline transition-all">KVKK Aydınlatma Metni</Link></li>
+              <li><Link href="/gizlilik" className="hover:underline transition-all">Gizlilik Politikası</Link></li>
+              <li><Link href="/hizmetler" className="hover:underline transition-all border-t border-slate-200 block pt-2 mt-2 font-medium">Tüm Hizmetler</Link></li>
+              <li><Link href="/iletisim" className="hover:underline transition-all font-medium">Bize Ulaşın</Link></li>
+            </ul>
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-4 border-t border-slate-200 pt-6">
-          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-            <div className="text-xs text-slate-500">© 2026 Eslamed</div>
-            <div className="flex gap-3">
-              <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
-                KVKK
-              </a>
-              <span aria-hidden="true" className="text-slate-400">·</span>
-              <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
-                Gizlilik
-              </a>
-              <span aria-hidden="true" className="text-slate-400">·</span>
-              <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
-                İşletme Belgeleri
-              </a>
-            </div>
-          </div>
-          {/* Feedback Button */}
-          <div className="flex justify-center">
-            <button
-              onClick={() => setFeedbackOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline underline-offset-4 transition-colors"
-            >
-              <MessageSquare className="w-4 h-4" strokeWidth={1.5} />
-              Geri Bildirim
-            </button>
-          </div>
+        {/* Closing Line & Copyright */}
+        <div className="border-t border-slate-200 pt-8 flex flex-col items-center gap-4">
+          <p className="text-xs text-slate-400 tracking-wide text-center uppercase">
+            İstanbul genelinde evde kullanılan medikal ekipmanlar için süreç yönlendirmesi sunar.
+          </p>
+          <p className="text-[10px] text-slate-300">
+            &copy; 2026 ESLAMED MEDİKAL. Tüm hakları saklıdır.
+          </p>
         </div>
       </div>
     </footer>
-    <FeedbackForm isOpen={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
-    </>
   );
 }
 
