@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/navbar";
+import { MinimalistNavbar } from "@/components/layout/minimalist-navbar";
 import { DynamicHero } from "@/components/sections/hero/index";
 import { detectIntent } from "@/lib/intent/detector";
 
@@ -23,12 +24,12 @@ export default async function DynamicPage({
   // Detect intent using the new system
   const intentResult = await detectIntent(searchParamsWithPath);
   
-  // Hide navbar in emergency mode
-  const hideNavbar = intentResult.mode === 'CRITICAL_EMERGENCY';
+  // Use MinimalistNavbar for CRITICAL_EMERGENCY, standard Navbar for others
+  const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
-      {!hideNavbar && <Navbar />}
+      {isEmergency ? <MinimalistNavbar /> : <Navbar />}
       <DynamicHero intent={intentResult.mode} district={intentResult.district} />
 
       {/* Debug Info (For Development) */}

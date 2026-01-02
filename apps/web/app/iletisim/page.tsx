@@ -89,6 +89,7 @@ export default function IletisimPage() {
                 fill
                 className="object-cover opacity-10"
                 sizes="(max-width: 1024px) 100vw, 50vw"
+                loading="eager"
               />
             </div>
           </section>

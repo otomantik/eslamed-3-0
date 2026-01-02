@@ -6,7 +6,7 @@
 server {
     listen 80;
     listen [::]:80;
-    server_name eslamed.com www.eslamed.com;
+    server_name eslamed.com;
 
     # Let's Encrypt için
     location /.well-known/acme-challenge/ {
@@ -23,7 +23,7 @@ server {
 server {
     listen 443 ssl http2;
     listen [::]:443 ssl http2;
-    server_name eslamed.com www.eslamed.com;
+    server_name eslamed.com;
 
     # SSL Sertifikaları (Let's Encrypt)
     ssl_certificate /etc/letsencrypt/live/eslamed.com/fullchain.pem;

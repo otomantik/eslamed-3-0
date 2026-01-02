@@ -41,13 +41,15 @@ export function BrandTrustTicker() {
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="h-10 w-auto object-contain"
+                    width={120}
+                    height={40}
                     style={{ 
+                      width: 'auto',
+                      height: '40px',
+                      maxWidth: '120px',
+                      objectFit: 'contain',
                       filter: 'grayscale(100%)', 
                       transition: 'filter 0.3s ease',
-                      maxWidth: '120px',
-                      height: '40px',
-                      objectFit: 'contain'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.filter = 'grayscale(0%)';
@@ -63,8 +65,12 @@ export function BrandTrustTicker() {
                     alt={brand.name}
                     width={120}
                     height={40}
-                    className="h-10 w-auto object-contain"
-                    style={{ maxWidth: '120px' }}
+                    className="object-contain"
+                    style={{ 
+                      maxWidth: '120px',
+                      maxHeight: '40px',
+                      height: 'auto'
+                    }}
                     unoptimized
                     onError={() => handleImageError(brand.name)}
                   />
@@ -85,13 +91,15 @@ export function BrandTrustTicker() {
                   <img
                     src={brand.logo}
                     alt={brand.name}
-                    className="h-10 w-auto object-contain"
+                    width={120}
+                    height={40}
                     style={{ 
+                      width: 'auto',
+                      height: '40px',
+                      maxWidth: '120px',
+                      objectFit: 'contain',
                       filter: 'grayscale(100%)', 
                       transition: 'filter 0.3s ease',
-                      maxWidth: '120px',
-                      height: '40px',
-                      objectFit: 'contain'
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.filter = 'grayscale(0%)';
@@ -107,45 +115,16 @@ export function BrandTrustTicker() {
                     alt={brand.name}
                     width={120}
                     height={40}
-                    className="h-10 w-auto object-contain"
-                    style={{ maxWidth: '120px' }}
+                    className="object-contain"
+                    style={{ 
+                      maxWidth: '120px',
+                      maxHeight: '40px',
+                      height: 'auto'
+                    }}
                     unoptimized
                     onError={() => handleImageError(brand.name)}
                   />
                 )}
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Verified feedback (GBP-less, skeleton mode) */}
-        <div className="mt-10 border-t border-slate-200 pt-8">
-          <div className="text-center">
-            <h2 className="text-sm font-semibold text-slate-900">
-              Doğrulanmış geri bildirimler
-            </h2>
-            <p className="mt-2 text-xs text-slate-600 max-w-xl mx-auto">
-              Geri bildirimleri yalnızca doğrulanmış kaynaklardan gösteriyoruz. Google
-              Business entegrasyonu tamamlandığında burada doğrulanmış paylaşımlar yer
-              alacak.
-            </p>
-            <div className="mt-2 text-[11px] text-slate-500">Doğrulama bekleniyor</div>
-          </div>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="rounded-xl border border-slate-200 bg-white p-4"
-              >
-                <div className="h-3 w-24 bg-slate-200 rounded animate-pulse" />
-                <div className="mt-3 space-y-2">
-                  <div className="h-3 w-full bg-slate-200 rounded animate-pulse" />
-                  <div className="h-3 w-5/6 bg-slate-200 rounded animate-pulse" />
-                </div>
-                <div className="mt-4 text-[11px] text-slate-500">
-                  Geri bildirim • Doğrulanmış kaynak: beklemede
-                </div>
               </div>
             ))}
           </div>

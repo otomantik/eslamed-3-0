@@ -1,9 +1,16 @@
-import { CheckCircle2 } from 'lucide-react';
+'use client';
+
+import { useState } from 'react';
+import { CheckCircle2, MessageSquare } from 'lucide-react';
 import Link from 'next/link';
+import { FeedbackForm } from '@/components/forms/feedback-form';
 
 export function Footer() {
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+
   return (
-    <footer id="kurumsal" className="border-t border-slate-200 bg-white">
+    <>
+      <footer id="kurumsal" className="border-t border-slate-200 bg-white">
       {/* Trust Badge Row */}
       <div className="border-b border-slate-200 bg-slate-50 py-6">
         <div className="container-wide">
@@ -168,24 +175,38 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col gap-2 border-t border-slate-200 pt-6 text-xs text-slate-500 sm:flex-row sm:items-center sm:justify-between">
-          <div>© {new Date().getFullYear()} Eslamed</div>
-          <div className="flex gap-3">
-            <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-              KVKK
-            </a>
-            <span aria-hidden="true">·</span>
-            <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-              Gizlilik
-            </a>
-            <span aria-hidden="true">·</span>
-            <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4">
-              İşletme Belgeleri
-            </a>
+        <div className="mt-10 flex flex-col gap-4 border-t border-slate-200 pt-6">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="text-xs text-slate-500">© 2026 Eslamed</div>
+            <div className="flex gap-3">
+              <a href="/kvkk" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
+                KVKK
+              </a>
+              <span aria-hidden="true" className="text-slate-400">·</span>
+              <a href="/gizlilik" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
+                Gizlilik
+              </a>
+              <span aria-hidden="true" className="text-slate-400">·</span>
+              <a href="/isletme-belgeleri" className="min-h-[48px] inline-flex items-center py-3 hover:underline underline-offset-4 text-xs text-slate-500">
+                İşletme Belgeleri
+              </a>
+            </div>
+          </div>
+          {/* Feedback Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={() => setFeedbackOpen(true)}
+              className="inline-flex items-center gap-2 px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 hover:underline underline-offset-4 transition-colors"
+            >
+              <MessageSquare className="w-4 h-4" strokeWidth={1.5} />
+              Geri Bildirim
+            </button>
           </div>
         </div>
       </div>
     </footer>
+    <FeedbackForm isOpen={feedbackOpen} onClose={() => setFeedbackOpen(false)} />
+    </>
   );
 }
 

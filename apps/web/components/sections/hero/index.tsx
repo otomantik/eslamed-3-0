@@ -38,18 +38,18 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       cta: "Uzmanla Konuş",
       secondaryCta: "Nasıl Çalışıyoruz",
       bgImage: "/assets/hero-bg.png",
-      bgOverlay: "bg-gradient-to-r from-blue-900/70 via-blue-800/60 to-transparent",
+      bgOverlay: "bg-gradient-to-r from-emerald-900/70 via-emerald-800/60 to-transparent",
       titleColor: "text-white",
-      subtitleColor: "text-blue-50",
+      subtitleColor: "text-emerald-50",
       badge: {
         text: "ÜTS Kayıtlı & CE Belgeli Medikal Ekipman",
         icon: CheckCircle2,
-        bg: "bg-blue-500/20 backdrop-blur-sm border border-blue-400/50",
-        textColor: "text-blue-100",
-        iconColor: "text-blue-500",
+        bg: "bg-emerald-500/20 backdrop-blur-sm border border-emerald-400/50",
+        textColor: "text-emerald-100",
+        iconColor: "text-emerald-500",
         pulse: false
       },
-      ctaBg: "bg-blue-600 hover:bg-blue-700",
+      ctaBg: "bg-emerald-600 hover:bg-emerald-700",
       pulse: false
     },
     PRICE_SENSITIVE: {
@@ -126,15 +126,15 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       {/* Background Image - LCP Optimization */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={config.bgImage}
-          alt="Evde medikal cihaz kurulumu ve teknik süreç yönetimi - Eslamed İstanbul"
+          src="/assets/hero-bg.png"
+          alt="Eslamed Hero Background"
           fill
-          className="object-cover"
-          sizes="100vw"
-          priority
-          fetchPriority="high"
-          decoding="async"
+          priority={true}
           loading="eager"
+          fetchPriority="high"
+          quality={100}
+          className="object-cover object-center transition-opacity duration-700"
+          sizes="100vw"
         />
         <div className={`absolute inset-0 ${config.bgOverlay}`} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />

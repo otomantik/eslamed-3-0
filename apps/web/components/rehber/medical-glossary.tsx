@@ -82,7 +82,7 @@ export function MedicalGlossary({ terms, title = 'Terimler ve Kavramlar' }: Medi
             const termId = `term-${termSlug}`;
             
             return (
-              <div key={index} id={termId} className="rounded-xl border border-slate-200 bg-white p-6">
+              <div key={index} id={termId} className="rounded-xl border border-slate-200 bg-emerald-50/50 p-7">
                 <dt className="text-lg font-semibold text-slate-900 mb-2">
                   <a href={`#${termId}`} className="hover:underline" aria-label={`${item.term} tanımına git`}>
                     {item.term}

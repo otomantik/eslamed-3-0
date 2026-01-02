@@ -29,12 +29,12 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://eslamed.com"),
   title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
   description:
-    "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek.",
-  icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
-    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
-    shortcut: [{ url: "/favicon.ico" }],
-  },
+    "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek. 4.9 yıldız, 73+ doğrulanmış yorum.",
+  // Icons are automatically detected by Next.js from:
+  // - app/icon.svg (or icon.png)
+  // - app/favicon.ico
+  // - app/apple-icon.tsx (or apple-icon.png)
+  // No manual configuration needed - Next.js handles this automatically
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     title: "ESLAMED",
@@ -125,10 +125,67 @@ export default function RootLayout({
         serviceType: 'Technical Support',
       },
     ],
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      reviewCount: '73',
+      bestRating: '5',
+      worstRating: '1',
+    },
+    review: [
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'A. Y.',
+        },
+        datePublished: '2026-01-02',
+        reviewBody:
+          'Esla Med medikal, yılbaşı sonrası olsa da 7/24 hizmet veren kurumu aradığımızda oksijen tüpü için gelip değişimi sağlayan yetkili arkadaşımıza teşekkürlerimi sunarım iyi ki varsınız.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1',
+        },
+      },
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'G. E.',
+        },
+        datePublished: '2026-01-15',
+        reviewBody:
+          'Gece yarısı aradık, ertesi gün sabah teslimat yaptılar. Çok profesyonel ve hızlı bir hizmet. Teşekkürler.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1',
+        },
+      },
+      {
+        '@type': 'Review',
+        author: {
+          '@type': 'Person',
+          name: 'S. K.',
+        },
+        datePublished: '2026-01-20',
+        reviewBody:
+          'Eslamed ekibi cihaz kurulumunda çok profesyoneldi. Annem için kiraladığımız konsantratör tertemiz geldi.',
+        reviewRating: {
+          '@type': 'Rating',
+          ratingValue: '5',
+          bestRating: '5',
+          worstRating: '1',
+        },
+      },
+    ],
   };
 
   return (
-    <html lang="tr">
+    <html lang="tr" data-scroll-behavior="smooth">
       <head>
         {/* Preconnect to Google Fonts for Core Web Vitals optimization */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -71,18 +71,18 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
   }
 
   return (
-    <section className="py-20 bg-white">
+    <section className="py-20 bg-emerald-50">
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900 mb-4">
-            Hizmetler
+            Ürün/Hizmet
           </h2>
           <p className="text-base text-slate-600 max-w-2xl mx-auto">
             Kapsam ve süreç netliği için kısa başlıklar (ekipman uygunluğu, ev tipi cihaz kurulumu ve teknik destek)
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7">
           {orderedServices.map((service, index) => {
             const Icon = service.icon;
             const isRepair = service.id === 'repair';
@@ -93,23 +93,23 @@ export function ServiceMatrix({ intent }: ServiceMatrixProps) {
             return (
               <article
                 key={service.id}
-                className={`group relative bg-gradient-to-br from-white to-slate-50 rounded-2xl p-6 border-2 border-slate-200 hover:border-slate-300 transition-all hover:shadow-xl hover:-translate-y-1 ${colSpan}`}
+                className={`group relative bg-emerald-50/50 rounded-2xl p-9 border-2 border-emerald-200 hover:border-emerald-300 transition-all hover:shadow-xl hover:-translate-y-1 ${colSpan}`}
               >
                 <a
                   href={service.href}
                   aria-label={`${service.title} detayları`}
                   className="absolute inset-0 rounded-2xl"
                 />
-                <div className={`${service.color} w-12 h-12 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                <div className="bg-emerald-600 w-14 h-14 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform">
+                  <Icon className="w-7 h-7 text-white" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">
+                <h3 className="text-xl font-bold text-slate-900 mb-3">
                   {service.title}
                 </h3>
-                <p className="text-slate-600 text-sm leading-relaxed">
+                <p className="text-slate-600 text-base leading-relaxed">
                   {service.description}
                 </p>
-                <div className="mt-4 text-sm font-semibold text-slate-900 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                <div className="mt-5 text-sm font-semibold text-emerald-600 group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                   Detaylar →
                 </div>
               </article>

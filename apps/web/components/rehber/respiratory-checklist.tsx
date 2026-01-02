@@ -24,7 +24,7 @@ export function RespiratoryChecklist() {
   const [checked, setChecked] = useState<Record<string, boolean>>({});
 
   return (
-    <section aria-label="Cihaz Kontrol Listesi" className="rounded-3xl border border-slate-200 bg-white p-8">
+    <section aria-label="Cihaz Kontrol Listesi" className="rounded-3xl border border-slate-200 bg-emerald-50/50 p-9">
       <div className="flex items-center gap-2">
         <CheckCircle2 className="w-5 h-5 text-emerald-600" strokeWidth={1.5} />
         <h2 className="text-2xl font-semibold text-slate-900">Cihaz Kontrol Listesi</h2>

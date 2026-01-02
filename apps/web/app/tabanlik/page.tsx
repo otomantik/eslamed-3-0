@@ -116,6 +116,7 @@ export default function TabanlikPage() {
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent" />
                 <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-slate-200 px-3 py-2 text-slate-900 text-sm font-semibold">

@@ -36,7 +36,7 @@ export function QuickActionCard({
   return (
     <aside
       role="note"
-      className={`rounded-2xl border ${styles.wrapper} p-6 sm:p-7`}
+      className={`rounded-2xl border ${styles.wrapper} p-7 sm:p-8`}
     >
       <div className="flex items-start gap-3">
         <div

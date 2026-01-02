@@ -106,10 +106,15 @@ export default function Tracker() {
     prefIntent?: string
   ) => {
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || 
-        (typeof window !== 'undefined' && window.location.hostname === 'eslamed.com' 
-          ? 'https://eslamed.com/api' 
-          : 'http://localhost:8080');
+      // Use Next.js API route instead of external backend to avoid connection errors
+      const apiUrl = '/api/demand_logs';
+      
+      // Environment check: Always allow tracking since we use relative URL
+      // Relative URLs work in both development and production
+      if (typeof window === 'undefined') {
+        // Server-side: skip tracking
+        return;
+      }
       
       // Detect ad-blocker once per session
       const adblockKey = 'adblock_detected';
@@ -125,25 +130,23 @@ export default function Tracker() {
       const timeoutId = setTimeout(() => controller.abort(), 2000); // 2 saniye timeout
       
       try {
-        await fetch(`${apiUrl}/api/track/style.css`, {
+        await fetch(apiUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            type: eventType,
+            timestamp: Date.now(),
             vid: getVisitorId(),
             url: window.location.href,
             ref: document.referrer || 'direct',
-            events: [{
-              type: eventType,
-              timestamp: Date.now(),
-              session_id: getSessionId(),
-              scroll_depth: scrollDepth || 0,
-              element_id: elementId || '',
-              button_proximity: buttonProximity || 0,
-              call_duration_est: callDurationEst || 0,
-              pref_intent: prefIntent || getPrefIntent(),
-              is_adblock_detected: isAdblockDetected,
-              meta: meta || {}
-            }]
+            session_id: getSessionId(),
+            scroll_depth: scrollDepth || 0,
+            element_id: elementId || '',
+            button_proximity: buttonProximity || 0,
+            call_duration_est: callDurationEst || 0,
+            pref_intent: prefIntent || getPrefIntent(),
+            is_adblock_detected: isAdblockDetected,
+            meta: meta || {}
           }),
           keepalive: true,
           signal: controller.signal
@@ -151,21 +154,11 @@ export default function Tracker() {
         clearTimeout(timeoutId);
       } catch (fetchErr) {
         clearTimeout(timeoutId);
-        // Sadece ilk hatada logla, sonra sessizce devam et
-        const errorKey = 'track_error_logged';
-        if (!sessionStorage.getItem(errorKey)) {
-          sessionStorage.setItem(errorKey, 'true');
-          if (process.env.NODE_ENV === 'development') {
-            console.warn('Backend tracking unavailable (backend not running). This is normal in development.');
-          }
-        }
-        // Hata durumunda sessizce devam et, kullanıcı deneyimini bozma
+        // Silently fail - don't log errors to avoid console noise
+        // Tracking failures should not impact user experience
       }
     } catch (err) {
-      // Sadece beklenmeyen hataları logla
-      if (process.env.NODE_ENV === 'development' && err instanceof Error && !err.message.includes('aborted')) {
-        console.error('Unexpected track error:', err);
-      }
+      // Silently fail - tracking is non-critical
     }
   };
 

@@ -137,6 +137,7 @@ export default function NotFound() {
                   className="object-cover opacity-10"
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority
+                  loading="eager"
                 />
               </div>
             </div>

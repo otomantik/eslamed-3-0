@@ -196,7 +196,9 @@ export default function IstanbulPage() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  priority
+                  priority={true}
+                  fetchPriority="high"
+                  loading="eager"
                 />
                 <div className="absolute inset-0 bg-gradient-to-r from-black/20 via-transparent to-transparent" />
               </div>

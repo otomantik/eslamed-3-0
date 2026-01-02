@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/layout/navbar";
+import { MinimalistNavbar } from "@/components/layout/minimalist-navbar";
 import { GlobalAlertBar } from "@/components/sections/global-alert-bar";
 import { BrandTrustTicker } from "@/components/sections/brand-trust-ticker";
 import { ProductShowcase } from "@/components/sections/product-showcase";
@@ -6,10 +7,10 @@ import { ServiceValueGrid } from "@/components/sections/service-value-grid";
 import { DynamicHero } from "@/components/sections/hero/index";
 import { ServiceMatrix } from "@/components/sections/service-matrix";
 import { HyperLocalMap } from "@/components/sections/hyperlocal-map";
-import { LiveActivityTicker } from "@/components/sections/live-activity-ticker";
 import { FloatingRescueBar } from "@/components/sections/floating-rescue-bar";
 import { SmartFAQ } from "@/components/sections/smart-faq";
 import { TrustSafetyBridge } from "@/components/sections/trust-safety-bridge";
+import { WallOfTrust } from "@/components/sections/wall-of-trust";
 import { Footer } from "@/components/sections/footer";
 import { Suspense } from "react";
 import { detectIntent } from "@/lib/intent/detector";
@@ -48,25 +49,23 @@ export default async function Page({
   
   const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
 
-  // In URGENT mode, PanicRecoveryUI renders its own minimal header
   // In VIP mode, PremiumConciergeUI renders its own header
   // In RESEARCH mode and default, use standard Navbar
-  const shouldShowNavbar = intentResult.mode !== 'CRITICAL_EMERGENCY' && intentResult.mode !== 'TRUST_SEEKER';
+  const shouldShowNavbar = intentResult.mode !== 'TRUST_SEEKER';
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
       {/* Global Emergency Alert Bar (only if not in PanicRecoveryUI) */}
       {isEmergency && <GlobalAlertBar />}
       
-      {/* Navbar (hidden in URGENT/VIP mode - they have their own headers) */}
-      {shouldShowNavbar && <Navbar isEmergency={isEmergency} />}
+      {/* MinimalistNavbar for CRITICAL_EMERGENCY, Standard Navbar for others */}
+      {isEmergency ? (
+        <MinimalistNavbar />
+      ) : shouldShowNavbar ? (
+        <Navbar isEmergency={isEmergency} />
+      ) : null}
 
       <ModeWrapper serverMode={intentResult.mode}>
-
-        {/* Live Activity Ticker */}
-        <Suspense fallback={<TickerSkeleton />}>
-          <LiveActivityTicker />
-        </Suspense>
 
         {/* Dynamic Hero */}
         <DynamicHero intent={intentResult.mode} district={intentResult.district} />
@@ -83,12 +82,15 @@ export default async function Page({
         {/* Service Matrix */}
         <ServiceMatrix intent={intentResult.mode} />
 
+        {/* Wall of Trust (Google Ratings + Testimonials) - Between Services and Maps */}
+        <WallOfTrust />
+
         {/* HyperLocal Map */}
         <Suspense fallback={<MapSkeleton />}>
           <HyperLocalMap district={intentResult.district || 'Istanbul'} />
         </Suspense>
 
-        {/* Trust & Safety Bridge (before FAQ) */}
+        {/* Trust & Safety Bridge */}
         <TrustSafetyBridge />
 
         {/* Smart FAQ */}

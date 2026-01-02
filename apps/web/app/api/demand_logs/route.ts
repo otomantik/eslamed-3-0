@@ -12,6 +12,28 @@ export async function POST(req: Request) {
 
     // Handle different log types
     switch (body?.type) {
+      case 'pageview':
+        logData.url = body?.url;
+        logData.ref = body?.ref;
+        logData.vid = body?.vid;
+        logData.session_id = body?.session_id;
+        logData.meta = body?.meta;
+        break;
+      case 'click':
+        logData.element_id = body?.element_id;
+        logData.url = body?.url;
+        logData.button_proximity = body?.button_proximity;
+        logData.hover_duration = body?.hover_duration;
+        logData.vid = body?.vid;
+        logData.session_id = body?.session_id;
+        logData.meta = body?.meta;
+        break;
+      case 'scroll':
+        logData.scroll_depth = body?.scroll_depth;
+        logData.scroll_percentage = body?.scroll_percentage;
+        logData.vid = body?.vid;
+        logData.session_id = body?.session_id;
+        break;
       case 'catalog_no_result':
         logData.query = body?.query;
         logData.category = body?.category;
@@ -35,11 +57,21 @@ export async function POST(req: Request) {
         logData.subtype = body?.subtype; // e.g., 'High_Intent_Conversion_Signal'
         logData.intent_mode = body?.mode || body?.newMode; // Canonical field name for analytics
         break;
+      case 'feedback':
+      case 'feedback_submission':
+        logData.rating = body?.rating;
+        logData.comment = body?.comment;
+        logData.sessionId = body?.sessionId;
+        break;
       default:
+        // Generic event handling - preserve all fields
+        Object.assign(logData, body);
         // Legacy: search term logging
-        logData.term = body?.term;
-        logData.source = body?.source;
-        logData.ts = body?.ts;
+        if (body?.term) {
+          logData.term = body?.term;
+          logData.source = body?.source;
+          logData.ts = body?.ts;
+        }
     }
 
     // Mock for now: later forward to backend/ClickHouse demand_logs table.

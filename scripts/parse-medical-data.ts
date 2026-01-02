@@ -231,3 +231,4 @@ if (require.main === module) {
 
 export { calculateIntentWeights, generateSlug, generateMetaTitle };
 
+

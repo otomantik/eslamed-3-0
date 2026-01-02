@@ -10,6 +10,7 @@ export type IntentContextValue = {
   score: number;
   confidence: number;
   isLoading: boolean;
+  trackIntentShift?: (prev: IntentMode, next: IntentMode) => Promise<void>;
 };
 
 const IntentContext = createContext<IntentContextValue | undefined>(undefined);
@@ -38,12 +39,55 @@ export function IntentProvider({
   initialConfidence = 0.65,
 }: IntentProviderProps) {
   const searchParams = useSearchParams();
+  
+  // Load district from sessionStorage on mount for persistence
+  const [district, setDistrict] = useState<string | undefined>(() => {
+    if (typeof window !== 'undefined') {
+      const persistedDistrict = sessionStorage.getItem('eslamed_district');
+      return persistedDistrict || initialDistrict;
+    }
+    return initialDistrict;
+  });
+  
   const [mode, setMode] = useState<IntentMode>(initialMode);
-  const [district, setDistrict] = useState<string | undefined>(initialDistrict);
   const [score, setScore] = useState(initialScore);
   const [confidence, setConfidence] = useState(initialConfidence);
   const [isLoading, setIsLoading] = useState(false);
   const [previousMode, setPreviousMode] = useState<IntentMode | undefined>(initialMode);
+  
+  // Track intent shift function for High-Intent Conversion Signal
+  const trackIntentShift = async (prev: IntentMode, next: IntentMode) => {
+    if (prev === 'INFORMATION_SEEKER' && next === 'CRITICAL_EMERGENCY') {
+      // High-Intent Conversion Signal: Bu veri altın değerinde!
+      if (typeof window !== 'undefined') {
+        const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
+        sessionStorage.setItem('eslamed_session_id', sessionId);
+        
+        await fetch('/api/demand_logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'intent_shift',
+            subtype: 'High_Intent_Conversion_Signal',
+            previousMode: prev,
+            newMode: next,
+            sessionId,
+            timestamp: new Date().toISOString(),
+          }),
+          keepalive: true,
+        }).catch(() => {
+          // Silent fail for analytics
+        });
+      }
+    }
+  };
+  
+  // Persist district to sessionStorage whenever it changes
+  useEffect(() => {
+    if (typeof window !== 'undefined' && district) {
+      sessionStorage.setItem('eslamed_district', district);
+    }
+  }, [district]);
 
   useEffect(() => {
     // Extract mode from URL searchParams (e.g., ?mode=URGENT or ?mode=urgent)
@@ -110,6 +154,16 @@ export function IntentProvider({
 
     if (districtParam) {
       setDistrict(districtParam);
+      // Persist to sessionStorage immediately
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('eslamed_district', districtParam);
+      }
+    } else if (typeof window !== 'undefined') {
+      // If no district param, try to load from sessionStorage
+      const persistedDistrict = sessionStorage.getItem('eslamed_district');
+      if (persistedDistrict && !district) {
+        setDistrict(persistedDistrict);
+      }
     }
 
     // Log mode switch to demand_logs (if session ID exists)
@@ -154,6 +208,7 @@ export function IntentProvider({
         score,
         confidence,
         isLoading,
+        trackIntentShift,
       }}
     >
       {children}
