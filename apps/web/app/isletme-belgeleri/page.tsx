@@ -43,7 +43,15 @@ const licenses: LicenseItem[] = [
   },
 ];
 
-export default function IsletmeBelgeleriPage() {
+export default async function IsletmeBelgeleriPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  // Detect intent for mode-aware navbar
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent(resolvedParams);
+
   // Credentials schema (placeholders; no ratings/reviews/GBP)
   const jsonLd = {
     '@context': 'https://schema.org',
