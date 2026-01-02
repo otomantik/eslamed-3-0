@@ -142,7 +142,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
   const showComplianceBar = intent === 'TRUST_SEEKER' || intent === 'INFORMATION_SEEKER';
 
   return (
-    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-28 sm:pt-24 pb-0 group">
+    <section className="relative min-h-[90vh] flex items-center overflow-hidden pt-16 sm:pt-24 pb-0 group">
       {/* Background Image - LCP Optimization */}
       <div className="absolute inset-0 z-0">
         <Image

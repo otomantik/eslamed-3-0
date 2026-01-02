@@ -3,7 +3,6 @@ import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
 import Tracker from "@/components/analytics/Tracker";
-import { MobileFAB } from "@/components/ui/mobile-fab";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 import { IntentThemeProvider } from "@/context/theme-provider";
@@ -220,7 +219,6 @@ export default function RootLayout({
             <IntentThemeProvider>
               {children}
               <BottomNav />
-              <MobileFAB />
             </IntentThemeProvider>
           </IntentProviderWrapper>
         </Suspense>

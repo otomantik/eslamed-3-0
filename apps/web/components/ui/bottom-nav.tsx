@@ -1,28 +1,71 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { Home, Grid3x3, Search, Phone, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useIntent } from '@/context/IntentContext';
 
 /**
- * BottomNav: Persistent Bottom Control Center (Sovereign Seal v2)
- * Icons: Home, Services, Action (Logo), Search, Support
- * Logo button pops above bar with mode-based color
+ * BottomNav: Mobile CTA Consolidation - Medical Calm
+ * Icons: Home, Services, Primary Phone Action (Center), Search, WhatsApp
+ * Center button is primary phone action with pulse effect
  */
 export function BottomNav() {
   const pathname = usePathname();
   const { mode, district } = useIntent();
+  const [showPulse, setShowPulse] = useState(false);
+  const [mounted, setMounted] = useState(false);
   
   const isEmergency = mode === 'CRITICAL_EMERGENCY';
-  const isTrustSeeker = mode === 'TRUST_SEEKER';
   
-  // Mode-based logo color
-  const logoColor = isEmergency 
-    ? 'bg-red-600 hover:bg-red-700' 
-    : isTrustSeeker 
-    ? 'bg-blue-600 hover:bg-blue-700'
-    : 'bg-brand-primary hover:bg-blue-700';
+  // Build dynamic WhatsApp message with context
+  const buildWhatsAppMessage = () => {
+    const districtText = district ? `${district} bölgesinde ` : '';
+    const modeText = mode === 'CRITICAL_EMERGENCY' 
+      ? 'acil medikal ekipman desteği'
+      : mode === 'TRUST_SEEKER'
+      ? 'güvenilir medikal ekipman yönlendirmesi'
+      : mode === 'PRICE_SENSITIVE'
+      ? 'fiyat bilgisi ve şeffaf kapsam'
+      : mode === 'COMMERCIAL_RENTAL'
+      ? 'cihaz kiralama ve satış süreçleri'
+      : 'medikal ekipman bilgisi';
+    
+    return `Merhaba, ${districtText}${modeText} hakkında bilgi almak istiyorum.`;
+  };
+
+  const whatsAppUrl = `https://wa.me/905372425535?text=${encodeURIComponent(buildWhatsAppMessage())}`;
+
+  // Client-side only: Enable pulse after mount, disable after 5 seconds
+  useEffect(() => {
+    setMounted(true);
+    setShowPulse(true);
+    const timer = setTimeout(() => {
+      setShowPulse(false);
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Track function
+  const track = (eventName: string, data: { mode: string; district?: string }) => {
+    if (typeof window !== 'undefined') {
+      const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
+      fetch('/api/demand_logs', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'conversion',
+          subtype: eventName,
+          mode: data.mode,
+          district: data.district,
+          sessionId,
+          timestamp: new Date().toISOString(),
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    }
+  };
 
   const openSearch = () => {
     if (typeof window !== 'undefined') {
@@ -32,10 +75,14 @@ export function BottomNav() {
 
   const isActive = (path: string) => pathname === path;
 
+  // Center button label
+  const centerButtonLabel = isEmergency ? 'Acil Ara' : 'Hemen Ara';
+
   return (
     <nav 
-      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden backdrop-blur-xl bg-white/70 border-t border-slate-200/50 shadow-lg"
+      className="fixed bottom-0 left-0 right-0 z-40 lg:hidden backdrop-blur-lg bg-white/70 border-t border-slate-200/50 shadow-lg"
       style={{ 
+        height: '64px',
         paddingBottom: 'env(safe-area-inset-bottom, 0)',
       }}
     >
@@ -62,14 +109,24 @@ export function BottomNav() {
           <span className="text-xs font-semibold text-slate-900">Hizmetler</span>
         </Link>
 
-        {/* Logo Button (Action) - Pops above */}
-        <Link
-          href="/"
-          className={`relative -mt-4 w-14 h-14 ${logoColor} rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 z-50`}
-          aria-label="Ana Sayfa"
+        {/* Primary Phone Action (Center) - Pulse effect for first 5s */}
+        <a
+          href="tel:+905372425535"
+          onClick={() => track('cta_phone_primary', { mode, district })}
+          className={`relative -mt-4 w-14 h-14 ${
+            isEmergency ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'
+          } rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 z-50`}
+          style={{
+            boxShadow: mounted && showPulse 
+              ? `0 0 0 0 rgba(37, 99, 235, 0.2), 0 0 0 0 rgba(37, 99, 235, 0.2), 0 0 20px rgba(37, 99, 235, 0.1), 0 0 40px rgba(37, 99, 235, 0.05)`
+              : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+            animation: mounted && showPulse ? 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' : 'none',
+          }}
+          aria-label={centerButtonLabel}
+          title={centerButtonLabel}
         >
-          <span className="text-white font-bold text-xl">E</span>
-        </Link>
+          <Phone className="w-6 h-6 text-white" strokeWidth={2} />
+        </a>
 
         {/* Search */}
         <button
@@ -80,16 +137,13 @@ export function BottomNav() {
           <span className="text-xs font-semibold text-slate-900">Ara</span>
         </button>
 
-        {/* Support */}
+        {/* WhatsApp Support */}
         <a
-          href="tel:+905372425535"
-          className={`flex flex-col items-center justify-center gap-0.5 flex-1 transition-colors ${
-            isEmergency 
-              ? 'text-red-600 hover:text-red-700' 
-              : 'text-slate-600 hover:text-slate-900'
-          }`}
+          href={whatsAppUrl}
+          onClick={() => track('cta_whatsapp_bar', { mode, district })}
+          className="flex flex-col items-center justify-center gap-0.5 flex-1 text-emerald-600 hover:text-emerald-700 transition-colors"
         >
-          <Phone className="w-5 h-5" strokeWidth={1.5} />
+          <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
           <span className="text-xs font-semibold text-slate-900">Destek</span>
         </a>
       </div>
