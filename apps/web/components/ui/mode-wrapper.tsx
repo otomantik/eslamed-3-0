@@ -20,7 +20,7 @@ const StickyPanicBar = dynamic(() => import('./sticky-panic-bar').then((m) => ({
 });
 
 interface ModeWrapperProps {
-  children: ReactNode;
+  children?: ReactNode; // Optional for dynamic pages
   serverMode?: IntentMode; // Server-detected mode (for SSR)
 }
 
@@ -35,7 +35,7 @@ export function ModeWrapper({ children, serverMode }: ModeWrapperProps) {
   if (activeMode === 'CRITICAL_EMERGENCY') {
     return (
       <>
-        <PanicRecoveryUI>{children}</PanicRecoveryUI>
+        <PanicRecoveryUI>{children || null}</PanicRecoveryUI>
         <StickyPanicBar />
       </>
     );
@@ -43,16 +43,16 @@ export function ModeWrapper({ children, serverMode }: ModeWrapperProps) {
 
   // RESEARCH mode: EducationUI (auto-expand FAQ, comparison tables)
   if (activeMode === 'INFORMATION_SEEKER') {
-    return <EducationUI>{children}</EducationUI>;
+    return <EducationUI>{children || null}</EducationUI>;
   }
 
   // VIP mode: PremiumConciergeUI (serif fonts, premium copy)
   if (activeMode === 'TRUST_SEEKER') {
-    return <PremiumConciergeUI>{children}</PremiumConciergeUI>;
+    return <PremiumConciergeUI>{children || null}</PremiumConciergeUI>;
   }
 
   // DEFAULT: Render children as-is (standard UI)
-  return <>{children}</>;
+  return <>{children || null}</>;
 }
 
 
