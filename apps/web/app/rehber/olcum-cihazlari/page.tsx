@@ -13,7 +13,15 @@ export const metadata: Metadata = {
   alternates: { canonical: '/rehber/olcum-cihazlari' },
 };
 
-export default function OlcumCihazlariPage() {
+export default async function OlcumCihazlariPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}) {
+  // Detect intent for mode-aware navbar
+  const resolvedParams = await searchParams;
+  const intentResult = await detectIntent(resolvedParams);
+
   const speakableId = 'rehber-tansiyon-kural';
 
   const howToMeasureBp = {
