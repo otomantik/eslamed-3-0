@@ -25,10 +25,12 @@ export async function GET(req: Request) {
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     // Mock data structure matching UTS API response
-    // Official UTS No: 26672691179647
+    // Official UTS Firm No: 26672691179647
+    // Official ÇKYS Registration No: 5120489
     const mockVerificationData = {
       registered: true,
-      registrationNumber: '26672691179647', // Official UTS registration number
+      registrationNumber: '26672691179647', // Official UTS Firm Number
+      ckysRegistrationNumber: '5120489', // Official ÇKYS Registration Number
       verifiedAt: new Date().toISOString(),
       lastCalibrationDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days ago
       gmpCompliant: true,

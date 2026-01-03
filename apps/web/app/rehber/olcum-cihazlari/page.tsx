@@ -4,6 +4,8 @@ import { detectIntent } from '@/lib/intent/detector';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
+import { ExpertVerificationPanel } from '@/components/integrity/expert-verification-panel';
+import { ESLAMED_EXPERTS } from '@/lib/integrity/eslamed-experts';
 import { Activity, BadgeCheck, ClipboardList, Mic, PlaySquare } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -126,6 +128,16 @@ export default async function OlcumCihazlariPage({
               Dijital cihazlar zamanla sensör hassasiyeti ve manşet performansı açısından sapma gösterebilir. Yılda bir kez profesyonel
               kontrol/kalibrasyon, ölçüm güvenini artırır ve yanlış alarm riskini azaltır.
             </p>
+
+            {/* Expert Verification Panel */}
+            <div className="mt-8">
+              <ExpertVerificationPanel
+                expert={ESLAMED_EXPERTS.salih}
+                lastReviewDate="2026-01-03"
+                contentId="olcum-cihazlari-rehberi"
+                contentType="guide"
+              />
+            </div>
           </section>
 
           {/* How-to placeholders */}

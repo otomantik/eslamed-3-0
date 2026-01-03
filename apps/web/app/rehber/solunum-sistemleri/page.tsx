@@ -10,6 +10,8 @@ import { IconStrip } from '@/components/infographics/icon-strip';
 import { FlowInfographic } from '@/components/infographics/flow-infographic';
 import { ComingSoonCard } from '@/components/infographics/coming-soon-card';
 import { RespiratoryDeviceIllustration } from '@/components/infographics/respiratory-device-illustration';
+import { ExpertVerificationPanel } from '@/components/integrity/expert-verification-panel';
+import { ESLAMED_EXPERTS } from '@/lib/integrity/eslamed-experts';
 import { BatteryCharging, Droplets, Filter, Megaphone, PlaySquare, ArrowUpRight } from 'lucide-react';
 import { detectIntent } from '@/lib/intent/detector';
 
@@ -132,6 +134,16 @@ export default async function SolunumSistemleriPage({
 
           {/* Checklist */}
           <RespiratoryChecklist />
+
+          {/* Expert Verification Panel */}
+          <div className="mt-8">
+            <ExpertVerificationPanel
+              expert={ESLAMED_EXPERTS.salih}
+              lastReviewDate="2026-01-03"
+              contentId="solunum-sistemleri-rehberi"
+              contentType="guide"
+            />
+          </div>
 
           {/* Why: distilled water - Hybrid Infographic */}
           <section className="rounded-3xl border border-slate-200 bg-white p-8">
