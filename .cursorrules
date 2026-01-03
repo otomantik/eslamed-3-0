@@ -40,7 +40,7 @@ When processing any request, follow the "Check-Verify-Anchor" loop to prevent ha
 
 ### 1. Strict Retrieval (RAG)
 Before generating content about business credentials:
-- ✅ **MUST** reference `/public/assets/documents/` for official documents (UTS, License, Authority)
+- ✅ **MUST** reference `/assets/documents/` for official documents (UTS, License, Authority) (NOT `/public/assets/documents/` - Next.js public folder is root-mapped)
 - ✅ **MUST** verify against Reality Anchors above
 - ✅ **MUST** check ExpertVerificationPanel data source
 
