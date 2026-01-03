@@ -26,9 +26,9 @@ export function QuickActionCard({
           ),
         }
       : {
-          wrapper: 'bg-blue-50 border-blue-200',
+          wrapper: 'bg-[#F8FAFC] border-slate-200',
           title: 'text-slate-900',
-          body: 'text-slate-700',
+          body: 'text-slate-900',
           iconWrap: 'bg-white/70 border-blue-200',
           defaultIcon: <Info className="w-5 h-5 text-blue-700" strokeWidth={1.5} />,
         };

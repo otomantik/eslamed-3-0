@@ -118,37 +118,63 @@ export function IntentProvider({
       if (validModes.includes(normalizedMode as IntentMode)) {
         const newMode = normalizedMode as IntentMode;
         
-        // Track intent mode shift for conversion signals
-        setPreviousMode((prev) => {
-          const oldMode = prev || mode;
-          
-          // Detect high-intent conversion: research -> urgent
-          if (oldMode === 'INFORMATION_SEEKER' && newMode === 'CRITICAL_EMERGENCY') {
-            // Log High_Intent_Conversion_Signal
-            if (typeof window !== 'undefined') {
-              const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
-              fetch('/api/demand_logs', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  type: 'intent_shift',
-                  subtype: 'High_Intent_Conversion_Signal',
-                  previousMode: oldMode,
-                  newMode: newMode,
-                  sessionId,
-                  timestamp: new Date().toISOString(),
-                }),
-                keepalive: true,
-              }).catch(() => {
-                // Silent fail
-              });
+        // Only update and log if mode actually changed
+        if (newMode !== mode) {
+          // Track intent mode shift for conversion signals
+          setPreviousMode((prev) => {
+            const oldMode = prev || mode;
+            
+            // Detect high-intent conversion: research -> urgent
+            if (oldMode === 'INFORMATION_SEEKER' && newMode === 'CRITICAL_EMERGENCY') {
+              // Log High_Intent_Conversion_Signal
+              if (typeof window !== 'undefined') {
+                const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
+                fetch('/api/demand_logs', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({
+                    type: 'intent_shift',
+                    subtype: 'High_Intent_Conversion_Signal',
+                    previousMode: oldMode,
+                    newMode: newMode,
+                    sessionId,
+                    timestamp: new Date().toISOString(),
+                  }),
+                  keepalive: true,
+                }).catch(() => {
+                  // Silent fail
+                });
+              }
             }
-          }
+            
+            return oldMode;
+          });
           
-          return oldMode;
-        });
-        
-        setMode(newMode);
+          setMode(newMode);
+
+          // Log mode switch to demand_logs (ONLY when mode actually changes)
+          if (typeof window !== 'undefined') {
+            const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
+            sessionStorage.setItem('eslamed_session_id', sessionId);
+
+            // Fire-and-forget logging
+            fetch('/api/demand_logs', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'intent_switch',
+                mode: newMode,
+                originalParam: modeParam,
+                district: districtParam || null,
+                sessionId,
+                timestamp: new Date().toISOString(),
+              }),
+              keepalive: true,
+            }).catch(() => {
+              // Silent fail
+            });
+          }
+        }
       }
     }
 
@@ -165,40 +191,7 @@ export function IntentProvider({
         setDistrict(persistedDistrict);
       }
     }
-
-    // Log mode switch to demand_logs (if session ID exists)
-    if (modeParam && typeof window !== 'undefined') {
-      const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
-      sessionStorage.setItem('eslamed_session_id', sessionId);
-
-      // Resolve final mode for logging
-      const modeAliases: Record<string, IntentMode> = {
-        'urgent': 'CRITICAL_EMERGENCY',
-        'research': 'INFORMATION_SEEKER',
-        'vip': 'TRUST_SEEKER',
-        'price': 'PRICE_SENSITIVE',
-        'rental': 'COMMERCIAL_RENTAL',
-      };
-      const finalMode = modeAliases[modeParam.toLowerCase()] || modeParam.toUpperCase();
-
-      // Fire-and-forget logging
-      fetch('/api/demand_logs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'intent_switch',
-          mode: finalMode,
-          originalParam: modeParam,
-          district: districtParam || null,
-          sessionId,
-          timestamp: new Date().toISOString(),
-        }),
-        keepalive: true,
-      }).catch(() => {
-        // Silent fail
-      });
-    }
-  }, [searchParams]);
+  }, [searchParams, mode, district]);
 
   return (
     <IntentContext.Provider

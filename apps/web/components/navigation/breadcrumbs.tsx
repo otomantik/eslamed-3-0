@@ -11,14 +11,15 @@ export type BreadcrumbItem = {
 
 interface BreadcrumbsProps {
   items?: BreadcrumbItem[]; // Optional: if provided, use it; otherwise auto-generate from pathname
+  className?: string;
 }
 
-export function Breadcrumbs({ items }: BreadcrumbsProps) {
+export function Breadcrumbs({ items, className }: BreadcrumbsProps) {
   const pathname = usePathname();
   const breadcrumbItems = items || getBreadcrumbsForPath(pathname);
 
   return (
-    <nav aria-label="Breadcrumb" className="text-sm text-slate-700">
+    <nav aria-label="Breadcrumb" className={`text-sm ${className || 'text-slate-700'}`}>
       <ol className="flex flex-wrap items-center gap-2">
         {breadcrumbItems.map((item, idx) => {
           const isLast = idx === breadcrumbItems.length - 1;

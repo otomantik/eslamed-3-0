@@ -1,13 +1,26 @@
 'use client';
 
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, AlertCircle, MessageCircle } from 'lucide-react';
+import { LiveServiceTracking } from '@/components/integrity/live-service-tracking';
 
 /**
  * EmergencySteps: CRITICAL_EMERGENCY mode specific section
  * Shows step-by-step emergency guide
  */
 export function EmergencySteps() {
+  const [showTracking, setShowTracking] = useState(false);
+  const [serviceRequestId, setServiceRequestId] = useState<string | null>(null);
+
+  // Simulate service request creation when user calls
+  const handleEmergencyCall = () => {
+    // In production, this would be triggered by actual service request creation
+    const requestId = `SR-${Date.now()}`;
+    setServiceRequestId(requestId);
+    setShowTracking(true);
+  };
+
   const steps = [
     {
       step: '1',
@@ -72,6 +85,7 @@ export function EmergencySteps() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <motion.a
               href="tel:+905372425535"
+              onClick={handleEmergencyCall}
               className="min-h-[64px] inline-flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -82,6 +96,7 @@ export function EmergencySteps() {
             </motion.a>
             <motion.a
               href="https://wa.me/905372425535?text=Acil%20teknik%20destek%20ihtiyacım%20var"
+              onClick={handleEmergencyCall}
               className="min-h-[64px] inline-flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
@@ -91,6 +106,21 @@ export function EmergencySteps() {
               <span>WhatsApp Destek</span>
             </motion.a>
           </div>
+
+          {/* Live Service Tracking */}
+          {showTracking && serviceRequestId && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-8"
+            >
+              <LiveServiceTracking
+                serviceRequestId={serviceRequestId}
+                customerAddress="İstanbul, Türkiye"
+                onClose={() => setShowTracking(false)}
+              />
+            </motion.div>
+          )}
         </div>
       </div>
     </section>

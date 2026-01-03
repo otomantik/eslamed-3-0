@@ -62,3 +62,4 @@ export function EmptyState({ query, category, onClearFilters }: EmptyStateProps)
 }
 
 
+

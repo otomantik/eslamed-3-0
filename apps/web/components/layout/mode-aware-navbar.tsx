@@ -36,3 +36,4 @@ export function ModeAwareNavbar({ serverMode }: ModeAwareNavbarProps) {
   return <Navbar isEmergency={false} />;
 }
 
+

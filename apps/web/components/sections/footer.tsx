@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ShieldCheck, Phone, MapPin, Clock } from 'lucide-react';
+import { ShieldCheck, Phone, MapPin, Clock, Database } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -41,9 +41,9 @@ export function Footer() {
                 <Phone className="w-4 h-4 text-slate-400" />
                 <span>Planlı Teknik Destek & Bilgi Hattı</span>
               </li>
-              <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-slate-400" />
-                <span>İstanbul Genel Operasyon Merkezi</span>
+              <li className="flex items-start gap-2">
+                <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
+                <span>Alemdağ Mah. Atabey Cad. No:19/E1A, Çekmeköy, İstanbul</span>
               </li>
               <li className="flex items-center gap-2 italic text-slate-500">
                 <Clock className="w-4 h-4" />
@@ -59,6 +59,12 @@ export function Footer() {
               <li><Link href="/isletme-belgeleri" className="hover:underline transition-all">İşletme Belgeleri</Link></li>
               <li><Link href="/kvkk" className="hover:underline transition-all">KVKK Aydınlatma Metni</Link></li>
               <li><Link href="/gizlilik" className="hover:underline transition-all">Gizlilik Politikası</Link></li>
+              <li>
+                <Link href="/veri-portali" className="hover:underline transition-all flex items-center gap-1.5 text-emerald-700 font-medium">
+                  <Database className="w-3.5 h-3.5" strokeWidth={2} />
+                  Veri Portali (EHDS)
+                </Link>
+              </li>
               <li><Link href="/hizmetler" className="hover:underline transition-all border-t border-slate-200 block pt-2 mt-2 font-medium">Tüm Hizmetler</Link></li>
               <li><Link href="/iletisim" className="hover:underline transition-all font-medium">Bize Ulaşın</Link></li>
             </ul>

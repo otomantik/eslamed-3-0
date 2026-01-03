@@ -81,8 +81,15 @@ export function MedicalGlossary({ terms, title = 'Terimler ve Kavramlar' }: Medi
             const termSlug = item.term.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
             const termId = `term-${termSlug}`;
             
+            // Alternate background for "ladder" effect
+            const bgClass = index % 2 === 0 ? 'bg-white' : 'bg-slate-50/30';
+            
             return (
-              <div key={index} id={termId} className="rounded-xl border border-slate-200 bg-emerald-50/50 p-7">
+              <div
+                key={index}
+                id={termId}
+                className={`rounded-xl border-l-4 border-blue-500/20 border border-slate-200 ${bgClass} p-7 transition-all hover:shadow-md hover:border-blue-500/40`}
+              >
                 <dt className="text-lg font-semibold text-slate-900 mb-2">
                   <a href={`#${termId}`} className="hover:underline" aria-label={`${item.term} tanımına git`}>
                     {item.term}

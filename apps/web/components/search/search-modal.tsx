@@ -263,14 +263,7 @@ export function SearchModal() {
     }).catch(() => {});
   }, [open, q, results.length, fuse]);
 
-  if (!open) return null;
-
-  const nq = normalizeQuery(q);
-  const showEmpty = nq.length > 0 && results.length === 0;
-  const guides = results.filter((r) => r.kind === 'guide');
-  const equipment = results.filter((r) => (r.kind || 'equipment') === 'equipment' || r.kind === 'vip');
-
-  // Top searches based on mode
+  // Top searches based on mode (must be before early return to maintain hook order)
   const topSearches = useMemo(() => {
     if (mode === 'PRICE_SENSITIVE') {
       return [
@@ -304,6 +297,14 @@ export function SearchModal() {
       ];
     }
   }, [mode]);
+
+  // Early return after all hooks to maintain hook order consistency
+  if (!open) return null;
+
+  const nq = normalizeQuery(q);
+  const showEmpty = nq.length > 0 && results.length === 0;
+  const guides = results.filter((r) => r.kind === 'guide');
+  const equipment = results.filter((r) => (r.kind || 'equipment') === 'equipment' || r.kind === 'vip');
 
   return (
     <div

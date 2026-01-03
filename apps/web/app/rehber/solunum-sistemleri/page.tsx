@@ -6,6 +6,10 @@ import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { RespiratoryChecklist } from '@/components/rehber/respiratory-checklist';
 import { MedicalGlossary } from '@/components/rehber/medical-glossary';
+import { IconStrip } from '@/components/infographics/icon-strip';
+import { FlowInfographic } from '@/components/infographics/flow-infographic';
+import { ComingSoonCard } from '@/components/infographics/coming-soon-card';
+import { RespiratoryDeviceIllustration } from '@/components/infographics/respiratory-device-illustration';
 import { BatteryCharging, Droplets, Filter, Megaphone, PlaySquare, ArrowUpRight } from 'lucide-react';
 import { detectIntent } from '@/lib/intent/detector';
 
@@ -74,7 +78,7 @@ export default async function SolunumSistemleriPage({
 
       <ModeAwareNavbar serverMode={intentResult.mode} />
 
-      <header className="pt-28 sm:pt-24">
+      <header className="pt-28 sm:pt-24 pb-12">
         <div className="container-wide">
           <Breadcrumbs
             items={[
@@ -82,13 +86,26 @@ export default async function SolunumSistemleriPage({
               { label: 'Tıbbi Rehber', href: '/#vip-hizmetler' },
               { label: 'Solunum Sistemleri' },
             ]}
+            className="text-slate-400"
           />
-          <h1 className="mt-6 text-3xl sm:text-4xl font-display font-semibold text-slate-900">
-            Solunum Sistemleri Rehberi
-          </h1>
-          <p className="mt-3 text-base text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-            Bu sayfa, solunum destek cihazlarında günlük kullanım ve teknik güvenlik için hazırlanmıştır. Tanı veya tedavi yerine geçmez.
-          </p>
+          
+          {/* Hero Layout - 2 Column Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 items-center">
+            {/* Left Side: Title and Description */}
+            <div className="space-y-4 order-2 md:order-1">
+              <h1 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900">
+                Solunum Sistemleri Rehberi
+              </h1>
+              <p className="text-base text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                Bu sayfa, solunum destek cihazlarında günlük kullanım ve teknik güvenlik için hazırlanmıştır. Tanı veya tedavi yerine geçmez.
+              </p>
+            </div>
+            
+            {/* Right Side: Visual Illustration */}
+            <div className="order-1 md:order-2">
+              <RespiratoryDeviceIllustration />
+            </div>
+          </div>
         </div>
       </header>
 
@@ -110,12 +127,15 @@ export default async function SolunumSistemleriPage({
             </div>
           </QuickActionCard>
 
+          {/* Icon Strip - Visual Preparation */}
+          <IconStrip />
+
           {/* Checklist */}
           <RespiratoryChecklist />
 
-          {/* Why: distilled water */}
+          {/* Why: distilled water - Hybrid Infographic */}
           <section className="rounded-3xl border border-slate-200 bg-white p-8">
-            <div className="flex items-start gap-3">
+            <div className="flex items-start gap-3 mb-6">
               <div className="w-11 h-11 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center flex-shrink-0">
                 <Droplets className="w-5 h-5 text-slate-700" strokeWidth={1.5} />
               </div>
@@ -127,35 +147,74 @@ export default async function SolunumSistemleriPage({
                 </p>
               </div>
             </div>
+
+            {/* Flow Infographic - 2 Column Layout */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+              {/* Left: Narrative Text (hidden on mobile, shown on desktop) */}
+              <div className="hidden lg:block">
+                <div className="p-4 bg-blue-50/30 rounded-xl border border-blue-100">
+                  <p className="text-sm text-slate-700 leading-relaxed" style={{ lineHeight: 1.8 }}>
+                    <strong className="text-slate-900">Teknik Not:</strong> Musluk suyundaki mineraller (özellikle kalsiyum ve magnezyum) zamanla cihaz içinde birikir ve performansı düşürür. Saf su kullanımı bu birikimi önler ve cihazın uzun ömürlü çalışmasını destekler.
+                  </p>
+                </div>
+              </div>
+
+              {/* Right: Flow Diagram */}
+              <div className="lg:col-span-1">
+                <FlowInfographic
+                  steps={[
+                    {
+                      icon: 'X',
+                      label: 'Musluk Suyu',
+                      status: 'negative',
+                      description: 'Kireç riski',
+                    },
+                    {
+                      icon: 'AlertTriangle',
+                      label: 'Kireç Birikimi',
+                      status: 'warning',
+                      description: 'Performans düşer',
+                    },
+                    {
+                      icon: 'TrendingDown',
+                      label: 'Cihaz Ömrü',
+                      status: 'negative',
+                      description: 'Kısalır',
+                    },
+                  ]}
+                  orientation="horizontal"
+                />
+              </div>
+            </div>
           </section>
 
-          {/* How-to placeholders */}
+          {/* How-to - Intentional Coming Soon Cards */}
           <section className="rounded-3xl border border-slate-200 bg-white p-8">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mb-6">
               <PlaySquare className="w-5 h-5 text-slate-700" strokeWidth={1.5} />
-              <h2 className="text-2xl font-semibold text-slate-900">Nasıl yapılır (yakında)</h2>
+              <h2 className="text-2xl font-semibold text-slate-900">Görsel Anlatımlar</h2>
             </div>
-            <p className="mt-3 text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-              Aşağıdaki alanlar, ileride eklenecek kısa video veya fotoğraf anlatımları için yer tutucudur.
+            <p className="mt-3 text-slate-600 leading-relaxed mb-6" style={{ lineHeight: 1.8 }}>
+              Aşağıdaki görsel anlatımlar teknik ekip tarafından hazırlanmaktadır.
             </p>
 
-            <div className="mt-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <figure className="rounded-2xl border border-slate-200 bg-blue-50/40 overflow-hidden">
-                <div className="aspect-video flex items-center justify-center text-slate-600 font-semibold">
-                  [PLACEHOLDER: Filtre Temizliği Video/Fotoğraf]
-                </div>
-                <figcaption className="p-4 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                  Oksijen filtresi temizliği (model bazlı farklılıklar olabilir).
-                </figcaption>
-              </figure>
-              <figure className="rounded-2xl border border-slate-200 bg-blue-50/40 overflow-hidden">
-                <div className="aspect-video flex items-center justify-center text-slate-600 font-semibold">
-                  [PLACEHOLDER: Cihaz Uyarı Sesleri ve Anlamları]
-                </div>
-                <figcaption className="p-4 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                  “Cihaz ötüyor” durumunda temel kontrol adımları.
-                </figcaption>
-              </figure>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <div>
+                <ComingSoonCard
+                  title="Filtre Temizliği Görsel Anlatımı"
+                  subtitle="Oksijen filtresi temizliği adımları (model bazlı farklılıklar olabilir)"
+                  icon="video"
+                  badge="Teknik Ekip Onaylı"
+                />
+              </div>
+              <div>
+                <ComingSoonCard
+                  title="Cihaz Uyarı Sesleri ve Anlamları"
+                  subtitle="Cihaz ötüyor durumunda temel kontrol adımları ve çözüm önerileri"
+                  icon="camera"
+                  badge="Teknik Ekip Onaylı"
+                />
+              </div>
             </div>
           </section>
 
@@ -184,7 +243,7 @@ export default async function SolunumSistemleriPage({
                 term: 'Satürasyon',
                 definition:
                   'Kandaki oksijen doygunluğu. Oksimetre cihazları ile ölçülür ve normal değer genellikle %95-100 arasındadır. Düşük satürasyon değerleri hekim değerlendirmesi gerektirir.',
-                externalUrl: 'https://www.who.int/health-topics/oxygen-therapy',
+                externalUrl: 'https://www.who.int/health-topics/oxygen',
                 source: 'WHO',
               },
               {

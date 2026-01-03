@@ -80,23 +80,49 @@ export function WallOfTrust() {
             {/* Trust Badges Grid */}
             <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
               {[
-                { label: 'ISO 13485', icon: ShieldCheck },
-                { label: 'CE Uygunluk', icon: CheckCircle2 },
-                { label: 'ÜTS Kayıtlı', icon: CheckCircle2 },
-                { label: '15+ Yıl Deneyim', icon: CheckCircle2 },
-                { label: 'TSE Onaylı', icon: CheckCircle2 },
+                { label: 'ISO 13485', icon: ShieldCheck, href: null },
+                { label: 'CE Uygunluk', icon: CheckCircle2, href: null },
+                { label: 'ÜTS Kayıtlı', icon: CheckCircle2, href: '/assets/documents/uts-firma-kayit-belgesi.pdf' },
+                { label: '15+ Yıl Deneyim', icon: CheckCircle2, href: null },
+                { label: 'TSE Onaylı', icon: CheckCircle2, href: null },
               ].map((badge, index) => {
                 const Icon = badge.icon;
-                return (
+                const BadgeContent = (
+                  <>
+                    <Icon className="w-6 h-6 text-emerald-600" strokeWidth={1.5} />
+                    <span className="text-xs font-semibold text-slate-700 text-center">{badge.label}</span>
+                  </>
+                );
+                
+                return badge.href ? (
+                  <a
+                    key={index}
+                    href={badge.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all cursor-pointer"
+                  >
+                    {BadgeContent}
+                  </a>
+                ) : (
                   <div
                     key={index}
                     className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all"
                   >
-                    <Icon className="w-6 h-6 text-emerald-600" strokeWidth={1.5} />
-                    <span className="text-xs font-semibold text-slate-700 text-center">{badge.label}</span>
+                    {BadgeContent}
                   </div>
                 );
               })}
+              {/* İşletme Ruhsatı badge as separate clickable */}
+              <a
+                href="/assets/documents/isyeri-acma-ve-calisma-ruhsati.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all cursor-pointer"
+              >
+                <ShieldCheck className="w-6 h-6 text-emerald-600" strokeWidth={1.5} />
+                <span className="text-xs font-semibold text-slate-700 text-center">İşletme Ruhsatı</span>
+              </a>
             </div>
           </div>
         </div>

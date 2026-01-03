@@ -24,19 +24,20 @@ export default async function IletisimPage({
   const lng = 29.1826;
 
   const mapsDirections = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-    'Alemdağ Mah. Atabey Caddesi 19/BA, Çekmeköy/İstanbul'
+    'Alemdağ Mah. Atabey Cad. No:19/E1A, Çekmeköy, İstanbul'
   )}&destination_place_id=&travelmode=driving`;
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
     '@id': 'https://www.eslamed.com/#business',
-    name: 'Eslamed',
+    name: 'ESLAMED MEDİKAL - SALİH CEVHEROĞLU',
+    alternateName: 'ESLAMED',
     url: 'https://www.eslamed.com/',
     telephone: '+905372425535',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Alemdağ Mah. Atabey Caddesi 19/BA',
+      streetAddress: 'Alemdağ Mah. Atabey Cad. No:19/E1A',
       addressLocality: 'Çekmeköy',
       addressRegion: 'İstanbul',
       postalCode: '34797',
@@ -106,7 +107,7 @@ export default async function IletisimPage({
             <h2 className="text-xl font-semibold text-slate-900">Adres ve iletişim</h2>
             <address className="mt-4 not-italic text-slate-700" style={{ lineHeight: 1.8 }}>
               <div className="font-semibold text-slate-900">ESLAMED</div>
-              Alemdağ Mah. Atabey Caddesi 19/BA
+              Alemdağ Mah. Atabey Cad. No:19/E1A
               <br />
               Çekmeköy / İstanbul, <span className="font-mono">34797</span>
               <br />

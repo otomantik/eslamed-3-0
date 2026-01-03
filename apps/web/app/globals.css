@@ -47,6 +47,47 @@
   }
 }
 
+/* Interactive SVG Parts - Hover and Touch Effects for Field Tech Demos */
+.medical-bed-part,
+.wheelchair-part {
+  transition: filter 0.2s ease, stroke-width 0.2s ease;
+  cursor: pointer;
+}
+
+.medical-bed-part:hover,
+.wheelchair-part:hover {
+  filter: brightness(1.15);
+}
+
+.medical-bed-part:active,
+.wheelchair-part:active {
+  filter: brightness(1.25);
+  stroke-width: 3px;
+}
+
+/* Brake Lever Pulse Animation - For Guide Pages */
+@keyframes brake-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.05);
+  }
+}
+
+.brake-lever-pulse {
+  animation: brake-pulse 2s ease-in-out infinite;
+}
+
+/* SVG Container Enhancements */
+.medical-bed-svg,
+.wheelchair-svg {
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
 /* Ensure marquee container doesn't break layout */
 .animate-marquee {
   display: flex;

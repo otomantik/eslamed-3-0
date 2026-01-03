@@ -5,14 +5,14 @@ import { useSearchParams, useRouter } from 'next/navigation';
 import {
   Activity,
   Bed,
-  Filter as FilterIcon,
+  RotateCcw,
   Footprints,
   Stethoscope,
   Wind,
 } from 'lucide-react';
 import type { SearchItem } from '@/lib/search/search-config';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
-import { CatalogSkeleton } from '@/components/catalog/skeleton';
+import { CatalogSkeleton } from './skeleton';
 import { VirtualizedCatalog } from './virtualized-catalog';
 import { useIntent } from '@/context/IntentContext';
 import { filterByCategoryAndMode, sortByIntentWeight, fuzzySearchWithIntent } from '@/lib/search/intent-ranking';
@@ -28,22 +28,37 @@ type Category = {
   items: SearchItem[];
 };
 
-function makeWhatsAppLink(title: string) {
-  return `https://wa.me/905372425535?text=${encodeURIComponent(
-    `Merhaba, ${title} hakkında kurulum ve fiyat bilgisi almak istiyorum.`
-  )}`;
+interface UnifiedFilters {
+  query: string;
+  categoryId: string;
+  filterTag: FilterKey | 'all';
 }
 
+/**
+ * CatalogExplorer: Unified equipment catalog with consistent state management
+ * - Single source of truth for filters (query, category, filter tags)
+ * - Correct count displays (filtered results)
+ * - URL sync for shareable links
+ * - Reset button instead of confusing "Tek tık filtre"
+ */
 export function CatalogExplorer() {
   const params = useSearchParams();
   const router = useRouter();
   const { mode } = useIntent();
   const [raw, setRaw] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [activeCategoryId, setActiveCategoryId] = useState<string>('all');
-  const [activeFilter, setActiveFilter] = useState<FilterKey | 'all'>('all');
   const [ghostLoading, setGhostLoading] = useState(false);
+  const [fuzzyResults, setFuzzyResults] = useState<SearchItem[]>([]);
+  const [isFuzzySearching, setIsFuzzySearching] = useState(false);
 
+  // Unified filter state - single source of truth
+  const [filters, setFilters] = useState<UnifiedFilters>({
+    query: params.get('query') || '',
+    categoryId: params.get('category') || 'all',
+    filterTag: (params.get('filter') as FilterKey) || 'all',
+  });
+
+  // Load search index
   useEffect(() => {
     let cancelled = false;
     (async () => {
@@ -60,11 +75,25 @@ export function CatalogExplorer() {
     };
   }, []);
 
-  const { equipmentCategories, totalProducts } = useMemo(() => {
-    if (!raw) return { equipmentCategories: [] as Category[], totalProducts: 2500 };
+  // Initialize filters from URL on mount
+  useEffect(() => {
+    if (loading) return;
+    const queryParam = params.get('query') || '';
+    const categoryParam = params.get('category') || 'all';
+    const filterParam = (params.get('filter') as FilterKey) || 'all';
+    
+    setFilters({
+      query: queryParam,
+      categoryId: categoryParam,
+      filterTag: filterParam,
+    });
+  }, [loading, params]);
+
+  // Build equipment categories
+  const { equipmentCategories, allEquipment } = useMemo(() => {
+    if (!raw) return { equipmentCategories: [] as Category[], allEquipment: [] as SearchItem[] };
     const normalized = normalizeSearchIndex(raw);
     const allItems = normalized.items;
-    const total = normalized.totalProducts;
 
     const equipment = allItems.filter((i) => (i.kind || 'equipment') === 'equipment');
 
@@ -97,53 +126,42 @@ export function CatalogExplorer() {
       })),
     ];
 
-    return { equipmentCategories: cats, totalProducts: total };
+    return { equipmentCategories: cats, allEquipment: equipment };
   }, [raw]);
 
   const activeCategory = useMemo(() => {
-    return equipmentCategories.find((c) => c.id === activeCategoryId) || equipmentCategories[0];
-  }, [equipmentCategories, activeCategoryId]);
+    return equipmentCategories.find((c) => c.id === filters.categoryId) || equipmentCategories[0];
+  }, [equipmentCategories, filters.categoryId]);
 
-  // Support pre-applied filters from URL params (e.g. /ekipmanlar?category=solunum&mode=urgent)
+  // Update URL when filters change (only if params actually changed)
   useEffect(() => {
     if (loading) return;
-    if (!equipmentCategories.length) return;
+    
+    const newParams = new URLSearchParams();
+    if (filters.query) newParams.set('query', filters.query);
+    if (filters.categoryId !== 'all') newParams.set('category', filters.categoryId);
+    if (filters.filterTag !== 'all') newParams.set('filter', filters.filterTag);
+    if (mode) newParams.set('mode', mode);
 
-    const filterParam = (params.get('filter') || '').toLowerCase();
-    const catParamRaw = (params.get('category') || '').toLowerCase();
-    const modeParam = params.get('mode');
+    // Compare current URL params with desired params
+    const currentParams = new URLSearchParams(params.toString());
+    
+    const paramsChanged = 
+      currentParams.get('query') !== newParams.get('query') ||
+      currentParams.get('category') !== newParams.get('category') ||
+      currentParams.get('filter') !== newParams.get('filter') ||
+      currentParams.get('mode') !== newParams.get('mode');
 
-    if (filterParam === 'kurulum' || filterParam === 'kiralik' || filterParam === 'vip' || filterParam === 'all') {
-      setActiveFilter(filterParam as any);
+    // Only update URL if params actually changed
+    if (paramsChanged) {
+      const newUrl = `/ekipmanlar${newParams.toString() ? `?${newParams.toString()}` : ''}`;
+      router.replace(newUrl, { scroll: false });
     }
+  }, [filters, mode, router, loading, params]);
 
-    if (catParamRaw) {
-      const normalizedCat = catParamRaw.replace(/\s+/g, '-');
-      const found =
-        equipmentCategories.find((c) => c.id === normalizedCat) ||
-        equipmentCategories.find((c) => c.label.toLowerCase() === catParamRaw) ||
-        equipmentCategories.find((c) => c.label.toLowerCase().replace(/\s+/g, '-') === normalizedCat);
-      if (found) setActiveCategoryId(found.id);
-    }
-
-    // Update URL if mode changes (for shareable links)
-    if (modeParam && modeParam !== mode) {
-      const newParams = new URLSearchParams(params.toString());
-      newParams.set('mode', mode);
-      router.replace(`/ekipmanlar?${newParams.toString()}`, { scroll: false });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [loading, equipmentCategories.length, mode]);
-
-  // Intent-based filtering and ranking with fuzzy search
-  const [fuzzyResults, setFuzzyResults] = useState<SearchItem[]>([]);
-  const [isFuzzySearching, setIsFuzzySearching] = useState(false);
-
-  const query = params.get('query');
-
-  // Fuzzy search effect (async)
+  // Fuzzy search effect
   useEffect(() => {
-    if (!query || query.trim().length === 0 || !mode) {
+    if (!filters.query || filters.query.trim().length === 0 || !mode) {
       setFuzzyResults([]);
       setIsFuzzySearching(false);
       return;
@@ -153,21 +171,19 @@ export function CatalogExplorer() {
     let cancelled = false;
 
     (async () => {
-      const base = activeCategory?.items || [];
-      
-      // Apply filter
-      let filtered = activeFilter === 'all' 
-        ? base 
-        : base.filter((x) => (x.filters || []).includes(activeFilter));
+      // Get base items from active category
+      let base = filters.categoryId === 'all' 
+        ? allEquipment 
+        : (activeCategory?.items || []);
 
-      // Apply category filter from URL
-      const categoryParam = params.get('category');
-      if (categoryParam && categoryParam !== 'all') {
-        filtered = filterByCategoryAndMode(filtered, categoryParam, mode);
+      // Apply filter tag
+      if (filters.filterTag !== 'all') {
+        const filterTag = filters.filterTag as FilterKey;
+        base = base.filter((x) => (x.filters || []).includes(filterTag));
       }
 
       // Perform fuzzy search
-      const results = await fuzzySearchWithIntent(filtered, query, mode);
+      const results = await fuzzySearchWithIntent(base, filters.query, mode);
       
       if (!cancelled) {
         setFuzzyResults(results.map((r) => r.item));
@@ -178,60 +194,75 @@ export function CatalogExplorer() {
     return () => {
       cancelled = true;
     };
-  }, [query, mode, activeCategory, activeFilter, params]);
+  }, [filters.query, filters.categoryId, filters.filterTag, mode, activeCategory, allEquipment]);
 
-  // Intent-based filtering and ranking (non-fuzzy)
+  // Calculate filtered items (final results)
   const filteredItems = useMemo(() => {
     // If fuzzy search is active, use fuzzy results
-    if (query && query.trim().length > 0 && mode && fuzzyResults.length > 0) {
+    if (filters.query && filters.query.trim().length > 0 && mode && fuzzyResults.length > 0) {
       return fuzzyResults;
     }
 
-    const base = activeCategory?.items || [];
+    // Get base items
+    let base = filters.categoryId === 'all' 
+      ? allEquipment 
+      : (activeCategory?.items || []);
     
-    // Apply filter
-    let filtered = activeFilter === 'all' 
-      ? base 
-      : base.filter((x) => (x.filters || []).includes(activeFilter));
-
-    // Apply category filter from URL
-    const categoryParam = params.get('category');
-    if (categoryParam && categoryParam !== 'all') {
-      filtered = filterByCategoryAndMode(filtered, categoryParam, mode);
+    // Apply filter tag
+    if (filters.filterTag !== 'all') {
+      const filterTag = filters.filterTag as FilterKey;
+      base = base.filter((x) => (x.filters || []).includes(filterTag));
     }
 
-    // Sort by intent weight if mode is active (no query)
+    // Sort by intent weight if mode is active
     if (mode) {
-      filtered = sortByIntentWeight(filtered, mode);
+      base = sortByIntentWeight(base, mode);
     }
 
-    return filtered;
-  }, [activeCategory, activeFilter, mode, params, query, fuzzyResults]);
+    return base;
+  }, [filters, activeCategory, allEquipment, mode, fuzzyResults]);
 
-  // Ghost loading on filter/category change (perceived performance)
+  // Calculate category counts (with current filter tag applied)
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    
+    equipmentCategories.forEach((cat) => {
+      let items = cat.items;
+      
+      // Apply current filter tag
+      if (filters.filterTag !== 'all') {
+        const filterTag = filters.filterTag as FilterKey;
+        items = items.filter((x) => (x.filters || []).includes(filterTag));
+      }
+      
+      counts[cat.id] = items.length;
+    });
+
+    return counts;
+  }, [equipmentCategories, filters.filterTag]);
+
+  // Ghost loading on filter/category change
   useEffect(() => {
     if (loading || isFuzzySearching) return;
     setGhostLoading(true);
     const t = window.setTimeout(() => setGhostLoading(false), 220);
     return () => window.clearTimeout(t);
-  }, [activeCategoryId, activeFilter, loading, mode, isFuzzySearching]);
+  }, [filters.categoryId, filters.filterTag, loading, mode, isFuzzySearching]);
 
   // Log no-result queries
   useEffect(() => {
     if (loading || filteredItems.length > 0) return;
     
-    const query = params.get('query');
-    const category = params.get('category');
-    if (query || category) {
+    if (filters.query || filters.categoryId !== 'all' || filters.filterTag !== 'all') {
       fetch('/api/demand_logs', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           type: 'catalog_no_result',
-          query: query || null,
-          category: category || null,
+          query: filters.query || null,
+          category: filters.categoryId !== 'all' ? filters.categoryId : null,
           mode: mode || null,
-          filter: activeFilter,
+          filter: filters.filterTag,
           timestamp: new Date().toISOString(),
         }),
         keepalive: true,
@@ -239,7 +270,19 @@ export function CatalogExplorer() {
         // Silent fail
       });
     }
-  }, [loading, filteredItems.length, params, mode, activeFilter]);
+  }, [loading, filteredItems.length, filters, mode]);
+
+  // Reset all filters
+  const handleReset = () => {
+    setFilters({
+      query: '',
+      categoryId: 'all',
+      filterTag: 'all',
+    });
+  };
+
+  // Check if any filters are active
+  const hasActiveFilters = filters.categoryId !== 'all' || filters.filterTag !== 'all' || filters.query.length > 0;
 
   if (loading) {
     return <CatalogSkeleton />;
@@ -253,29 +296,43 @@ export function CatalogExplorer() {
           <div>
             <h2 className="text-2xl font-semibold text-slate-900">Tüm Ekipmanlar</h2>
             <p className="mt-2 text-slate-600" style={{ lineHeight: 1.8 }}>
-              Şu an <span className="font-semibold text-slate-900">{totalProducts.toLocaleString('tr-TR')}</span> ürün içinde arıyorsunuz.
+              Şu an <span className="font-semibold text-slate-900">{filteredItems.length.toLocaleString('tr-TR')}</span> ürün görüntüleniyor
+              {allEquipment.length !== filteredItems.length && (
+                <span className="text-slate-500">
+                  {' '}(toplam {allEquipment.length.toLocaleString('tr-TR')})
+                </span>
+              )}
             </p>
           </div>
-          <div className="flex items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm text-slate-700">
-            <FilterIcon className="w-4 h-4" strokeWidth={1.5} />
-            Tek tık filtre
-          </div>
+          {hasActiveFilters && (
+            <button
+              onClick={handleReset}
+              className="flex items-center gap-2 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 px-4 py-3 text-sm font-medium text-slate-700 transition-colors"
+              aria-label="Tüm filtreleri sıfırla"
+            >
+              <RotateCcw className="w-4 h-4" strokeWidth={1.5} />
+              Sıfırla
+            </button>
+          )}
         </div>
 
         <div className="mt-6 grid grid-cols-2 lg:grid-cols-5 gap-4">
           {equipmentCategories.map((c) => {
             const Icon = c.icon;
-            const active = c.id === activeCategoryId;
+            const active = c.id === filters.categoryId;
+            const count = categoryCounts[c.id] || 0;
+            
             return (
               <button
                 key={c.id}
                 type="button"
-                onClick={() => setActiveCategoryId(c.id)}
+                onClick={() => setFilters((prev) => ({ ...prev, categoryId: c.id }))}
                 className={`min-h-[88px] rounded-2xl border px-4 py-4 text-left transition-colors ${
                   active
                     ? 'border-brand-primary bg-blue-50/40'
                     : 'border-slate-200 bg-white hover:bg-slate-50'
                 }`}
+                aria-label={`${c.label} kategorisini seç (${count} ürün)`}
               >
                 <div className="flex items-center gap-3">
                   <div className={`w-10 h-10 rounded-xl border flex items-center justify-center ${
@@ -285,7 +342,7 @@ export function CatalogExplorer() {
                   </div>
                   <div className="min-w-0">
                     <div className="text-sm font-semibold text-slate-900 truncate">{c.label}</div>
-                    <div className="text-xs text-slate-500">{c.items.length} öğe</div>
+                    <div className="text-xs text-slate-500">{count} ürün</div>
                   </div>
                 </div>
               </button>
@@ -301,15 +358,18 @@ export function CatalogExplorer() {
             { id: 'kiralik', label: 'Kiralık Ürünler' },
             { id: 'vip', label: 'VIP Hizmetler' },
           ] as Array<{ id: FilterKey | 'all'; label: string }>).map((f) => {
-            const active = f.id === activeFilter;
+            const active = f.id === filters.filterTag;
             return (
               <button
                 key={f.id}
                 type="button"
-                onClick={() => setActiveFilter(f.id)}
+                onClick={() => setFilters((prev) => ({ ...prev, filterTag: f.id }))}
                 className={`min-h-[48px] rounded-xl border px-5 text-sm font-semibold transition-colors ${
-                  active ? 'border-slate-900 bg-slate-900 text-white' : 'border-slate-200 bg-white text-slate-900 hover:bg-slate-50'
+                  active 
+                    ? 'border-slate-900 bg-slate-900 text-white' 
+                    : 'border-slate-200 bg-white text-slate-900 hover:bg-slate-50'
                 }`}
+                aria-label={`${f.label} filtresini ${active ? 'kaldır' : 'uygula'}`}
               >
                 {f.label}
               </button>
@@ -328,12 +388,9 @@ export function CatalogExplorer() {
           </div>
         ) : filteredItems.length === 0 ? (
           <EmptyState
-            query={params.get('query') || undefined}
-            category={activeCategoryId !== 'all' ? activeCategoryId : undefined}
-            onClearFilters={() => {
-              setActiveCategoryId('all');
-              setActiveFilter('all');
-            }}
+            query={filters.query || undefined}
+            category={filters.categoryId !== 'all' ? filters.categoryId : undefined}
+            onClearFilters={handleReset}
           />
         ) : (
           <VirtualizedCatalog
@@ -351,7 +408,7 @@ export function CatalogExplorer() {
                   category: item.category,
                   mode: mode || null,
                   rank: rank || null,
-                  query: params.get('query') || null,
+                  query: filters.query || null,
                   timestamp: new Date().toISOString(),
                 }),
                 keepalive: true,
@@ -363,5 +420,3 @@ export function CatalogExplorer() {
     </section>
   );
 }
-
-

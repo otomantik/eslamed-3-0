@@ -82,6 +82,10 @@ export const routeDictionary: Record<string, RouteMetadata> = {
     title: 'Evde Bakım Ekipmanları Rehberi',
     parent: '/',
   },
+  '/field-service': {
+    title: 'Saha Terminali - Teknisyen Arayüzü',
+    parent: '/',
+  },
 };
 
 /**
@@ -135,5 +139,6 @@ export function getBreadcrumbsForPath(pathname: string): Array<{ label: string; 
 
   return items;
 }
+
 
 

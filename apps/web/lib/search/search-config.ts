@@ -18,6 +18,20 @@ export type SearchItem = {
   intent_weights?: IntentWeights;
   meta_title?: string;
   slug?: string;
+  // New fields for enhanced catalog
+  imageUrl?: string; // High-res WebP product image
+  utsRegistration?: {
+    registered: boolean;
+    registrationNumber?: string;
+    verifiedAt?: string;
+  };
+  technicalSpecs?: {
+    noiseLevel?: number; // dB
+    weight?: number; // kg
+    batteryLife?: number; // hours
+    dimensions?: string;
+    powerConsumption?: number; // watts
+  };
 };
 
 export type SearchConfig = {
