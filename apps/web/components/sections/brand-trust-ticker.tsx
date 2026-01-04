@@ -33,18 +33,31 @@ export function BrandTrustTicker() {
     const hasFailed = failedImages.has(brand.name);
     const showFallback = !brand.logo || hasFailed;
 
+    // Type guard: ensure logo is a string before using it
+    if (showFallback) {
+      return (
+        <div
+          key={`${keyPrefix}-${brand.name}`}
+          className="flex-shrink-0 flex items-center justify-center h-10 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100 relative"
+        >
+          <span className="text-slate-400 font-semibold text-base tracking-wide whitespace-nowrap px-3">
+            {brand.name}
+          </span>
+        </div>
+      );
+    }
+
+    // At this point, TypeScript knows brand.logo is not null
+    const logoUrl: string = brand.logo!;
+
     return (
       <div
         key={`${keyPrefix}-${brand.name}`}
         className="flex-shrink-0 flex items-center justify-center h-10 grayscale hover:grayscale-0 transition-all opacity-60 hover:opacity-100 relative"
       >
-        {showFallback ? (
-          <span className="text-slate-400 font-semibold text-base tracking-wide whitespace-nowrap px-3">
-            {brand.name}
-          </span>
-        ) : brand.isSvg ? (
+        {brand.isSvg ? (
           <img
-            src={brand.logo}
+            src={logoUrl}
             alt={brand.name}
             width={120}
             height={40}
@@ -66,7 +79,7 @@ export function BrandTrustTicker() {
           />
         ) : (
           <Image
-            src={brand.logo}
+            src={logoUrl}
             alt={brand.name}
             width={120}
             height={40}

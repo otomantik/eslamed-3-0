@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+/// <reference types="node" />
 
 /**
  * Smart Data Parser: Transform RAW CSV/Excel into search-index.json
