@@ -1,24 +1,98 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Image from 'next/image';
 
+/**
+ * Raw brand data (may have null/empty logos)
+ */
 interface Brand {
   name: string;
   logo: string | null;
   isSvg: boolean;
 }
 
+/**
+ * Normalized brand with guaranteed non-empty logo (data layer)
+ */
+interface BrandWithLogo {
+  name: string;
+  logo: string; // Non-empty, trimmed string
+  isSvg: boolean;
+}
+
+/**
+ * Type guard: checks if brand has valid logo
+ */
+function isBrandWithLogo(brand: Brand): brand is BrandWithLogo {
+  return (
+    typeof brand.logo === 'string' &&
+    brand.logo.trim().length > 0
+  );
+}
+
+/**
+ * Normalize brands: filter, trim, and deduplicate
+ * - Filters out brands with null/empty/whitespace logos
+ * - Trims logo strings
+ * - Deduplicates by name (keeps first occurrence)
+ * 
+ * @param brands Raw brand array
+ * @returns Normalized brands with guaranteed non-empty logos
+ */
+function normalizeBrands(brands: Brand[]): BrandWithLogo[] {
+  const seen = new Set<string>();
+  const normalized: BrandWithLogo[] = [];
+
+  for (const brand of brands) {
+    // Skip if logo is invalid
+    if (!isBrandWithLogo(brand)) {
+      continue;
+    }
+
+    // Deduplicate by name (keep first)
+    if (seen.has(brand.name)) {
+      continue;
+    }
+    seen.add(brand.name);
+
+    // Add normalized brand with trimmed logo
+    normalized.push({
+      name: brand.name,
+      logo: brand.logo.trim(),
+      isSvg: brand.isSvg,
+    });
+  }
+
+  return normalized;
+}
+
 export function BrandTrustTicker() {
-  const brands: Brand[] = [
+  const rawBrands: Brand[] = [
     { name: 'Philips', logo: '/assets/logos/philips.svg', isSvg: true },
     { name: 'Respirox', logo: '/assets/logos/respirox.png', isSvg: false },
     { name: 'Omron', logo: '/assets/logos/omron.png', isSvg: false },
     { name: 'Jumper', logo: '/assets/logos/jumper.png', isSvg: false },
     { name: 'Endostall', logo: '/assets/logos/endostall.png', isSvg: false },
     { name: 'Önlem', logo: '/assets/logos/onlem.png', isSvg: false },
-    { name: 'Diamond Mama', logo: null, isSvg: false }, // Logo bulunamadı, fallback kullanılacak
   ];
+
+  // ✅ Data layer: Normalize brands once with useMemo
+  const safeBrands = useMemo(() => {
+    const normalized = normalizeBrands(rawBrands);
+    
+    // Development-only warning if brands were dropped
+    if (process.env.NODE_ENV === 'development') {
+      const droppedCount = rawBrands.length - normalized.length;
+      if (droppedCount > 0) {
+        console.warn(
+          `[BrandTrustTicker] ${droppedCount} brand(s) dropped due to missing/invalid logos`
+        );
+      }
+    }
+    
+    return normalized;
+  }, []); // Empty deps: rawBrands is static
 
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set());
 
@@ -28,13 +102,13 @@ export function BrandTrustTicker() {
 
   /**
    * ✅ OPTIMIZED: Brand logo rendering helper - eliminates code duplication
+   * ✅ Type-safe: brand.logo is guaranteed to be non-empty string (BrandWithLogo)
    */
-  const renderBrandLogo = (brand: Brand, keyPrefix: string) => {
+  const renderBrandLogo = (brand: BrandWithLogo, keyPrefix: string) => {
     const hasFailed = failedImages.has(brand.name);
-    const showFallback = !brand.logo || hasFailed;
 
-    // Type guard: ensure logo is a string before using it
-    if (showFallback) {
+    // If image failed to load, show fallback text
+    if (hasFailed) {
       return (
         <div
           key={`${keyPrefix}-${brand.name}`}
@@ -47,9 +121,7 @@ export function BrandTrustTicker() {
       );
     }
 
-    // At this point, TypeScript knows brand.logo is not null
-    const logoUrl: string = brand.logo!;
-
+    // ✅ Type-safe: brand.logo is string (never null/undefined)
     return (
       <div
         key={`${keyPrefix}-${brand.name}`}
@@ -57,7 +129,7 @@ export function BrandTrustTicker() {
       >
         {brand.isSvg ? (
           <img
-            src={logoUrl}
+            src={brand.logo}
             alt={brand.name}
             width={120}
             height={40}
@@ -79,7 +151,7 @@ export function BrandTrustTicker() {
           />
         ) : (
           <Image
-            src={logoUrl}
+            src={brand.logo}
             alt={brand.name}
             width={120}
             height={40}
@@ -98,7 +170,11 @@ export function BrandTrustTicker() {
   };
 
   // ✅ OPTIMIZED: Duplicate brands array for seamless loop (CSS handles the animation)
-  const duplicatedBrands = [...brands, ...brands];
+  // ✅ Type-safe: safeBrands is already normalized and non-empty
+  const duplicatedBrands = useMemo(
+    () => [...safeBrands, ...safeBrands],
+    [safeBrands]
+  );
 
   return (
     <section className="py-12 bg-slate-50 border-y border-slate-200">
