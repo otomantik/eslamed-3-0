@@ -12,6 +12,9 @@ export async function POST(req: Request) {
     const body = await req.json();
     const format = body?.format || 'json';
 
+    // ✅ FIXED: Use Reality Anchors for manager name and ID
+    const { REALITY_ANCHORS } = await import('@/lib/integrity/reality-anchors');
+
     // TODO: Replace with actual database query
     // - Fetch user's rental history from database
     // - Fetch service reports
@@ -41,8 +44,8 @@ export async function POST(req: Request) {
           reportId: 'SR-2024-001',
           deviceName: 'Oksijen Konsantratörü',
           serviceDate: '2024-02-01T14:30:00Z',
-          technicianName: 'Salih Eslameed',
-          technicianLicense: 'BME-TR-2020-001',
+          technicianName: REALITY_ANCHORS.managerName, // ✅ FIXED: Was 'Salih Eslameed'
+          technicianLicense: REALITY_ANCHORS.managerID, // ✅ FIXED: Was 'BME-TR-2020-001'
           serviceType: 'Kalibrasyon',
           notes: 'Cihaz kalibrasyonu tamamlandı. Tüm parametreler normal.',
         },

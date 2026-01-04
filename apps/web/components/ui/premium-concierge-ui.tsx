@@ -1,57 +1,82 @@
 'use client';
 
-import { ShieldCheck, CheckCircle2, FileText, Award } from 'lucide-react';
+import { ShieldCheck, CheckCircle2, FileText } from 'lucide-react';
 import Link from 'next/link';
+import { VERIFIED_CREDENTIALS, assertNoUnverifiedClaims } from '@/lib/integrity/business-credentials';
 
 /**
  * PremiumConciergeUI: VIP mode - Trust indicators and premium content
- * Hero is now outside, this only wraps content sections
+ * ✅ ADSMantık Compliance: Only verified credentials from Reality Anchors
+ * ✅ REMOVED: '15+ Yıl Deneyim' (hallucination) - removed from both locations
  */
 export function PremiumConciergeUI({ children }: { children: React.ReactNode }) {
+  // ✅ Data-first validation: Validate text blocks at component level (not DOM)
+  const textContent = VERIFIED_CREDENTIALS.map(cred => `${cred.label} ${cred.value}`).join(' ');
+  if (process.env.NODE_ENV !== 'production') {
+    assertNoUnverifiedClaims(textContent);
+  }
+
+  // Get only verified credentials for VIP display
+  const vipCredentials = VERIFIED_CREDENTIALS.filter(
+    (cred) => ['uts-registered', 'ckys-registered', 'licensed-business'].includes(cred.id)
+  );
+
   return (
     <div className="bg-blue-50">
       {/* Trust Indicators Section - Mode-specific */}
       <section className="py-16 bg-white border-b border-blue-100">
         <div className="container-wide">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
-                <ShieldCheck className="w-6 h-6 text-white" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-1">ÜTS Kayıtlı</h3>
-                <p className="text-sm text-slate-600">T.C. Sağlık Bakanlığı kayıtlı</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
-                <CheckCircle2 className="w-6 h-6 text-white" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-1">CE Belgeli</h3>
-                <p className="text-sm text-slate-600">Avrupa standartlarına uygun</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
-              <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
-                <Award className="w-6 h-6 text-white" strokeWidth={1.5} />
-              </div>
-              <div>
-                <h3 className="font-semibold text-slate-900 mb-1">15+ Yıl Deneyim</h3>
-                <p className="text-sm text-slate-600">Sektörde güvenilir geçmiş</p>
-              </div>
-            </div>
-            <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md transition-shadow">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {/* ✅ FIXED: Removed duplicate, only showing verified credentials */}
+            {vipCredentials.map((cred) => {
+              const icon = cred.id === 'uts-registered' ? ShieldCheck : CheckCircle2;
+              const Icon = icon;
+
+              const cardContent = (
+                <div className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md hover:border-blue-300 transition-all w-full">
+                  <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
+                    <Icon className="w-6 h-6 text-white" strokeWidth={1.5} />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-slate-900 mb-1">{cred.label}</h3>
+                    <p className="text-sm text-slate-600">{cred.value}</p>
+                  </div>
+                </div>
+              );
+
+              // ✅ FIXED: documentPath optional - render disabled if not available
+              return cred.documentPath ? (
+                <a
+                  key={cred.id}
+                  href={cred.documentPath}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block"
+                >
+                  {cardContent}
+                </a>
+              ) : (
+                <div key={cred.id} className="opacity-75 cursor-not-allowed" title="Belge yolu mevcut değil">
+                  {cardContent}
+                </div>
+              );
+            })}
+
+            {/* İşletme Belgeleri Link */}
+            <Link
+              href="/isletme-belgeleri"
+              className="flex items-start gap-4 p-6 bg-blue-50 rounded-xl border border-blue-200 hover:shadow-md hover:border-blue-300 transition-all"
+            >
               <div className="w-12 h-12 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
                 <FileText className="w-6 h-6 text-white" strokeWidth={1.5} />
               </div>
               <div>
-                <Link href="/isletme-belgeleri" className="font-semibold text-slate-900 mb-1 hover:text-blue-600 transition-colors block">
+                <h3 className="font-semibold text-slate-900 mb-1 hover:text-blue-600 transition-colors">
                   İşletme Belgeleri
-                </Link>
+                </h3>
                 <p className="text-sm text-slate-600">Tüm belgeleri görüntüle</p>
               </div>
-            </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -89,10 +114,7 @@ export function PremiumConciergeUI({ children }: { children: React.ReactNode }) 
                     <div className="text-2xl font-bold text-white mb-1">100%</div>
                     <div className="text-blue-100 text-sm">Güvenilir Süreç</div>
                   </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                    <div className="text-2xl font-bold text-white mb-1">15+</div>
-                    <div className="text-blue-100 text-sm">Yıl Deneyim</div>
-                  </div>
+                  {/* ✅ REMOVED: "15+ Yıl Deneyim" duplicate - no longer showing */}
                 </div>
               </div>
             </div>

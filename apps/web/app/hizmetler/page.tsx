@@ -109,7 +109,7 @@ export default async function HizmetlerHubPage({
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Uzman Kadro</h3>
                 <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                  15+ yıl deneyimli teknik ekibimiz, medikal cihazlarda uzmanlaşmış personel.
+                  Deneyimli teknik ekibimiz, medikal cihazlarda uzmanlaşmış personel.
                 </p>
               </div>
             </div>

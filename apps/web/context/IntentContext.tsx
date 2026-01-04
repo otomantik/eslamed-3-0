@@ -13,7 +13,7 @@ export type IntentContextValue = {
   trackIntentShift?: (prev: IntentMode, next: IntentMode) => Promise<void>;
 };
 
-const IntentContext = createContext<IntentContextValue | undefined>(undefined);
+export const IntentContext = createContext<IntentContextValue | undefined>(undefined);
 
 export function useIntent() {
   const ctx = useContext(IntentContext);

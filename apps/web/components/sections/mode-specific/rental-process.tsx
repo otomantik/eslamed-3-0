@@ -1,13 +1,15 @@
 'use client';
 
 import { Calendar, FileText, CheckCircle2, MapPin } from 'lucide-react';
+import { getPhoneLink } from '@/lib/constants/contact-info';
+import { Timeline, type TimelineStep } from '@/components/ui/timeline';
 
 /**
  * RentalProcess: COMMERCIAL_RENTAL mode specific section
  * Shows rental process timeline
  */
 export function RentalProcess() {
-  const steps = [
+  const steps: TimelineStep[] = [
     {
       step: 1,
       title: 'İletişim ve Değerlendirme',
@@ -47,38 +49,12 @@ export function RentalProcess() {
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="relative">
-            {/* Timeline line */}
-            <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-slate-200 hidden md:block" />
-
-            <div className="space-y-8">
-              {steps.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <div key={item.step} className="relative flex items-start gap-6">
-                    {/* Step number */}
-                    <div className="flex-shrink-0 w-16 h-16 bg-slate-600 text-white rounded-full flex items-center justify-center font-bold text-lg relative z-10 shadow-lg">
-                      <Icon className="w-6 h-6" strokeWidth={2} />
-                    </div>
-
-                    {/* Content */}
-                    <div className="flex-1 bg-white rounded-xl p-6 border-2 border-slate-200 shadow-md hover:shadow-lg transition-shadow">
-                      <div className="flex items-center gap-3 mb-2">
-                        <span className="text-sm font-semibold text-slate-500">Adım {item.step}</span>
-                      </div>
-                      <h3 className="text-xl font-bold text-slate-900 mb-2">{item.title}</h3>
-                      <p className="text-slate-600" style={{ lineHeight: 1.8 }}>{item.description}</p>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+          <Timeline steps={steps} accentColor="#475569" variant="vertical" showStepNumbers={true} />
 
           {/* CTA */}
           <div className="mt-12 text-center">
             <a
-              href="tel:+905372425535"
+              href={getPhoneLink()}
               className="inline-flex items-center gap-3 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-semibold text-lg transition-colors shadow-lg"
             >
               <Calendar className="w-6 h-6" strokeWidth={2} />

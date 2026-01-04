@@ -1,24 +1,219 @@
 import { ModeAwareNavbar } from "@/components/layout/mode-aware-navbar";
-import { BrandTrustTicker } from "@/components/sections/brand-trust-ticker";
-import { SEOAnchorSection } from "@/components/sections/seo-anchor-section";
-import { ProductShowcase } from "@/components/sections/product-showcase";
-import { ServiceValueGrid } from "@/components/sections/service-value-grid";
 import { DynamicHero } from "@/components/sections/hero/index";
-import { ServiceMatrix } from "@/components/sections/service-matrix";
-import { HyperLocalMap } from "@/components/sections/hyperlocal-map";
-import { SmartFAQ } from "@/components/sections/smart-faq";
-import { TrustSafetyBridge } from "@/components/sections/trust-safety-bridge";
-import { WallOfTrust } from "@/components/sections/wall-of-trust";
-import { Footer } from "@/components/sections/footer";
-import { PageFeedback } from "@/components/ui/page-feedback";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 import { detectIntent } from "@/lib/intent/detector";
 import { ModeWrapper } from "@/components/ui/mode-wrapper";
-import { EmergencySteps } from "@/components/sections/mode-specific/emergency-steps";
-import { PriceTable } from "@/components/sections/mode-specific/price-table";
-import { GuideCategories } from "@/components/sections/mode-specific/guide-categories";
-import { RentalProcess } from "@/components/sections/mode-specific/rental-process";
-import { InteractiveStats } from "@/components/sections/mode-specific/interactive-stats";
+import type { IntentMode } from "@/lib/intent/detector";
+
+/**
+ * ✅ ADSMantık Performance Optimization: Dynamic imports for Ghost Sections
+ * Sections are only loaded when visibility.showSection is true
+ * This eliminates unused code from the bundle
+ * 
+ * Note: ssr: false removed for Server Component compatibility
+ * Components with 'use client' directive will still render client-side
+ */
+const SEOAnchorSection = dynamic(
+  () => import("@/components/sections/seo-anchor-section").then((m) => ({ default: m.SEOAnchorSection }))
+);
+const BrandTrustTicker = dynamic(
+  () => import("@/components/sections/brand-trust-ticker").then((m) => ({ default: m.BrandTrustTicker }))
+);
+const ProductShowcase = dynamic(
+  () => import("@/components/sections/product-showcase").then((m) => ({ default: m.ProductShowcase }))
+);
+const ServiceValueGrid = dynamic(
+  () => import("@/components/sections/service-value-grid").then((m) => ({ default: m.ServiceValueGrid }))
+);
+const ServiceMatrix = dynamic(
+  () => import("@/components/sections/service-matrix").then((m) => ({ default: m.ServiceMatrix }))
+);
+const HyperLocalMap = dynamic(
+  () => import("@/components/sections/hyperlocal-map").then((m) => ({ default: m.HyperLocalMap }))
+);
+const SmartFAQ = dynamic(
+  () => import("@/components/sections/smart-faq").then((m) => ({ default: m.SmartFAQ }))
+);
+const TrustSafetyBridge = dynamic(
+  () => import("@/components/sections/trust-safety-bridge").then((m) => ({ default: m.TrustSafetyBridge }))
+);
+const WallOfTrust = dynamic(
+  () => import("@/components/sections/wall-of-trust").then((m) => ({ default: m.WallOfTrust }))
+);
+const Footer = dynamic(
+  () => import("@/components/sections/footer").then((m) => ({ default: m.Footer }))
+);
+const PageFeedback = dynamic(
+  () => import("@/components/ui/page-feedback").then((m) => ({ default: m.PageFeedback }))
+);
+const EmergencySteps = dynamic(
+  () => import("@/components/sections/mode-specific/emergency-steps").then((m) => ({ default: m.EmergencySteps }))
+);
+const PriceTable = dynamic(
+  () => import("@/components/sections/mode-specific/price-table").then((m) => ({ default: m.PriceTable }))
+);
+const GuideCategories = dynamic(
+  () => import("@/components/sections/mode-specific/guide-categories").then((m) => ({ default: m.GuideCategories }))
+);
+const RentalProcess = dynamic(
+  () => import("@/components/sections/mode-specific/rental-process").then((m) => ({ default: m.RentalProcess }))
+);
+const InteractiveStats = dynamic(
+  () => import("@/components/sections/mode-specific/interactive-stats").then((m) => ({ default: m.InteractiveStats }))
+);
+
+/**
+ * ✅ FIXED: Full Visibility interface covering all sections
+ * Every mode MUST explicitly return true/false for every property
+ */
+interface SectionVisibility {
+  showSEOAnchor: boolean;
+  showInteractiveStats: boolean;
+  showWallOfTrust: boolean;
+  showServiceValueGrid: boolean;
+  showProductShowcase: boolean;
+  showServiceMatrix: boolean;
+  showHyperLocalMap: boolean;
+  showTrustSafetyBridge: boolean;
+  showSmartFAQ: boolean;
+  showBrandTrustTicker: boolean;
+  showPageFeedback: boolean;
+  showEmergencySteps: boolean;
+  showPriceTable: boolean;
+  showGuideCategories: boolean;
+  showRentalProcess: boolean;
+  showFooter: boolean; // ✅ FIXED: Renamed from shouldShowNavbar
+}
+
+/**
+ * Section Visibility Matrix: Deterministic mode-based rendering
+ * ✅ ADSMantık Compliance: Each mode shows ONLY relevant sections
+ */
+function getSectionVisibility(mode: IntentMode): SectionVisibility {
+  switch (mode) {
+    case 'CRITICAL_EMERGENCY':
+      return {
+        showSEOAnchor: false,
+        showInteractiveStats: false,
+        showWallOfTrust: false,
+        showServiceValueGrid: false,
+        showProductShowcase: false,
+        showServiceMatrix: false,
+        showHyperLocalMap: false,
+        showTrustSafetyBridge: false,
+        showSmartFAQ: false,
+        showBrandTrustTicker: false,
+        showPageFeedback: false,
+        showEmergencySteps: true,
+        showPriceTable: false,
+        showGuideCategories: false,
+        showRentalProcess: false,
+        showFooter: false, // PanicRecoveryUI handles its own footer
+      };
+
+    case 'TRUST_SEEKER':
+      return {
+        showSEOAnchor: false, // PremiumConciergeUI has its own trust indicators
+        showInteractiveStats: true,
+        showWallOfTrust: true, // Testimonials only (badges removed)
+        showServiceValueGrid: true,
+        showProductShowcase: true,
+        showServiceMatrix: true,
+        showHyperLocalMap: true,
+        showTrustSafetyBridge: true,
+        showSmartFAQ: true,
+        showBrandTrustTicker: true,
+        showPageFeedback: true,
+        showEmergencySteps: false,
+        showPriceTable: false,
+        showGuideCategories: false,
+        showRentalProcess: false,
+        showFooter: true,
+      };
+
+    case 'PRICE_SENSITIVE':
+      return {
+        showSEOAnchor: true,
+        showInteractiveStats: true,
+        showWallOfTrust: true,
+        showServiceValueGrid: true,
+        showProductShowcase: true,
+        showServiceMatrix: true,
+        showHyperLocalMap: true,
+        showTrustSafetyBridge: true,
+        showSmartFAQ: true,
+        showBrandTrustTicker: true,
+        showPageFeedback: true,
+        showPriceTable: true,
+        showEmergencySteps: false,
+        showGuideCategories: false,
+        showRentalProcess: false,
+        showFooter: true,
+      };
+
+    case 'INFORMATION_SEEKER':
+      return {
+        showSEOAnchor: true,
+        showInteractiveStats: true,
+        showWallOfTrust: true,
+        showServiceValueGrid: true,
+        showProductShowcase: true,
+        showServiceMatrix: true,
+        showHyperLocalMap: true,
+        showTrustSafetyBridge: true,
+        showSmartFAQ: true,
+        showBrandTrustTicker: true,
+        showPageFeedback: true,
+        showGuideCategories: true,
+        showEmergencySteps: false,
+        showPriceTable: false,
+        showRentalProcess: false,
+        showFooter: true,
+      };
+
+    case 'COMMERCIAL_RENTAL':
+      return {
+        showSEOAnchor: true,
+        showInteractiveStats: true,
+        showWallOfTrust: true,
+        showServiceValueGrid: true,
+        showProductShowcase: true,
+        showServiceMatrix: true,
+        showHyperLocalMap: true,
+        showTrustSafetyBridge: true,
+        showSmartFAQ: true,
+        showBrandTrustTicker: true,
+        showPageFeedback: true,
+        showRentalProcess: true,
+        showEmergencySteps: false,
+        showPriceTable: false,
+        showGuideCategories: false,
+        showFooter: true,
+      };
+
+    default:
+      // Fallback: show all sections (should not happen with typed modes)
+      return {
+        showSEOAnchor: true,
+        showInteractiveStats: true,
+        showWallOfTrust: true,
+        showServiceValueGrid: true,
+        showProductShowcase: true,
+        showServiceMatrix: true,
+        showHyperLocalMap: true,
+        showTrustSafetyBridge: true,
+        showSmartFAQ: true,
+        showBrandTrustTicker: true,
+        showPageFeedback: true,
+        showEmergencySteps: false,
+        showPriceTable: false,
+        showGuideCategories: false,
+        showRentalProcess: false,
+        showFooter: true,
+      };
+  }
+}
 
 // Skeleton components for Suspense
 function MapSkeleton() {
@@ -51,11 +246,8 @@ export default async function Page({
   // Detect intent
   const intentResult = await detectIntent(resolvedParams);
   
-  const isEmergency = intentResult.mode === 'CRITICAL_EMERGENCY';
-
-  // In VIP mode, PremiumConciergeUI renders its own header
-  // In RESEARCH mode and default, use standard Navbar
-  const shouldShowNavbar = intentResult.mode !== 'TRUST_SEEKER';
+  // Get section visibility matrix for current mode
+  const visibility = getSectionVisibility(intentResult.mode);
 
   return (
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900 pb-16 lg:pb-0">
@@ -65,53 +257,37 @@ export default async function Page({
       {/* Hero - ALWAYS OUTSIDE ModeWrapper */}
       <DynamicHero intent={intentResult.mode} district={intentResult.district} />
 
-      {/* SEO Anchor Section - Split layout (content + trust wall) */}
-      <SEOAnchorSection />
+      {/* SEO Anchor Section - Conditional based on mode */}
+      {visibility.showSEOAnchor && <SEOAnchorSection />}
 
       {/* Mode-specific content wrapper */}
       <ModeWrapper serverMode={intentResult.mode}>
         {/* Mode-specific sections */}
-        {intentResult.mode === 'CRITICAL_EMERGENCY' && <EmergencySteps />}
-        {intentResult.mode === 'PRICE_SENSITIVE' && <PriceTable />}
-        {intentResult.mode === 'INFORMATION_SEEKER' && <GuideCategories />}
-        {intentResult.mode === 'COMMERCIAL_RENTAL' && <RentalProcess />}
+        {visibility.showEmergencySteps && <EmergencySteps />}
+        {visibility.showPriceTable && <PriceTable />}
+        {visibility.showGuideCategories && <GuideCategories />}
+        {visibility.showRentalProcess && <RentalProcess />}
         
-        {/* Interactive Stats - All modes */}
-        <InteractiveStats />
+        {/* Conditional sections based on visibility matrix */}
+        {visibility.showInteractiveStats && <InteractiveStats />}
+        {visibility.showServiceValueGrid && <ServiceValueGrid intent={intentResult.mode} />}
+        {visibility.showProductShowcase && <ProductShowcase />}
+        {visibility.showServiceMatrix && <ServiceMatrix intent={intentResult.mode} />}
+        {visibility.showWallOfTrust && <WallOfTrust />}
+        
+        {visibility.showHyperLocalMap && (
+          <Suspense fallback={<MapSkeleton />}>
+            <HyperLocalMap district={intentResult.district || 'Istanbul'} />
+          </Suspense>
+        )}
+        
+        {visibility.showTrustSafetyBridge && <TrustSafetyBridge />}
+        {visibility.showSmartFAQ && <SmartFAQ intent={intentResult.mode} />}
+        {visibility.showBrandTrustTicker && <BrandTrustTicker />}
+        {visibility.showPageFeedback && <PageFeedback />}
 
-        {/* Service Value Grid */}
-        <ServiceValueGrid intent={intentResult.mode} />
-
-        {/* Product Showcase */}
-        <ProductShowcase />
-
-        {/* Service Matrix */}
-        <ServiceMatrix intent={intentResult.mode} />
-
-        {/* Wall of Trust (Google Ratings + Testimonials) */}
-        <WallOfTrust />
-
-        {/* HyperLocal Map */}
-        <Suspense fallback={<MapSkeleton />}>
-          <HyperLocalMap district={intentResult.district || 'Istanbul'} />
-        </Suspense>
-
-        {/* Trust & Safety Bridge */}
-        <TrustSafetyBridge />
-
-        {/* Smart FAQ */}
-        <SmartFAQ intent={intentResult.mode} />
-
-        {/* Brand Trust Ticker - Final trust seal before footer */}
-        <BrandTrustTicker />
-
-        {/* Page Feedback - Above footer */}
-        <PageFeedback />
-
-        {/* Footer (hidden in URGENT mode by PanicRecoveryUI) */}
-        {shouldShowNavbar && <Footer />}
-
-        {/* Floating Rescue Bar removed - replaced by BottomNav */}
+        {/* ✅ FIXED: Footer visibility renamed for clarity */}
+        {visibility.showFooter && <Footer />}
 
         {/* Debug Info (Development Only + Query Flag) */}
         {process.env.NODE_ENV === 'development' && 

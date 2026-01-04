@@ -21,10 +21,13 @@ export async function GET(req: Request) {
     // - Calculate ETA based on current location and destination
     // - Update status (dispatched -> en_route -> arrived)
 
+    // ✅ FIXED: Use Reality Anchors for manager name
+    const { REALITY_ANCHORS } = await import('@/lib/integrity/reality-anchors');
+
     // Mock response - simulate real-time tracking
     const mockTechnicianData = {
       technicianId: 'TECH-001',
-      technicianName: 'Salih Eslameed',
+      technicianName: REALITY_ANCHORS.managerName, // ✅ FIXED: Was 'Salih Eslameed'
       phone: '+905372425535',
       latitude: 41.0082 + (Math.random() - 0.5) * 0.01, // Istanbul area with small variation
       longitude: 28.9784 + (Math.random() - 0.5) * 0.01,

@@ -4,6 +4,30 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Phone, AlertCircle, MessageCircle } from 'lucide-react';
 import { LiveServiceTracking } from '@/components/integrity/live-service-tracking';
+import { CONTACT_INFO, getPhoneLink } from '@/lib/constants/contact-info';
+import { getWhatsAppUrlWithTemplate } from '@/lib/utils/whatsapp-helpers';
+
+/**
+ * Emergency Steps Data - Exported for reuse in other components
+ * ✅ De-duplicated: Single source of truth for emergency step content
+ */
+export const EMERGENCY_STEPS = [
+  {
+    step: '1',
+    title: 'Cihazı Güvenli Şekilde Kapatın',
+    description: 'Elektrik bağlantısını kesin ve cihazı kapatın. Güvenlik önceliklidir.',
+  },
+  {
+    step: '2',
+    title: 'Hemen Arayın',
+    description: 'Telefon veya WhatsApp üzerinden teknik destek ekibimize ulaşın.',
+  },
+  {
+    step: '3',
+    title: 'Durumu Açıklayın',
+    description: 'Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
+  },
+] as const;
 
 /**
  * EmergencySteps: CRITICAL_EMERGENCY mode specific section
@@ -21,26 +45,11 @@ export function EmergencySteps() {
     setShowTracking(true);
   };
 
-  const steps = [
-    {
-      step: '1',
-      title: 'Cihazı Güvenli Şekilde Kapatın',
-      description: 'Elektrik bağlantısını kesin ve cihazı kapatın. Güvenlik önceliklidir.',
-      icon: AlertCircle,
-    },
-    {
-      step: '2',
-      title: 'Hemen Arayın',
-      description: 'Telefon veya WhatsApp üzerinden teknik destek ekibimize ulaşın.',
-      icon: Phone,
-    },
-    {
-      step: '3',
-      title: 'Durumu Açıklayın',
-      description: 'Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
-      icon: MessageCircle,
-    },
-  ];
+  const stepIcons = [AlertCircle, Phone, MessageCircle];
+  const steps = EMERGENCY_STEPS.map((step, index) => ({
+    ...step,
+    icon: stepIcons[index],
+  }));
 
   return (
     <section className="py-16 bg-red-50">
@@ -84,7 +93,7 @@ export function EmergencySteps() {
           {/* Quick Contact Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <motion.a
-              href="tel:+905372425535"
+              href={getPhoneLink()}
               onClick={handleEmergencyCall}
               className="min-h-[64px] inline-flex items-center justify-center gap-3 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.02 }}
@@ -92,10 +101,10 @@ export function EmergencySteps() {
               aria-label="Telefon ile acil destek al"
             >
               <Phone className="w-6 h-6" strokeWidth={2} />
-              <span>Telefon: 0537 242 55 35</span>
+              <span>Telefon: {CONTACT_INFO.phone.formatted}</span>
             </motion.a>
             <motion.a
-              href="https://wa.me/905372425535?text=Acil%20teknik%20destek%20ihtiyacım%20var"
+              href={getWhatsAppUrlWithTemplate('EMERGENCY')}
               onClick={handleEmergencyCall}
               className="min-h-[64px] inline-flex items-center justify-center gap-3 bg-red-500 hover:bg-red-600 text-white rounded-xl font-bold text-lg transition-colors shadow-lg hover:shadow-xl"
               whileHover={{ scale: 1.02 }}

@@ -1,13 +1,14 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { Star, CheckCircle2, ShieldCheck } from 'lucide-react';
+import { Star, CheckCircle2 } from 'lucide-react';
 import { Testimonials } from './testimonials';
+import Link from 'next/link';
 
 /**
- * Wall of Trust: Merged verified data section
- * Combines Google Ratings, Trust Badges, and Testimonials
- * Placement: Between Services and Maps
+ * Wall of Trust: Testimonials and Google Ratings ONLY
+ * ✅ ADSMantık Compliance: No hallucinations, verified content only
+ * ✅ REMOVED: Trust badges grid (duplicates SEOAnchorSection)
  */
 export function WallOfTrust() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -35,7 +36,7 @@ export function WallOfTrust() {
 
   return (
     <>
-      {/* Google Rating & Trust Badges Banner */}
+      {/* Google Rating & Testimonials Section */}
       <section 
         ref={sectionRef}
         className="py-16 bg-gradient-to-b from-emerald-50 to-white animate-fade-in-up"
@@ -77,52 +78,16 @@ export function WallOfTrust() {
               </div>
             </div>
 
-            {/* Trust Badges Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-              {[
-                { label: 'ISO 13485', icon: ShieldCheck, href: null },
-                { label: 'CE Uygunluk', icon: CheckCircle2, href: null },
-                { label: 'ÜTS Kayıtlı', icon: CheckCircle2, href: '/assets/documents/uts-firma-kayit-belgesi.pdf' },
-                { label: '15+ Yıl Deneyim', icon: CheckCircle2, href: null },
-                { label: 'TSE Onaylı', icon: CheckCircle2, href: null },
-              ].map((badge, index) => {
-                const Icon = badge.icon;
-                const BadgeContent = (
-                  <>
-                    <Icon className="w-6 h-6 text-emerald-600" strokeWidth={1.5} />
-                    <span className="text-xs font-semibold text-slate-700 text-center">{badge.label}</span>
-                  </>
-                );
-                
-                return badge.href ? (
-                  <a
-                    key={index}
-                    href={badge.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all cursor-pointer"
-                  >
-                    {BadgeContent}
-                  </a>
-                ) : (
-                  <div
-                    key={index}
-                    className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all"
-                  >
-                    {BadgeContent}
-                  </div>
-                );
-              })}
-              {/* İşletme Ruhsatı badge as separate clickable */}
-              <a
-                href="/assets/documents/isyeri-acma-ve-calisma-ruhsati.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center gap-2 p-4 rounded-xl bg-white border border-emerald-200 hover:border-emerald-300 hover:shadow-sm transition-all cursor-pointer"
+            {/* ✅ REMOVED: Trust Badges Grid - Duplicates SEOAnchorSection */}
+            {/* ✅ ADDED: Verified Facts Link (minimal, non-duplicating) */}
+            <div className="text-center mb-8">
+              <Link
+                href="/isletme-belgeleri"
+                className="inline-flex items-center gap-2 text-sm text-slate-600 hover:text-emerald-700 transition-colors"
               >
-                <ShieldCheck className="w-6 h-6 text-emerald-600" strokeWidth={1.5} />
-                <span className="text-xs font-semibold text-slate-700 text-center">İşletme Ruhsatı</span>
-              </a>
+                <CheckCircle2 className="w-4 h-4 text-emerald-600" strokeWidth={1.5} />
+                <span>Doğrulanabilir kurumsal belgeleri görüntüle</span>
+              </Link>
             </div>
           </div>
         </div>

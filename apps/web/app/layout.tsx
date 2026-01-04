@@ -6,6 +6,7 @@ import Tracker from "@/components/analytics/Tracker";
 import { BottomNav } from "@/components/ui/bottom-nav";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 import { IntentThemeProvider } from "@/context/theme-provider";
+import { CTALockWrapper } from "@/components/ui/cta-lock-wrapper";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -222,7 +223,7 @@ export default function RootLayout({
           <IntentProviderWrapper>
             <IntentThemeProvider>
               {children}
-              <BottomNav />
+              <CTALockWrapper />
             </IntentThemeProvider>
           </IntentProviderWrapper>
         </Suspense>

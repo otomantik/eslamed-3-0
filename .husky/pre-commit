@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running ADSMantık Audit Scan..."
+
+# Navigate to apps/web directory (where package.json has audit:scan script)
+cd apps/web
+
+# Run audit scan
+npm run audit:scan
+
+# Capture exit code
+EXIT_CODE=$?
+
+# Return to root directory
+cd ../..
+
+if [ $EXIT_CODE -ne 0 ]; then
+  echo ""
+  echo "❌ Audit failed. Commit blocked."
+  echo "Please fix violations before committing."
+  echo ""
+  echo "Common violations:"
+  echo "  - '15+ Yıl Deneyim' or '15+ Yıl'"
+  echo "  - 'TSE Onaylı' or 'TSE Belgeli'"
+  echo "  - 'ISO 13485' or 'ISO 9001'"
+  echo "  - Name violations (e.g., 'Salih Eslameed' instead of 'Salih Cevheroğlu')"
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "✅ Audit passed. Proceeding with commit."
+exit 0
+

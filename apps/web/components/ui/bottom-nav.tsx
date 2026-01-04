@@ -5,6 +5,9 @@ import { Home, Grid3x3, Search, Phone, MessageCircle } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useIntent } from '@/context/IntentContext';
+import { CONTACT_INFO, getPhoneLink } from '@/lib/constants/contact-info';
+import { getWhatsAppUrl, WHATSAPP_MESSAGES } from '@/lib/utils/whatsapp-helpers';
+import type { IntentMode } from '@/lib/intent/detector';
 
 /**
  * BottomNav: Mobile CTA Consolidation - Medical Calm
@@ -16,36 +19,28 @@ export function BottomNav() {
   const { mode, district } = useIntent();
   const [showPulse, setShowPulse] = useState(false);
   const [mounted, setMounted] = useState(false);
+  // ✅ FIXED: Prevent hydration mismatch - initialize URL state on client only
+  // ✅ REFACTORED: Use centralized WhatsApp helper
+  const [whatsAppUrl, setWhatsAppUrl] = useState(
+    `https://wa.me/${CONTACT_INFO.whatsapp.number}?text=${encodeURIComponent(WHATSAPP_MESSAGES.GENERAL)}`
+  );
   
   const isEmergency = mode === 'CRITICAL_EMERGENCY';
-  
-  // Build dynamic WhatsApp message with context
-  const buildWhatsAppMessage = () => {
-    const districtText = district ? `${district} bölgesinde ` : '';
-    const modeText = mode === 'CRITICAL_EMERGENCY' 
-      ? 'acil medikal ekipman desteği'
-      : mode === 'TRUST_SEEKER'
-      ? 'güvenilir medikal ekipman yönlendirmesi'
-      : mode === 'PRICE_SENSITIVE'
-      ? 'fiyat bilgisi ve şeffaf kapsam'
-      : mode === 'COMMERCIAL_RENTAL'
-      ? 'cihaz kiralama ve satış süreçleri'
-      : 'medikal ekipman bilgisi';
-    
-    return `Merhaba, ${districtText}${modeText} hakkında bilgi almak istiyorum.`;
-  };
 
-  const whatsAppUrl = `https://wa.me/905372425535?text=${encodeURIComponent(buildWhatsAppMessage())}`;
-
-  // Client-side only: Enable pulse after mount, disable after 5 seconds
+  // ✅ REFACTORED: Update WhatsApp URL only on client-side after mount using centralized helper
+  // This prevents hydration mismatch between server and client
   useEffect(() => {
     setMounted(true);
     setShowPulse(true);
+    
+    // Update WhatsApp URL with actual mode/district (client-side only)
+    setWhatsAppUrl(getWhatsAppUrl(mode as IntentMode, district));
+    
     const timer = setTimeout(() => {
       setShowPulse(false);
     }, 5000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [mode, district]); // Re-compute when mode/district changes
 
   // Track function
   const track = (eventName: string, data: { mode: string; district?: string }) => {
@@ -111,7 +106,7 @@ export function BottomNav() {
 
         {/* Primary Phone Action (Center) - Pulse effect for first 5s */}
         <a
-          href="tel:+905372425535"
+          href={getPhoneLink()}
           onClick={() => track('cta_phone_primary', { mode, district })}
           className={`relative -mt-4 w-14 h-14 ${
             isEmergency ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'

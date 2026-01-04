@@ -1,6 +1,8 @@
 'use client';
 
 import { CheckCircle2, DollarSign } from 'lucide-react';
+import { getPhoneLink } from '@/lib/constants/contact-info';
+import { getWhatsAppUrlWithTemplate } from '@/lib/utils/whatsapp-helpers';
 
 /**
  * PriceTable: PRICE_SENSITIVE mode specific section
@@ -64,7 +66,7 @@ export function PriceTable() {
                 ))}
               </ul>
               <a
-                href="tel:+905372425535"
+                href={getPhoneLink()}
                 className="mt-6 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors"
               >
                 Fiyat Bilgisi Al
@@ -78,7 +80,7 @@ export function PriceTable() {
             Detaylı fiyat bilgisi için iletişime geçin. İhtiyacınıza özel teklif hazırlayalım.
           </p>
           <a
-            href="https://wa.me/905372425535?text=Fiyat%20bilgisi%20almak%20istiyorum"
+            href={getWhatsAppUrlWithTemplate('PRICE')}
             className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors"
           >
             Detaylı Fiyat Teklifi Al

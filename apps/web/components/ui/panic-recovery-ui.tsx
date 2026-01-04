@@ -4,6 +4,9 @@ import { motion } from 'framer-motion';
 import { Phone, Home, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import { FocusTrap } from './focus-trap';
+import { EMERGENCY_STEPS } from '@/components/sections/mode-specific/emergency-steps';
+import { CONTACT_INFO, getPhoneLink } from '@/lib/constants/contact-info';
+import { getWhatsAppUrlWithTemplate } from '@/lib/utils/whatsapp-helpers';
 
 /**
  * PanicRecoveryUI: URGENT mode - Minimal navigation, action-focused
@@ -29,7 +32,7 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
               <span className="hidden sm:inline">ESLAMED</span>
             </Link>
             <a
-              href="tel:+905372425535"
+              href={getPhoneLink()}
               className="min-h-[48px] inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors animate-pulse focus:outline-none focus:ring-4 focus:ring-red-500 focus:ring-offset-2"
               aria-label="Acil durum için hemen ara"
             >
@@ -56,23 +59,7 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
             </div>
 
             <ol className="space-y-4">
-              {[
-                {
-                  step: '1',
-                  title: 'Cihazı Güvenli Şekilde Kapatın',
-                  description: 'Elektrik bağlantısını kesin ve cihazı kapatın. Güvenlik önceliklidir.',
-                },
-                {
-                  step: '2',
-                  title: 'Hemen Arayın',
-                  description: 'Telefon veya WhatsApp üzerinden teknik destek ekibimize ulaşın.',
-                },
-                {
-                  step: '3',
-                  title: 'Durumu Açıklayın',
-                  description: 'Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
-                },
-              ].map((item) => (
+              {EMERGENCY_STEPS.map((item) => (
                 <motion.li
                   key={item.step}
                   initial={{ opacity: 0, x: -20 }}
@@ -96,17 +83,17 @@ export function PanicRecoveryUI({ children }: { children: React.ReactNode }) {
             {/* SOS Buttons with Heartbeat Animation */}
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <motion.a
-                href="tel:+905372425535"
+                href={getPhoneLink()}
                 className="min-h-[56px] inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white rounded-xl font-bold text-lg transition-colors animate-heartbeat"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 aria-label="Telefon ile acil destek al"
               >
                 <Phone className="w-6 h-6" strokeWidth={2} />
-                <span>Telefon: 0537 242 55 35</span>
+                <span>Telefon: {CONTACT_INFO.phone.formatted}</span>
               </motion.a>
               <motion.a
-                href="https://wa.me/905372425535?text=Acil%20teknik%20destek%20ihtiyacım%20var"
+                href={getWhatsAppUrlWithTemplate('EMERGENCY')}
                 className="min-h-[56px] inline-flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-lg transition-colors animate-heartbeat"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
