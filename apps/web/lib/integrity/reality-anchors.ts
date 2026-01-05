@@ -49,7 +49,7 @@ export const REALITY_ANCHORS: RealityAnchors = {
   taxID: '2070554381',
   businessLicense: {
     number: '84',
-    issuedDate: '17-03-2025',
+    issuedDate: '2025-03-17',
   },
   address: {
     street: 'Alemdağ Mah. Atabey Cad. No:19/E1A',

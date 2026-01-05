@@ -11,7 +11,7 @@ export function GuideCategories() {
   const guides = [
     {
       title: 'Solunum Sistemleri',
-      description: 'Oksijen konsantratörleri, CPAP cihazları ve kullanım rehberleri',
+      description: 'Oksijen konsantratörleri, solunum destek cihazları ve kullanım rehberleri',
       icon: Wind,
       href: '/rehber/solunum-sistemleri',
       color: 'blue',
@@ -34,7 +34,7 @@ export function GuideCategories() {
       title: 'Kullanım Kılavuzları',
       description: 'Tüm cihazlar için detaylı kullanım ve bakım rehberleri',
       icon: BookOpen,
-      href: '/rehber',
+      href: '/rehber/solunum-sistemleri',
       color: 'purple',
     },
   ];

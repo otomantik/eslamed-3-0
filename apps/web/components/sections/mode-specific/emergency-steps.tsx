@@ -14,18 +14,18 @@ import { getWhatsAppUrlWithTemplate } from '@/lib/utils/whatsapp-helpers';
 export const EMERGENCY_STEPS = [
   {
     step: '1',
-    title: 'Cihazı Güvenli Şekilde Kapatın',
-    description: 'Elektrik bağlantısını kesin ve cihazı kapatın. Güvenlik önceliklidir.',
+    title: 'Durumu Değerlendirin',
+    description: 'Elektrik arızası/yangın/duman varsa cihazı kapatın ve fişi çekin. Solunum sıkıntısı varsa cihazı KAPATMAYIN, doğrudan 112\'yi arayın.',
   },
   {
     step: '2',
-    title: 'Hemen Arayın',
-    description: 'Telefon veya WhatsApp üzerinden teknik destek ekibimize ulaşın.',
+    title: 'Acil Tıbbi Durum: 112',
+    description: 'Ciddi nefes darlığı, göğüs ağrısı, bilinç değişikliği varsa hemen 112. Teknik arıza için bizi arayın.',
   },
   {
     step: '3',
-    title: 'Durumu Açıklayın',
-    description: 'Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
+    title: 'Teknik Destek İçin Bize Ulaşın',
+    description: 'Cihaz arızası için telefon/WhatsApp ile iletişime geçin. Cihaz modeli, belirtiler ve kullanım koşullarını paylaşın.',
   },
 ] as const;
 
@@ -56,11 +56,15 @@ export function EmergencySteps() {
       <div className="container-wide">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-red-100 rounded-full mb-4">
+              <AlertCircle className="w-5 h-5 text-red-700" strokeWidth={2} />
+              <span className="font-semibold text-red-900">Tıbbi Acil: 112 | Teknik Arıza: Bizi Arayın</span>
+            </div>
             <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
               Acil Durumda Ne Yapmalıyım?
             </h2>
             <p className="text-lg text-slate-600">
-              Aşağıdaki adımları sırayla takip edin. Teknik destek ekibimiz size yardımcı olacaktır.
+              Ciddi sağlık sorunu varsa önce 112. Cihaz arızası için aşağıdaki adımları takip edin.
             </p>
           </div>
 
@@ -75,7 +79,7 @@ export function EmergencySteps() {
                   transition={{ delay: index * 0.2, duration: 0.5 }}
                   className="flex items-start gap-4 p-6 bg-white rounded-xl border-2 border-red-100 shadow-md hover:shadow-lg transition-shadow"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
+                  <div className="shrink-0 w-12 h-12 bg-red-600 text-white rounded-full flex items-center justify-center font-bold text-lg">
                     {item.step}
                   </div>
                   <div className="flex-1">

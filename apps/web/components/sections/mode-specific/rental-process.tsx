@@ -1,6 +1,6 @@
 'use client';
 
-import { Calendar, FileText, CheckCircle2, MapPin } from 'lucide-react';
+import { Calendar, FileText, CheckCircle2, Headphones } from 'lucide-react';
 import { getPhoneLink } from '@/lib/constants/contact-info';
 import { Timeline, type TimelineStep } from '@/components/ui/timeline';
 
@@ -32,7 +32,7 @@ export function RentalProcess() {
       step: 4,
       title: 'Sürekli Destek',
       description: 'Kiralama süresi boyunca teknik destek ve bakım hizmeti.',
-      icon: MapPin,
+      icon: Headphones,
     },
   ];
 
