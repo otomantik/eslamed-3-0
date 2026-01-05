@@ -35,19 +35,19 @@ export function ProductShowcase() {
   const categoryVisuals: Record<ProductTab, { src: string; alt: string; label: string }> = {
     respiratory: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.webp',
+      src: '/assets/hero-bg.png',
       alt: 'Ev tipi solunum destek ünitesi kurulumu - Oksijen konsantratörü teknik desteği İstanbul',
       label: 'Solunum destek grubunda kurulum ve teknik kullanım adımları',
     },
     diagnostic: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.webp',
+      src: '/assets/hero-bg.png',
       alt: 'Dijital tıbbi ölçüm cihazları teknik desteği - Tansiyon ölçüm cihazı kurulumu Eslamed',
       label: 'Tanı ve ölçüm grubunda cihaz seçimi ve teknik destek süreci',
     },
     homecare: {
       // Fallback image: replace with a real WebP when available under /public/assets/
-      src: '/assets/hero-bg.webp',
+      src: '/assets/hero-bg.png',
       alt: 'Evde bakım ekipmanları uygunluk değerlendirmesi - Hasta yatağı ve mobilite ekipmanları İstanbul',
       label: 'Evde bakım grubunda ekipman uygunluğu ve kullanım koşulları',
     },
@@ -87,7 +87,7 @@ export function ProductShowcase() {
               <div className="relative w-full lg:w-1/2 h-64 sm:h-72 lg:h-auto lg:min-h-[420px]">
                 <Image
                   // Fallback image: replace with /assets/kisiye-ozel-tabanlik-analizi.webp when uploaded.
-                  src="/assets/hero-bg.webp"
+                  src="/assets/hero-bg.png"
                   alt="Kişiye özel tabanlık analizi ve ortopedik çözümler - Eslamed Çekmeköy"
                   fill
                   className="object-cover"

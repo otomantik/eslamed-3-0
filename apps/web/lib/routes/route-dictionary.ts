@@ -86,6 +86,10 @@ export const routeDictionary: Record<string, RouteMetadata> = {
     title: 'Saha Terminali - Teknisyen Arayüzü',
     parent: '/',
   },
+  '/veri-portali': {
+    title: 'Veri Portali',
+    parent: '/kvkk',
+  },
 };
 
 /**

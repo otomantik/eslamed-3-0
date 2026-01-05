@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
-import Tracker from "@/components/analytics/Tracker";
-import { BottomNav } from "@/components/ui/bottom-nav";
+import { TrackingProvider } from "@/components/providers/tracking-provider";
 import { IntentProviderWrapper } from "@/components/providers/intent-provider-wrapper";
 import { IntentThemeProvider } from "@/context/theme-provider";
 import { CTALockWrapper } from "@/components/ui/cta-lock-wrapper";
+import { ConsoleHygieneClient } from "@/lib/dev/console-hygiene-client";
 
 const plusJakarta = Plus_Jakarta_Sans({
   variable: "--font-display",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     siteName: "ESLAMED",
     title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
     description:
-      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.",
+      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.",
     images: [
       {
         url: "/opengraph-image",
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
     description:
-      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.",
+      "Evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.",
     images: ["/twitter-image"],
   },
 };
@@ -87,7 +87,7 @@ export default function RootLayout({
     image: 'https://www.eslamed.com/assets/hero-bg.png',
     logo: 'https://www.eslamed.com/assets/hero-bg.png',
     description:
-      'Eslamed, evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi sağlar (solunum desteği, evde bakım, ölçüm/takip). Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz.',
+      'Eslamed, evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi sağlar (solunum desteği, evde bakım, ölçüm/takip). Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Alemdağ Mah. Atabey Cad. No:19/E1A',
@@ -101,7 +101,7 @@ export default function RootLayout({
     telephone: '+905372425535',
     openingHours: 'Mo-Su 00:00-24:00',
     priceRange: '$$',
-    knowsAbout: ['ÜTS Kayıtlı Cihazlar', 'CE Belgeli Medikal Donanımlar', 'Evde Sağlık Ekipmanları'],
+    knowsAbout: ['ÜTS Kayıtlı', 'CE Mevzuatına Uygun Ürün Tedariki', 'Evde Sağlık Ekipmanları'],
     areaServed: [
       { '@type': 'AdministrativeArea', name: 'İstanbul' },
       { '@type': 'AdministrativeArea', name: 'Çekmeköy' },
@@ -194,17 +194,8 @@ export default function RootLayout({
   return (
     <html lang="tr" data-scroll-behavior="smooth">
       <head>
-        {/* Preconnect to Google Fonts for Core Web Vitals optimization */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        {/* Critical CSS: Playfair Display font variable for premium perception (0.00 CLS during font-swap) */}
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            :root {
-              --font-premium: ${playfair.style.fontFamily};
-            }
-          `
-        }} />
+        {/* Next.js automatically handles font preconnect and preload via next/font/google */}
+        {/* Critical CSS: Font variables are already injected by Next.js via className */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(medicalBusinessSchema) }}
@@ -213,19 +204,23 @@ export default function RootLayout({
       <body
         className={`${plusJakarta.variable} ${inter.variable} ${playfair.variable} antialiased`}
       >
+        {/* Console hygiene (DEV only, when NEXT_PUBLIC_CONSOLE_HYGIENE=1) */}
+        <ConsoleHygieneClient />
+
         {/* Aria-live region for mode announcements */}
         <div id="aria-live-announcements" aria-live="polite" aria-atomic="true" />
-        
+
         <Suspense fallback={null}>
-          <Tracker />
         </Suspense>
         <Suspense fallback={null}>
-          <IntentProviderWrapper>
-            <IntentThemeProvider>
-              {children}
-              <CTALockWrapper />
-            </IntentThemeProvider>
-          </IntentProviderWrapper>
+          <TrackingProvider>
+            <IntentProviderWrapper>
+              <IntentThemeProvider>
+                {children}
+                <CTALockWrapper />
+              </IntentThemeProvider>
+            </IntentProviderWrapper>
+          </TrackingProvider>
         </Suspense>
       </body>
     </html>

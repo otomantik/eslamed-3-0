@@ -115,7 +115,7 @@ export default function CihazKiralamaPage() {
           {
             question: 'Kiralama sırasında teknik destek alabilir miyim?',
             answer:
-              'Evet. Kiralama süresi boyunca teknik destek ve bakım hizmeti dahildir. Sorun yaşadığınızda WhatsApp veya telefon hattımızdan 7/24 ulaşabilirsiniz.',
+              'Evet. Kiralama süresi boyunca teknik destek ve bakım hizmeti dahildir. Sorun yaşadığınızda WhatsApp üzerinden 7/24 mesaj bırakabilirsiniz; acil durumlar önceliklidir.',
           },
         ]}
       />

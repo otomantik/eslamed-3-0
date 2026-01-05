@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { Navbar } from '@/components/layout/navbar';
+import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 
@@ -22,7 +22,7 @@ export function ServiceTemplate({
     <main className="min-h-screen bg-slate-50 font-sans antialiased text-slate-900">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }} />
 
-      <Navbar />
+      <ModeAwareNavbar />
 
       <header className="pt-28 sm:pt-24">
         <div className="container-wide">

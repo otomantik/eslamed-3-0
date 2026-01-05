@@ -143,3 +143,4 @@ export function isVerified(id: string): boolean {
   return VERIFIED_CREDENTIALS.some((cred) => cred.id === id);
 }
 
+

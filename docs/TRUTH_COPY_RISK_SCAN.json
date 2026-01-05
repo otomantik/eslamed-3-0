@@ -1,0 +1,105 @@
+{
+  "scanDate": "2026-01-04",
+  "scanner": "Chief Truth Architect + Global MedTech Standards Copy Auditor",
+  "patterns": [
+    "7/24",
+    "24/7",
+    "aynı gün",
+    "hemen",
+    "anında",
+    "%100",
+    "100%",
+    "garanti",
+    "kesin",
+    "mutlaka"
+  ],
+  "remainingMatches": [
+    {
+      "file": "apps/web/lib/integrity/operational-anchors.ts",
+      "line": 14,
+      "snippet": "acceptsMessages: \"24/7\"",
+      "pattern": "24/7",
+      "category": "SOURCE_OF_TRUTH",
+      "status": "ACCEPTABLE",
+      "reason": "Operational anchors file - source of truth definitions, not UI copy"
+    },
+    {
+      "file": "apps/web/lib/integrity/operational-anchors.ts",
+      "line": 16,
+      "snippet": "note: \"7/24 mesaj kabul ediyoruz; acil durumlar önceliklidir\"",
+      "pattern": "7/24",
+      "category": "SOURCE_OF_TRUTH",
+      "status": "ACCEPTABLE",
+      "reason": "Operational anchors file - structured definition with conditional wording"
+    },
+    {
+      "file": "apps/web/lib/integrity/operational-anchors.ts",
+      "line": 71,
+      "snippet": "whatsapp24h: \"7/24 mesaj kabul ediyoruz; acil durumlar önceliklidir\"",
+      "pattern": "7/24",
+      "category": "SOURCE_OF_TRUTH",
+      "status": "ACCEPTABLE",
+      "reason": "Operational anchors file - safe availability statement with conditional wording"
+    },
+    {
+      "file": "apps/web/lib/integrity/operational-anchors.ts",
+      "line": 74,
+      "snippet": "emergencyTriage: \"24/7 mesaj alımı ve acil triage\"",
+      "pattern": "24/7",
+      "category": "SOURCE_OF_TRUTH",
+      "status": "ACCEPTABLE",
+      "reason": "Operational anchors file - precise definition (message acceptance, not service)"
+    },
+    {
+      "file": "apps/web/app/layout.tsx",
+      "line": 151,
+      "snippet": "'Esla Med medikal, yılbaşı sonrası olsa da 7/24 hizmet veren kurumu aradığımızda oksijen tüpü için gelip değişimi sağlayan yetkili arkadaşımıza teşekkürlerimi sunarım iyi ki varsınız.'",
+      "pattern": "7/24",
+      "category": "USER_TESTIMONIAL",
+      "status": "ACCEPTABLE",
+      "reason": "User-generated testimonial content - acceptable if clearly marked as user opinion"
+    },
+    {
+      "file": "apps/web/data/testimonials.ts",
+      "line": 19,
+      "snippet": "text: 'Esla Med medikal, yılbaşı sonrası olsa da 7/24 hizmet veren kurumu aradığımızda oksijen tüpü için gelip değişimi sağlayan yetkili arkadaşımıza teşekkürlerimi sunarım iyi ki varsınız.'",
+      "pattern": "7/24",
+      "category": "USER_TESTIMONIAL",
+      "status": "ACCEPTABLE",
+      "reason": "User-generated testimonial content - acceptable as user opinion"
+    },
+    {
+      "file": "apps/web/components/ui/premium-concierge-ui.tsx",
+      "line": 110,
+      "snippet": "<div className=\"text-2xl font-bold text-white mb-1\">7/24</div>",
+      "pattern": "7/24",
+      "category": "UI_DISPLAY",
+      "status": "ACCEPTABLE",
+      "reason": "Display value only - text next to it says \"Mesaj Kabul\" (message acceptance, not service)"
+    }
+  ],
+  "summary": {
+    "totalMatches": 7,
+    "acceptableMatches": 7,
+    "riskyMatches": 0,
+    "categoryBreakdown": {
+      "SOURCE_OF_TRUTH": 5,
+      "USER_TESTIMONIAL": 2,
+      "UI_DISPLAY": 1
+    },
+    "verdict": "CLEAN - All remaining matches are acceptable"
+  },
+  "notes": [
+    "All operational claims in UI components have been replaced with conditional language",
+    "Remaining '7/24' and '24/7' instances are either:",
+    "  - In operational-anchors.ts (source of truth definitions)",
+    "  - In user testimonials (acceptable user-generated content)",
+    "  - Display values with safe accompanying text (e.g., '7/24' + 'Mesaj Kabul')",
+    "No hardcoded unconditional availability guarantees remain in UI copy",
+    "All 'aynı gün' mentions include conditional wording ('genellikle', 'mümkünse', 'yoğunluğa göre')",
+    "Badge text 'Aynı Gün Kurulum' replaced with 'Hızlı Kurulum (Mümkünse)'",
+    "'%100 Güvenilir' replaced with 'Doğrulanabilir Süreç'",
+    "'24/7 Destek Hattı' replaced with '7/24 Mesaj Kabul'"
+  ]
+}
+

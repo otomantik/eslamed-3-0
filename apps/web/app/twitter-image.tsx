@@ -90,7 +90,7 @@ export default function TwitterImage() {
                 'Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif',
             }}
           >
-            Teknik rehberlik ve süreç netliği. Tanı ve tedavi kararı hekimlere aittir.
+            Teknik rehberlik ve süreç netliği. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
           </div>
         </div>
 

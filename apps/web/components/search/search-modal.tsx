@@ -12,6 +12,7 @@ import { logSearchTelemetry } from '@/lib/search/search-telemetry';
 import { normalizeSearchIndex } from '@/lib/search/index-loader';
 import { HelpCard } from '@/components/search/help-card';
 import { useIntent } from '@/context/IntentContext';
+import { UTS_REGISTERED_LABEL, VERIFIED_SERVICE_LABEL } from '@/lib/copy/truth-claims';
 
 type FuseLike = {
   search: (q: string) => Array<{ item: SearchItem; score?: number }>;
@@ -274,14 +275,14 @@ export function SearchModal() {
     } else if (mode === 'CRITICAL_EMERGENCY') {
       return [
         { label: 'Acil Oksijen Desteği', query: 'acil oksijen' },
-        { label: '7/24 Teknik Destek', query: 'teknik destek' },
+        { label: '7/24 Mesaj Kabul', query: 'teknik destek' },
         { label: 'Acil Servis', query: 'acil servis' },
       ];
     } else if (mode === 'TRUST_SEEKER') {
       return [
         { label: 'Kişiye Özel Tabanlık', query: 'tabanlık' },
-        { label: 'ÜTS Kayıtlı Cihazlar', query: 'üts kayıtlı' },
-        { label: 'Güvenilir Hizmetler', query: 'güvenilir' },
+        { label: UTS_REGISTERED_LABEL, query: 'üts kayıtlı' },
+        { label: VERIFIED_SERVICE_LABEL, query: 'güvenilir' },
       ];
     } else if (mode === 'COMMERCIAL_RENTAL') {
       return [

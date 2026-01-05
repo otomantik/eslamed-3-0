@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run from project root
+cd "$(dirname -- "$0")/../.."
+npm run -s --prefix apps/web test:copy
+

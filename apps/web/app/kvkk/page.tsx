@@ -39,7 +39,7 @@ export default async function KvkkPage({
         <div className="container-wide space-y-8">
           <TLDRBox>
             - Verileri, yalnızca hizmetin yürütülmesi ve iletişim amaçlarıyla sınırlı şekilde işleriz.
-            <br />- Tıbbi tanı/tedavi verilerinizi bu kanallar üzerinden paylaşmamanızı öneririz.
+            <br />- Tıbbi tanı veya tedavi verilerinizi bu kanallar üzerinden paylaşmamanızı öneririz.
             <br />- Talep ve haklarınız için WhatsApp/telefon üzerinden bize ulaşabilirsiniz.
           </TLDRBox>
 

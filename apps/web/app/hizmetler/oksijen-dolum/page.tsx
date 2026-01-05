@@ -126,7 +126,7 @@ export default function OksijenDolumPage() {
           {
             question: 'Acil durumda ne yapmalıyım?',
             answer:
-              'Ciddi nefes darlığı gibi acil durumlarda 112\'yi arayın. Teknik destek ve dolum ihtiyacı için WhatsApp veya telefon hattımızdan 7/24 ulaşabilirsiniz.',
+              'Ciddi nefes darlığı gibi acil durumlarda 112\'yi arayın. Teknik destek ve dolum ihtiyacı için WhatsApp üzerinden 7/24 mesaj bırakabilirsiniz; acil durumlar önceliklidir.',
           },
           {
             question: 'Tüpüm test tarihi geçmiş, ne yapmalıyım?',

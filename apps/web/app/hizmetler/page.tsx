@@ -57,13 +57,11 @@ export default async function HizmetlerHubPage({
                 teknik destek, kurulum ve lojistik hizmetleri sağlar.
               </p>
               <p className="mt-4 text-[18px] text-slate-700 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                Tüm hizmetlerimiz, <span className="font-semibold text-slate-900">Sağlık Bakanlığı ÜTS kayıtlı</span> cihazlar ve{' '}
-                <span className="font-semibold text-slate-900">CE uygunluk belgeleri</span> ile yürütülür. Tanı ve tedavi kararı hekimlere aittir;{' '}
-                biz yalnızca teknik süreç ve donanım yönetimi alanında destek sağlarız.
+                Tüm hizmetlerimiz, <span className="font-semibold text-slate-900">ÜTS Kayıtlı</span> cihazlar ve{' '}
+                <span className="font-semibold text-slate-900">CE mevzuatına uygun ürün tedariki</span> ile yürütülür. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
               </p>
               <p className="mt-4 text-[18px] text-slate-700 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                İhtiyacınız olan hizmeti seçin, detaylı süreç bilgisi ve iletişim kanallarını inceleyin. Sorularınız için WhatsApp veya telefon{' '}
-                hattımızdan 7/24 ulaşabilirsiniz.
+                İhtiyacınız olan hizmeti seçin, detaylı süreç bilgisi ve iletişim kanallarını inceleyin. Sorularınız için WhatsApp üzerinden 7/24 mesaj bırakabilirsiniz; acil durumlar önceliklidir.
               </p>
             </div>
           </div>
@@ -80,9 +78,9 @@ export default async function HizmetlerHubPage({
                 <div className="w-12 h-12 rounded-xl bg-blue-100 flex items-center justify-center mb-4">
                   <Clock className="w-6 h-6 text-blue-600" strokeWidth={1.5} />
                 </div>
-                <h3 className="text-lg font-semibold text-slate-900 mb-2">24 Saat Destek</h3>
+                <h3 className="text-lg font-semibold text-slate-900 mb-2">7/24 Mesaj Kabul</h3>
                 <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                  Acil teknik destek ihtiyacınızda WhatsApp ve telefon hattımız 7/24 aktif.
+                  Acil teknik destek ihtiyacınızda WhatsApp üzerinden 7/24 mesaj bırakabilirsiniz; yanıt süresi aciliyet seviyesine göre planlanır.
                 </p>
               </div>
               <div className="flex flex-col items-start">
@@ -91,7 +89,7 @@ export default async function HizmetlerHubPage({
                 </div>
                 <h3 className="text-lg font-semibold text-slate-900 mb-2">Orijinal Parça</h3>
                 <p className="text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-                  Tüm yedek parça ve sarf malzemeleri üretici onaylı, ÜTS kayıtlı ve CE belgeli.
+                  Tüm yedek parça ve sarf malzemeleri üretici onaylı, ÜTS Kayıtlı ve CE mevzuatına uygun ürün tedariki ile sağlanmaktadır.
                 </p>
               </div>
               <div className="flex flex-col items-start">

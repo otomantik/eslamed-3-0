@@ -15,7 +15,7 @@ export function TrustSafetyBridge() {
           <div className="mt-3 flex items-start gap-3">
             <ShieldCheck className="w-4 h-4 text-slate-400 mt-0.5" strokeWidth={1.5} />
             <p className="text-sm text-slate-500 leading-relaxed">
-              Bu sayfa tıbbi tanı veya tedavi amacı taşımaz. Tanı, tedavi ve cihaz kullanımına ilişkin klinik kararlar hekimlere aittir. Biz; ekipman uygunluğu, ev tipi cihaz kurulumu ve güvenli kullanım adımlarında süreç yönlendirmesi sağlar, teknik değerlendirme sürecini netleştiririz.
+              Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
             </p>
           </div>
         </div>

@@ -8,26 +8,46 @@
     "start": "next start",
     "lint": "eslint",
     "audit:scan": "node ../../scripts/audit-scan.mjs",
+    "audit:claims": "node ../../scripts/claim-firewall.mjs",
+    "audit:tracking": "node ../../scripts/tracking-firewall.mjs",
+    "audit:drift": "node ../../scripts/tracking-drift-audit.mjs",
+    "test:copy": "node ../../scripts/check-copy-consistency.mjs",
     "prepare": "husky"
   },
   "dependencies": {
+    "@clickhouse/client": "^0.2.7",
     "@tanstack/react-virtual": "^3.13.14",
+    "dotenv": "^17.2.3",
+    "drizzle-orm": "^0.45.1",
     "framer-motion": "^12.23.26",
     "fuse.js": "^7.1.0",
     "lucide-react": "^0.562.0",
     "next": "16.1.1",
+    "postgres": "^3.4.7",
     "react": "19.2.3",
-    "react-dom": "19.2.3"
+    "react-dom": "19.2.3",
+    "uuid": "^9.0.1",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
+    "@types/pg": "^8.16.0",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "@types/uuid": "^9.0.8",
+    "drizzle-kit": "^0.31.8",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "glob": "^10.3.10",
     "husky": "^9.1.7",
+    "lint-staged": "^15.2.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,mjs,md,json}": [
+      "node ../../scripts/check-copy-consistency.mjs"
+    ]
   }
 }

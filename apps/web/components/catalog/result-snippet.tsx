@@ -12,7 +12,7 @@ interface ResultSnippetProps {
 
 /**
  * ResultSnippet: Mode-specific badges and tooltips
- * URGENT: "Aynı Gün Kurulum" / "Stokta Var"
+ * URGENT: "Hızlı Kurulum (Mümkünse)" / "Stokta Var"
  * RESEARCH: "Teknik Detayları İncele" / "Uzman Görüşü"
  * VIP: "Kişiye Özel Analiz Dahil"
  */
@@ -28,7 +28,7 @@ export function ResultSnippet({ item, mode, rank }: ResultSnippetProps) {
           className="inline-flex items-center gap-1 text-xs px-2 py-1 rounded bg-red-100 text-red-700 font-semibold"
         >
           <Clock className="w-3 h-3" strokeWidth={2} />
-          Aynı Gün Kurulum
+          Hızlı Kurulum (Mümkünse)
         </span>
       );
     }

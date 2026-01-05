@@ -30,7 +30,7 @@ export function RespiratoryChecklist() {
         <h2 className="text-2xl font-semibold text-slate-900">Cihaz Kontrol Listesi</h2>
       </div>
       <p className="mt-3 text-sm text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-        Bu liste, günlük kullanımda teknik güvenliği desteklemek içindir. Tıbbi tanı/tedavi yerine geçmez.
+        Bu liste, günlük kullanımda teknik güvenliği desteklemek içindir. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
       </p>
 
       <div className="mt-6 space-y-3">

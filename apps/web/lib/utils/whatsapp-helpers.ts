@@ -67,3 +67,4 @@ export function getWhatsAppUrlWithTemplate(template: keyof typeof WHATSAPP_MESSA
   return getWhatsAppUrlWithText(WHATSAPP_MESSAGES[template]);
 }
 
+

@@ -82,7 +82,7 @@ export function BrandTrustTicker() {
     const normalized = normalizeBrands(rawBrands);
     
     // Development-only warning if brands were dropped
-    if (process.env.NODE_ENV === 'development') {
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG === 'true') {
       const droppedCount = rawBrands.length - normalized.length;
       if (droppedCount > 0) {
         console.warn(

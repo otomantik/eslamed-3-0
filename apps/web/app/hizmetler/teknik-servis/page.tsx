@@ -20,7 +20,7 @@ export default function TeknikServisPage() {
     '@id': 'https://www.eslamed.com/hizmetler/teknik-servis#service',
     name: 'Teknik Servis',
     description:
-      'Medikal cihazlarda teknik ön değerlendirme, arıza analizi ve onarım planlama süreci. Tanı/tedavi sunmaz; yalnızca donanım ve mekanik/elektriksel kapsam.',
+      'Medikal cihazlarda teknik ön değerlendirme, arıza analizi ve onarım planlama süreci. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
     provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };

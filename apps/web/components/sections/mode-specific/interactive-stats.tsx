@@ -20,22 +20,22 @@ export function InteractiveStats() {
   const stats = [
     {
       icon: Building2,
-      title: 'Bakanlık Yetkili Merkezi',
-      description: `ÇKYS: ${REALITY_ANCHORS.ckysRegistrationNumber}`,
+      title: 'ÇKYS Kayıtlı',
+      description: REALITY_ANCHORS.ckysRegistrationNumber,
       color: 'blue',
       link: '/isletme-belgeleri',
     },
     {
       icon: Settings,
-      title: 'Aktif ÜTS Desteği & Teknik Servis',
-      description: `ÜTS Firma No: ${REALITY_ANCHORS.utsFirmNumber}`,
+      title: 'ÜTS Kayıtlı',
+      description: REALITY_ANCHORS.utsFirmNumber,
       color: 'amber',
       link: '/isletme-belgeleri',
     },
     {
       icon: ShieldCheck,
       title: 'Ruhsatlı İşletme',
-      description: `İşletme Ruhsat No: ${REALITY_ANCHORS.businessLicense.number} (İtibaren: ${REALITY_ANCHORS.businessLicense.issuedDate})`,
+      description: `Ruhsat No: ${REALITY_ANCHORS.businessLicense.number} (İtibaren: ${REALITY_ANCHORS.businessLicense.issuedDate})`,
       color: 'emerald',
       link: '/isletme-belgeleri',
     },

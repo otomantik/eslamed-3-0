@@ -2,6 +2,7 @@
 
 import { Star, CheckCircle2 } from 'lucide-react';
 import { testimonials as defaultTestimonialsData, type Testimonial } from '@/data/testimonials';
+import { TRUSTED_PROCESS_LABEL } from '@/lib/copy/truth-claims';
 
 interface TestimonialsProps {
   testimonials?: Testimonial[];
@@ -25,7 +26,7 @@ export function Testimonials({ testimonials }: TestimonialsProps) {
             Neden Bizi Tercih Ediyorlar?
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed" style={{ lineHeight: 1.8 }}>
-            Yüzlerce mutlu aile, 7/24 güvenli destek deneyimini bizimle yaşıyor. Acil durumlardan günlük kullanıma kadar, 
+            Yüzlerce mutlu aile, {TRUSTED_PROCESS_LABEL.toLowerCase()} ile medikal ekipman süreçlerinde bizimle çalışıyor. Acil durumlardan günlük kullanıma kadar, 
             her adımda yanınızdayız. İşte müşterilerimizin gerçek hikayeleri.
           </p>
         </div>

@@ -285,7 +285,7 @@ export default async function IsletmeBelgeleriPage({
               className="mt-8 sm:mt-10 border-t border-slate-200 pt-4 sm:pt-6 text-xs sm:text-sm text-slate-600 leading-relaxed break-words"
               style={{ lineHeight: 1.6 }}
             >
-              Bu sayfa, doğrulanabilir kurumsal bilgi paylaşımı içindir. Tıbbi tanı veya tedavi amacı taşımaz; klinik kararlar hekimlere aittir.
+              Bu sayfa, doğrulanabilir kurumsal bilgi paylaşımı içindir. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
             </aside>
           </div>
         </div>

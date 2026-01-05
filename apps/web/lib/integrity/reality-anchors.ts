@@ -54,3 +54,4 @@ export const REALITY_ANCHORS: RealityAnchors = {
 // Formatted address string for UI
 export const FORMATTED_ADDRESS = `${REALITY_ANCHORS.address.street}, ${REALITY_ANCHORS.address.city}, ${REALITY_ANCHORS.address.region} ${REALITY_ANCHORS.address.postalCode} ${REALITY_ANCHORS.address.country}`;
 
+

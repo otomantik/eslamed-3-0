@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   output: "standalone",
   images: {
     // Configure image qualities to support quality={100} for Hero LCP optimization
-    qualities: [100, 75],
+    qualities: [100, 75, 90],
   },
   experimental: {
     // Helps tree-shake icon libraries (and other packages) more aggressively.

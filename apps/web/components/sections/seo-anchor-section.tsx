@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { CheckCircle2, ShieldCheck, Clock } from 'lucide-react';
 import { VERIFIED_CREDENTIALS, assertNoUnverifiedClaims } from '@/lib/integrity/business-credentials';
 import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { VERIFIED_CORPORATE_STATUS_LABEL } from '@/lib/copy/truth-claims';
 
 /**
  * SEOAnchorSection: Split layout with contextual content and verified credentials
@@ -71,7 +72,7 @@ export function SEOAnchorSection() {
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="w-5 h-5 text-emerald-600 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <p className="text-slate-900 text-sm md:text-base" style={{ lineHeight: 1.8 }}>
-                    Tüm hizmetlerimiz <strong className="text-slate-900">Sağlık Bakanlığı ÜTS kayıtlı</strong> (ÜTS Firma No: {REALITY_ANCHORS.utsFirmNumber}) ve <strong className="text-slate-900">CE mevzuatına uygun ürün tedariki</strong> ile yürütülür. 
+                    Tüm hizmetlerimiz <strong className="text-slate-900">ÜTS Kayıtlı</strong> (ÜTS Firma No: {REALITY_ANCHORS.utsFirmNumber}) ve <strong className="text-slate-900">CE mevzuatına uygun ürün tedariki</strong> ile yürütülür. 
                     İstanbul genelinde 2 tam yetkili mobil ekip ile hızlı ve planlı operasyon süreci yürütürüz.
                   </p>
                 </div>
@@ -79,14 +80,14 @@ export function SEOAnchorSection() {
                 <div className="flex items-start gap-3">
                   <ShieldCheck className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <p className="text-slate-900 text-sm md:text-base" style={{ lineHeight: 1.8 }}>
-                    ÜTS kayıtlı cihazlar ve <strong className="text-slate-900">CE mevzuatına uygun ürün tedariki</strong> için güvenilir süreç yönlendirmesi sunuyoruz.
+                    <strong className="text-slate-900">ÜTS Kayıtlı</strong> cihazlar ve <strong className="text-slate-900">CE mevzuatına uygun ürün tedariki</strong> için güvenilir süreç yönlendirmesi sunuyoruz.
                   </p>
                 </div>
 
                 <div className="flex items-start gap-3">
                   <Clock className="w-5 h-5 text-slate-600 flex-shrink-0 mt-0.5" strokeWidth={1.5} />
                   <p className="text-slate-900 text-sm md:text-base" style={{ lineHeight: 1.8 }}>
-                    Tanı ve tedavi kararı hekimlere aittir; bu hizmet tanı/tedavi sunmaz, yalnızca teknik süreç ve donanım yönetimi alanında destek sağlar.
+                    Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
                   </p>
                 </div>
               </div>
@@ -96,7 +97,7 @@ export function SEOAnchorSection() {
             <div className="flex flex-col justify-center">
               <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 md:p-8">
                 <h3 className="text-lg font-semibold text-slate-900 mb-6 text-center">
-                  Doğrulanabilir Kurumsal Statü
+                  {VERIFIED_CORPORATE_STATUS_LABEL}
                 </h3>
                 <div className="grid grid-cols-1 gap-4">
                   {displayCredentials.map((cred) => {

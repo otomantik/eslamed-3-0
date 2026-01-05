@@ -2,6 +2,7 @@
 
 import { AlertCircle, User, Award, Calendar } from 'lucide-react';
 import type { ExpertProfile } from '@/lib/integrity/eslamed-experts';
+import { EXPERT_VERIFICATION_LABEL } from '@/lib/copy/truth-claims';
 
 interface ExpertVerificationPanelProps {
   expert: ExpertProfile | null | undefined;
@@ -41,7 +42,7 @@ export function ExpertVerificationPanel({
           <User className="w-5 h-5 text-blue-600" strokeWidth={2} />
         </div>
         <div className="flex-1">
-          <h3 className="text-sm font-semibold text-slate-900 mb-1">Uzman Doğrulaması</h3>
+          <h3 className="text-sm font-semibold text-slate-900 mb-1">{EXPERT_VERIFICATION_LABEL}</h3>
           <p className="text-xs text-slate-600">
             Bu içerik tıbbi uzman tarafından gözden geçirilmiştir.
           </p>

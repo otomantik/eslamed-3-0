@@ -8,6 +8,7 @@ import { ServiceTimeline } from '@/components/istanbul/service-timeline';
 import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { DistrictInquiry } from '@/components/istanbul/district-inquiry';
 import { detectIntent } from '@/lib/intent/detector';
+import { ONSITE_SUPPORT_LABEL } from '@/lib/copy/truth-claims';
 
 export const metadata: Metadata = {
   title: "İstanbul Medikal Destek | ESLAMED",
@@ -183,7 +184,7 @@ export default async function IstanbulPage({
               <div className="p-8 lg:p-12 flex flex-col justify-center">
                 <div className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-3 py-2 text-sm font-semibold text-slate-900 w-fit">
                   <BadgeCheck className="w-4 h-4 text-emerald-600" strokeWidth={1.5} />
-                  Yerinde Destek Garantisi
+                  {ONSITE_SUPPORT_LABEL}
                 </div>
                 <h1 className="mt-5 text-3xl sm:text-4xl font-display font-semibold text-slate-900 leading-tight">
                   İstanbul&apos;un Her Noktasına Uzman Medikal Destek

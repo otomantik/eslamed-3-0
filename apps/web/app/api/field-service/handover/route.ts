@@ -122,13 +122,15 @@ export async function POST(req: Request) {
     // Example with SendGrid, AWS SES, or Resend:
     // await emailService.send(emailContent);
 
-    // For now, log the email content (in production, remove this)
-    console.log('[HANDOVER EMAIL]', {
-      to: emailContent.to,
-      subject: emailContent.subject,
-      customer: body.customerName,
-      device: body.deviceName,
-    });
+    // Debug logging (only in development or when DEBUG env is set)
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG === 'true') {
+      console.log('[HANDOVER EMAIL]', {
+        to: emailContent.to,
+        subject: emailContent.subject,
+        customer: body.customerName,
+        device: body.deviceName,
+      });
+    }
 
     // Log handover to analytics
     try {

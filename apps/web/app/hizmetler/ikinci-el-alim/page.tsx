@@ -20,7 +20,7 @@ export default function IkinciElAlimPage() {
     '@id': 'https://www.eslamed.com/hizmetler/ikinci-el-alim#service',
     name: '2. El Alım',
     description:
-      'İkinci el medikal cihazlarda model doğrulama, teknik değerleme ve yenileme/yeniden kullanım planı. Tanı/tedavi sunmaz; donanım kapsamındadır.',
+      'İkinci el medikal cihazlarda model doğrulama, teknik değerleme ve yenileme/yeniden kullanım planı. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
     provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
@@ -93,7 +93,7 @@ export default function IkinciElAlimPage() {
       />
 
       <QuickActionCard variant="info" title="Sınırımız (net)">
-        Bu süreç, cihazın <span className="font-semibold text-slate-900">teknik durumunu</span> değerlendirir. Tıbbi tanı/tedavi önerisi içermez.
+        Bu süreç, cihazın <span className="font-semibold text-slate-900">teknik durumunu</span> değerlendirir. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
       </QuickActionCard>
     </ServiceTemplate>
   );

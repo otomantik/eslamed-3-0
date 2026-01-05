@@ -32,7 +32,7 @@ export default async function DestekPage({
             Destek & Sınırlar
           </h1>
           <p className="mt-3 text-base text-slate-600 leading-relaxed" style={{ lineHeight: 1.8 }}>
-            Buradaki bilgiler teknik kullanım güvenliği ve süreç yönlendirmesi içindir. Tıbbi tanı/tedavi yerine geçmez.
+            Buradaki bilgiler teknik kullanım güvenliği ve süreç yönlendirmesi içindir. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
           </p>
         </div>
       </header>
@@ -43,7 +43,7 @@ export default async function DestekPage({
 
           <QuickActionCard
             variant="warning"
-            title="Acil Teknik Destek (24/7 mesaj alımı)"
+            title="Acil Teknik Destek (7/24 mesaj kabul)"
             icon={<PhoneCall className="w-5 h-5 text-amber-800" strokeWidth={1.5} />}
           >
             Cihazınız alarm veriyorsa, çalışmıyorsa veya elektrik kesintisi gibi bir risk oluştuysa WhatsApp üzerinden mesaj bırakabilirsiniz.

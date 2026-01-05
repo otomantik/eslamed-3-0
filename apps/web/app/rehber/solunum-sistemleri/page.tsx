@@ -90,7 +90,7 @@ export default async function SolunumSistemleriPage({
             ]}
             className="text-slate-400"
           />
-          
+
           {/* Hero Layout - 2 Column Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6 items-center">
             {/* Left Side: Title and Description */}
@@ -102,7 +102,7 @@ export default async function SolunumSistemleriPage({
                 Bu sayfa, solunum destek cihazlarında günlük kullanım ve teknik güvenlik için hazırlanmıştır. Tanı veya tedavi yerine geçmez.
               </p>
             </div>
-            
+
             {/* Right Side: Visual Illustration */}
             <div className="order-1 md:order-2">
               <RespiratoryDeviceIllustration />
@@ -168,6 +168,42 @@ export default async function SolunumSistemleriPage({
                   <p className="text-sm text-slate-700 leading-relaxed" style={{ lineHeight: 1.8 }}>
                     <strong className="text-slate-900">Teknik Not:</strong> Musluk suyundaki mineraller (özellikle kalsiyum ve magnezyum) zamanla cihaz içinde birikir ve performansı düşürür. Saf su kullanımı bu birikimi önler ve cihazın uzun ömürlü çalışmasını destekler.
                   </p>
+                </div>
+              </div>
+
+              {/* Comparison Table */}
+              <div className="mt-8 rounded-xl border border-slate-200 overflow-hidden">
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm text-slate-600 min-w-[500px]">
+                    <thead className="bg-slate-50 text-slate-900 font-medium">
+                      <tr>
+                        <th className="px-6 py-4">Özellik</th>
+                        <th className="px-6 py-4">Ev Tipi</th>
+                        <th className="px-6 py-4">Taşınabilir</th>
+                        <th className="px-6 py-4">Tüp</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-200 bg-white">
+                      <tr>
+                        <td className="px-6 py-4 font-medium text-slate-900">Çalışma Prensibi</td>
+                        <td className="px-6 py-4">Elektrik (Sürekli)</td>
+                        <td className="px-6 py-4">Batarya (Pulse)</td>
+                        <td className="px-6 py-4">Basınçlı Gaz</td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 font-medium text-slate-900">Ağırlık</td>
+                        <td className="px-6 py-4">14-20 kg</td>
+                        <td className="px-6 py-4">2-4 kg</td>
+                        <td className="px-6 py-4">5-10 kg</td>
+                      </tr>
+                      <tr>
+                        <td className="px-6 py-4 font-medium text-slate-900">Süreklilik</td>
+                        <td className="px-6 py-4">7/24 Kesintisiz</td>
+                        <td className="px-6 py-4">2-4 Saat Pil</td>
+                        <td className="px-6 py-4">Hacme Bağlı</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
 

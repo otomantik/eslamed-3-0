@@ -3,6 +3,7 @@
 import { ShieldCheck, CheckCircle2, FileText } from 'lucide-react';
 import Link from 'next/link';
 import { VERIFIED_CREDENTIALS, assertNoUnverifiedClaims } from '@/lib/integrity/business-credentials';
+import { EXPERT_TEAM_LABEL, AUTHORIZED_MOBILE_TEAM_LABEL, VERIFIED_PROCESS_LABEL } from '@/lib/copy/truth-claims';
 
 /**
  * PremiumConciergeUI: VIP mode - Trust indicators and premium content
@@ -92,7 +93,7 @@ export function PremiumConciergeUI({ children }: { children: React.ReactNode }) 
                     Özel Danışmanlık Randevusu
                   </h2>
                   <p className="text-blue-50 text-lg mb-6 leading-relaxed">
-                    Evde ziyaret, yürüme analizi ve kişiye özel çözümler için uzman ekibimizle iletişime geçin.
+                    Evde ziyaret, yürüme analizi ve kişiye özel çözümler için {EXPERT_TEAM_LABEL.toLowerCase()} iletişime geçin.
                   </p>
                   <a
                     href="https://wa.me/905372425535?text=VIP%20danışmanlık%20randevusu%20almak%20istiyorum"
@@ -104,15 +105,15 @@ export function PremiumConciergeUI({ children }: { children: React.ReactNode }) 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <div className="text-2xl font-bold text-white mb-1">2</div>
-                    <div className="text-blue-100 text-sm">Tam Yetkili Mobil Ekip</div>
+                    <div className="text-blue-100 text-sm">{AUTHORIZED_MOBILE_TEAM_LABEL}</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                    <div className="text-2xl font-bold text-white mb-1">24/7</div>
-                    <div className="text-blue-100 text-sm">Destek Hattı</div>
+                    <div className="text-2xl font-bold text-white mb-1">7/24</div>
+                    <div className="text-blue-100 text-sm">Mesaj Kabul</div>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                    <div className="text-2xl font-bold text-white mb-1">100%</div>
-                    <div className="text-blue-100 text-sm">Güvenilir Süreç</div>
+                    <div className="text-2xl font-bold text-white mb-1">✓</div>
+                    <div className="text-blue-100 text-sm">{VERIFIED_PROCESS_LABEL}</div>
                   </div>
                   {/* ✅ REMOVED: "15+ Yıl Deneyim" duplicate - no longer showing */}
                 </div>

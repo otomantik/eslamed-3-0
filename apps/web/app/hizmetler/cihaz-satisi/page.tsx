@@ -22,7 +22,7 @@ export default function CihazSatisiPage() {
     '@id': 'https://www.eslamed.com/hizmetler/cihaz-satisi#service',
     name: 'Cihaz Satışı',
     description:
-      'Evde kullanım için cihaz satış sürecinde ihtiyaç odaklı eşleştirme ve teknik kullanım uyumu kontrolü. Tanı/tedavi sunmaz.',
+      'Evde kullanım için cihaz satış sürecinde ihtiyaç odaklı eşleştirme ve teknik kullanım uyumu kontrolü. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
     provider: { '@id': 'https://www.eslamed.com/#business' },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
@@ -69,7 +69,7 @@ export default function CihazSatisiPage() {
       {/* SECTION B: Pricing & Timeline */}
       <PricingTransparency
         title="Fiyatlandırma & Zamanlama"
-        content="Fiyatlandırma, cihaz tipine, teknik özelliklerine ve aksesuar paketine göre belirlenir. Tüm cihazlar ÜTS kayıtlı ve CE belgelidir. Kurulum ve eğitim hizmeti dahildir. Teslimat genellikle aynı gün veya ertesi gün yapılır. Detaylı fiyat bilgisi için kataloğu inceleyebilir veya WhatsApp üzerinden iletişime geçebilirsiniz."
+        content="Fiyatlandırma, cihaz tipine, teknik özelliklerine ve aksesuar paketine göre belirlenir. Tüm cihazlar ÜTS Kayıtlı ve CE mevzuatına uygun ürün tedariki ile sağlanmaktadır. Kurulum ve eğitim hizmeti dahildir. Teslimat genellikle aynı gün veya ertesi gün yapılır. Detaylı fiyat bilgisi için kataloğu inceleyebilir veya WhatsApp üzerinden iletişime geçebilirsiniz."
         accentColor={accent}
       />
 

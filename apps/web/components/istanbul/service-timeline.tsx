@@ -37,7 +37,7 @@ export function ServiceTimeline() {
     <section aria-label="Hizmet Zaman Çizelgesi" className="rounded-3xl border border-slate-200 bg-white p-8">
       <h2 className="text-2xl font-semibold text-slate-900">Hız ve Planlama</h2>
       <p className="mt-3 text-slate-600 leading-relaxed mb-8" style={{ lineHeight: 1.8 }}>
-        Bu akış, süreci anlaşılır kılmak içindir. Tıbbi tanı/tedavi kararı yerine geçmez.
+        Bu akış, süreci anlaşılır kılmak içindir. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.
       </p>
       <Timeline steps={steps} accentColor="#2563EB" variant="horizontal" />
     </section>

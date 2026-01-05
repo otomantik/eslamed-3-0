@@ -76,7 +76,11 @@ export async function POST(req: Request) {
 
     // Mock for now: later forward to backend/ClickHouse demand_logs table.
     // Keep it privacy-minimal: only store normalized data and coarse metadata.
-    console.log('[demand_logs]', logData);
+    
+    // Debug logging (only in development or when DEBUG env is set)
+    if (process.env.NODE_ENV === 'development' || process.env.DEBUG === 'true') {
+      console.log('[demand_logs]', logData);
+    }
     
     return new NextResponse(null, { status: 204 });
   } catch {

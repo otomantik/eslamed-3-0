@@ -1,29 +1,30 @@
 import Image from 'next/image';
 import { Phone, MessageCircle, MapPin, Clock, Activity, CheckCircle2, AlertTriangle, ShieldCheck, Wind, HandHeart } from 'lucide-react';
 import type { IntentMode } from '@/lib/intent/detector';
+import { RELIABLE_PROCESS_LABEL, AUTHORIZED_MOBILE_TEAM_LABEL, TRANSPARENT_PRICING_LABEL, CLEAR_SCOPE_LABEL } from '@/lib/copy/truth-claims';
 
 interface DynamicHeroProps {
   intent: IntentMode;
   district?: string;
 }
 
-// Helper function to get hero image with WebP fallback
+// Helper function to get hero image with fallback
 const getHeroImage = (imagePath?: string): string => {
   if (!imagePath || imagePath.length === 0) {
-    return "/assets/hero-bg.webp"; // Default WebP
+    return "/assets/hero-bg.png"; // Default fallback to existing image
   }
-  // Try WebP first, fallback to original
-  const webpPath = imagePath.replace(/\.(png|jpg|jpeg)$/i, '.webp');
-  return webpPath;
+  // For now, use hero-bg.png as fallback since mode-specific images don't exist yet
+  // TODO: Add mode-specific hero images when available
+  return "/assets/hero-bg.png";
 };
 
-// Mode-specific hero images
+// Mode-specific hero images (fallback to hero-bg.png until images are added)
 const heroImages = {
-  CRITICAL_EMERGENCY: "/assets/hero-emergency.jpg",
-  TRUST_SEEKER: "/assets/hero-trust.jpg",
-  PRICE_SENSITIVE: "/assets/hero-price.jpg",
-  COMMERCIAL_RENTAL: "/assets/hero-rental.jpg",
-  INFORMATION_SEEKER: "/assets/hero-info.jpg",
+  CRITICAL_EMERGENCY: "/assets/hero-bg.png",
+  TRUST_SEEKER: "/assets/hero-bg.png",
+  PRICE_SENSITIVE: "/assets/hero-bg.png",
+  COMMERCIAL_RENTAL: "/assets/hero-bg.png",
+  INFORMATION_SEEKER: "/assets/hero-bg.png",
 } as const;
 
 export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps) {
@@ -33,7 +34,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     CRITICAL_EMERGENCY: {
       title: `Oksijen cihazınızda sorun mu var?`,
       subtitle:
-        'Acil teknik destek için hemen iletişime geçin. 7/24 hizmetinizdeyiz.',
+        'Acil teknik destek için iletişime geçin. 7/24 mesaj kabul ediyoruz; acil durumlar önceliklidir.',
       cta: "Hemen Ara",
       secondaryCta: "Konumumu Gönder",
       bgImage: getHeroImage(heroImages.CRITICAL_EMERGENCY),
@@ -54,7 +55,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     TRUST_SEEKER: {
       title: `Evde medikal ekipman yönlendirme`,
       subtitle:
-        'ÜTS kayıtlı, CE belgeli medikal ekipmanlar için güvenilir süreç yönlendirmesi. İstanbul genelinde 2 tam yetkili mobil ekip.',
+        `ÜTS Kayıtlı ve CE mevzuatına uygun ürün tedariki ile medikal ekipmanlar için ${RELIABLE_PROCESS_LABEL.toLowerCase()}. İstanbul genelinde 2 ${AUTHORIZED_MOBILE_TEAM_LABEL.toLowerCase()}.`,
       cta: "Uzmanla Konuş",
       secondaryCta: "Nasıl Çalışıyoruz",
       bgImage: getHeroImage(heroImages.TRUST_SEEKER),
@@ -62,7 +63,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
       titleColor: "text-white",
       subtitleColor: "text-blue-50",
       badge: {
-        text: "ÜTS Kayıtlı & CE Belgeli Medikal Ekipman",
+        text: "ÜTS Kayıtlı & CE Mevzuatına Uygun",
         icon: CheckCircle2,
         bg: "bg-blue-500/20 backdrop-blur-sm border border-blue-400/50",
         textColor: "text-blue-100",
@@ -75,7 +76,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
     PRICE_SENSITIVE: {
       title: `Şeffaf kapsam, net fiyat`,
       subtitle:
-        'Fiyat bilgileri şeffaf, kapsam net. 450 TL\'den başlayan fiyatlarla hizmetinizdeyiz.',
+        `${TRANSPARENT_PRICING_LABEL}, ${CLEAR_SCOPE_LABEL.toLowerCase()}. 450 TL'den başlayan fiyatlarla hizmetinizdeyiz.`,
       cta: "Fiyat Bilgisi Al",
       secondaryCta: "Detaylı Bilgi",
       bgImage: getHeroImage(heroImages.PRICE_SENSITIVE),
@@ -184,7 +185,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
           {/* Compliance Bar (quiet, authority signal) */}
           {showComplianceBar && (
             <div className="text-xs text-white/80 bg-white/10 border border-white/15 rounded-lg px-3 py-2 backdrop-blur-sm max-w-xl">
-              T.C. Sağlık Bakanlığı ÜTS Kayıtlı | Yetkili Teknik Destek Merkezi
+              ÜTS Kayıtlı | Yetkili Teknik Destek Merkezi
             </div>
           )}
 
@@ -231,7 +232,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
             <div className="flex items-center gap-6 pt-4">
               <div className="flex items-center gap-2 text-blue-100">
                 <Clock className="w-4 h-4" strokeWidth={1.5} />
-                <span className="text-sm">İstanbul genelinde 2 tam yetkili mobil ekip ile hızlı ve planlı operasyon süreci</span>
+                <span className="text-sm">İstanbul genelinde 2 {AUTHORIZED_MOBILE_TEAM_LABEL.toLowerCase()} ile hızlı ve planlı operasyon süreci</span>
               </div>
               <div className="flex items-center gap-2 text-blue-100">
                 <MapPin className="w-4 h-4" strokeWidth={1.5} />
@@ -260,7 +261,7 @@ export function DynamicHero({ intent, district = 'Istanbul' }: DynamicHeroProps)
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-400"></span>
                 </span>
-                <span className="text-white/90 text-xs font-semibold">2 Tam Yetkili Mobil Ekip</span>
+                <span className="text-white/90 text-xs font-semibold">2 {AUTHORIZED_MOBILE_TEAM_LABEL}</span>
               </div>
             </div>
 

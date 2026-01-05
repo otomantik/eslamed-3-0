@@ -115,7 +115,7 @@ function getSectionVisibility(mode: IntentMode): SectionVisibility {
     case 'TRUST_SEEKER':
       return {
         showSEOAnchor: false, // PremiumConciergeUI has its own trust indicators
-        showInteractiveStats: true,
+        showInteractiveStats: false, // ✅ FIXED: PremiumConciergeUI already shows credentials, no duplication
         showWallOfTrust: true, // Testimonials only (badges removed)
         showServiceValueGrid: true,
         showProductShowcase: true,
@@ -134,8 +134,8 @@ function getSectionVisibility(mode: IntentMode): SectionVisibility {
 
     case 'PRICE_SENSITIVE':
       return {
-        showSEOAnchor: true,
-        showInteractiveStats: true,
+        showSEOAnchor: true, // SEOAnchorSection shows credentials
+        showInteractiveStats: false, // ✅ FIXED: SEOAnchorSection already shows credentials, no duplication
         showWallOfTrust: true,
         showServiceValueGrid: true,
         showProductShowcase: true,
@@ -154,8 +154,8 @@ function getSectionVisibility(mode: IntentMode): SectionVisibility {
 
     case 'INFORMATION_SEEKER':
       return {
-        showSEOAnchor: true,
-        showInteractiveStats: true,
+        showSEOAnchor: true, // SEOAnchorSection shows credentials
+        showInteractiveStats: false, // ✅ FIXED: SEOAnchorSection already shows credentials, no duplication
         showWallOfTrust: true,
         showServiceValueGrid: true,
         showProductShowcase: true,
@@ -174,8 +174,8 @@ function getSectionVisibility(mode: IntentMode): SectionVisibility {
 
     case 'COMMERCIAL_RENTAL':
       return {
-        showSEOAnchor: true,
-        showInteractiveStats: true,
+        showSEOAnchor: true, // SEOAnchorSection shows credentials
+        showInteractiveStats: false, // ✅ FIXED: SEOAnchorSection already shows credentials, no duplication
         showWallOfTrust: true,
         showServiceValueGrid: true,
         showProductShowcase: true,
@@ -195,8 +195,8 @@ function getSectionVisibility(mode: IntentMode): SectionVisibility {
     default:
       // Fallback: show all sections (should not happen with typed modes)
       return {
-        showSEOAnchor: true,
-        showInteractiveStats: true,
+        showSEOAnchor: true, // SEOAnchorSection shows credentials
+        showInteractiveStats: false, // ✅ FIXED: SEOAnchorSection already shows credentials, no duplication
         showWallOfTrust: true,
         showServiceValueGrid: true,
         showProductShowcase: true,

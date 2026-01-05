@@ -24,7 +24,7 @@ export function Footer() {
             <div className="space-y-3 text-sm text-slate-600">
               <div className="flex items-start gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 mt-1 shrink-0" />
-                <p>Kullanılan tüm teknik cihazlar ÜTS kayıtlı ve CE standartlarına uygundur.</p>
+                <p>Kullanılan tüm teknik cihazlar ÜTS Kayıtlı ve CE mevzuatına uygun ürün tedariki ile sağlanmaktadır.</p>
               </div>
               <div className="flex items-start gap-2">
                 <ShieldCheck className="w-4 h-4 text-emerald-600 mt-1 shrink-0" />

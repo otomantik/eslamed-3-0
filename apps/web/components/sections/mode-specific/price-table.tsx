@@ -3,6 +3,7 @@
 import { CheckCircle2, DollarSign } from 'lucide-react';
 import { getPhoneLink } from '@/lib/constants/contact-info';
 import { getWhatsAppUrlWithTemplate } from '@/lib/utils/whatsapp-helpers';
+import { TRANSPARENT_PROCESS_LABEL, TRANSPARENT_PRICING_LABEL, NO_HIDDEN_COSTS_LABEL, CLEAR_SCOPE_LABEL } from '@/lib/copy/truth-claims';
 
 /**
  * PriceTable: PRICE_SENSITIVE mode specific section
@@ -26,7 +27,7 @@ export function PriceTable() {
       name: 'Teknik Servis',
       price: 'Muayene: 200 TL',
       description: 'Arıza tespiti ve onarım',
-      features: ['Ücretsiz değerlendirme', 'Hızlı müdahale', 'Garanti'],
+      features: ['Ücretsiz değerlendirme', 'Hızlı müdahale (aciliyet seviyesine göre)', 'Garanti (cihaz tipine göre)'],
     },
   ];
 
@@ -39,10 +40,10 @@ export function PriceTable() {
             <span className="font-semibold text-amber-900">Şeffaf Fiyatlandırma</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 mb-4">
-            Net Fiyat, Şeffaf Süreç
+            Net Fiyat, {TRANSPARENT_PROCESS_LABEL}
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-            Tüm fiyatlarımız şeffaf. Gizli maliyet yok, net kapsam.
+            {TRANSPARENT_PRICING_LABEL}. {NO_HIDDEN_COSTS_LABEL}, {CLEAR_SCOPE_LABEL}.
           </p>
         </div>
 
