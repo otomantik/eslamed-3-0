@@ -148,7 +148,7 @@ export default async function SolunumSistemleriPage({
           {/* Why: distilled water - Hybrid Infographic */}
           <section className="rounded-3xl border border-slate-200 bg-white p-8">
             <div className="flex items-start gap-3 mb-6">
-              <div className="w-11 h-11 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center flex-shrink-0">
+              <div className="w-11 h-11 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-center shrink-0">
                 <Droplets className="w-5 h-5 text-slate-700" strokeWidth={1.5} />
               </div>
               <div>

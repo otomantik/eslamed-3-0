@@ -14,10 +14,11 @@ export const EventPriorityMap: Record<EventName, EventPriority> = {
   'quote_submitted': 'critical',
   'handover_completed': 'critical',
   'app_error': 'critical',
-  
+
   'search_performed': 'important',
   'mode_changed': 'important',
-  
+  'navigation': 'important',
+
   'app_perf': 'noise',
 };
 
