@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   experimental: {
     // Helps tree-shake icon libraries (and other packages) more aggressively.
     // Safe, low-risk win for "unused JS" reports.
-    optimizePackageImports: ["lucide-react"],
+    optimizePackageImports: ["lucide-react", "framer-motion", "zod", "date-fns"],
   },
   async redirects() {
     return [

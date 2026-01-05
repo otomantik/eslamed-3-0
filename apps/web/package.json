@@ -49,5 +49,9 @@
     "*.{ts,tsx,js,jsx,mjs,md,json}": [
       "node ../../scripts/check-copy-consistency.mjs"
     ]
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ]
 }

@@ -8,7 +8,7 @@
 'use client';
 
 import { v4 as uuidv4 } from 'uuid';
-import { EventName, EventPayload, EventSchemaMap } from './event-dictionary';
+import type { EventName, EventPayload } from './event-dictionary';
 import { getPriority } from './priorities';
 import { getSessionId, getVisitorId, getTraceId } from './ids';
 
@@ -56,12 +56,14 @@ class TrackingClient {
 
   public track<T extends EventName>(name: T, payload: EventPayload<T>) {
     // Runtime Schema Check (Dev only)
+    // Runtime Schema Check (Dev only)
     if (process.env.NODE_ENV === 'development') {
-      const result = EventSchemaMap[name].safeParse(payload);
-      if (!result.success) {
-        console.error(`[Tracking Violation] ${name}:`, result.error);
-        return;
-      }
+      import('./event-dictionary').then(({ EventSchemaMap }) => {
+        const result = EventSchemaMap[name].safeParse(payload);
+        if (!result.success) {
+          console.error(`[Tracking Violation] ${name}:`, result.error);
+        }
+      });
     }
 
     const priority = getPriority(name);
