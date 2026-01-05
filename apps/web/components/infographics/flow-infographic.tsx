@@ -54,7 +54,7 @@ export function FlowInfographic({
   const isHorizontal = orientation === 'horizontal';
 
   return (
-    <div className={`flex ${isHorizontal ? 'flex-row items-center' : 'flex-col items-start'} gap-4 p-6 bg-slate-50/30 rounded-2xl`}>
+    <div className={`flex ${isHorizontal ? 'flex-col sm:flex-row' : 'flex-col'} items-center sm:items-start gap-4 p-6 bg-slate-50/30 rounded-2xl`}>
       {steps.map((step, index) => {
         const IconComponent = iconMap[step.icon];
         const isLast = index === steps.length - 1;
@@ -65,10 +65,10 @@ export function FlowInfographic({
         };
 
         return (
-          <div key={index} className={`flex ${isHorizontal ? 'flex-col items-center' : 'flex-row items-center'} gap-3 flex-1`}>
+          <div key={index} className={`flex ${isHorizontal ? 'flex-col sm:flex-row' : 'flex-row'} items-center gap-3 flex-1 w-full sm:w-auto`}>
             {/* Step Card */}
             <div
-              className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border-2 ${colorClasses[step.status]} min-w-[120px] transition-all hover:scale-105 hover:shadow-md`}
+              className={`relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border-2 ${colorClasses[step.status]} w-full sm:min-w-[120px] transition-all hover:scale-105 hover:shadow-md`}
             >
               <IconComponent
                 className={`w-8 h-8 ${step.status === 'warning' ? 'animate-pulse' : ''}`}
@@ -82,9 +82,9 @@ export function FlowInfographic({
 
             {/* Arrow (SVG) */}
             {!isLast && (
-              <div className={`flex-shrink-0 ${isHorizontal ? 'w-8' : 'h-8'} flex items-center justify-center`}>
+              <div className={`shrink-0 ${isHorizontal ? 'rotate-90 sm:rotate-0' : 'rotate-90'} flex items-center justify-center p-2`}>
                 <ArrowRight
-                  className={`w-6 h-6 text-slate-400 ${isHorizontal ? '' : 'rotate-90'}`}
+                  className="w-6 h-6 text-slate-400"
                   strokeWidth={2}
                 />
               </div>

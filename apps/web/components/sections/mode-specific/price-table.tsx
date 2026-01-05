@@ -61,7 +61,7 @@ export function PriceTable() {
               <ul className="space-y-3">
                 {service.features.map((feature, idx) => (
                   <li key={idx} className="flex items-start gap-2">
-                    <CheckCircle2 className="w-5 h-5 text-amber-600 flex-shrink-0 mt-0.5" strokeWidth={2} />
+                    <CheckCircle2 className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" strokeWidth={2} />
                     <span className="text-slate-700 text-sm">{feature}</span>
                   </li>
                 ))}
@@ -70,7 +70,7 @@ export function PriceTable() {
                 href={getPhoneLink()}
                 className="mt-6 w-full inline-flex items-center justify-center gap-2 px-4 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors"
               >
-                Fiyat Bilgisi Al
+                Hemen Bilgi Al
               </a>
             </div>
           ))}
@@ -84,7 +84,7 @@ export function PriceTable() {
             href={getWhatsAppUrlWithTemplate('PRICE')}
             className="inline-flex items-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-lg font-semibold transition-colors"
           >
-            Detaylı Fiyat Teklifi Al
+            Fiyat Teklifi Al
           </a>
         </div>
       </div>

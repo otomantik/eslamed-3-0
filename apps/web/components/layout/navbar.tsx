@@ -2,8 +2,10 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { MessageCircle, Search, Menu, X, Phone } from 'lucide-react';
+import { Search, Menu, X, Phone } from 'lucide-react';
 import dynamic from 'next/dynamic';
+import { getPhoneLink } from '@/lib/constants/contact-info';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
 
 const SearchModal = dynamic(
   () => import('@/components/search/search-modal').then((m) => m.SearchModal),
@@ -70,25 +72,24 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
 
   return (
     <>
-      <header 
-        className={`fixed w-full z-50 border-b border-slate-200 shadow-sm transition-all duration-300 ease-out ${isEmergency ? 'top-12' : 'top-0'} ${
-          isScrolled 
-            ? 'backdrop-blur-md bg-white/90 h-16' 
-            : 'bg-white h-16'
-        }`}
+      <header
+        className={`fixed w-full z-50 border-b border-slate-200 shadow-sm transition-all duration-300 ease-out ${isEmergency ? 'top-12' : 'top-0'} ${isScrolled
+          ? 'backdrop-blur-md bg-white/90 h-16'
+          : 'bg-white h-16'
+          }`}
         style={{ willChange: 'height, background-color' }}
       >
         <div className="container-wide">
           {/* Top Row: Logo + Navigation + CTA */}
           <div className="flex items-center justify-between gap-2 h-16">
             {/* LOGO */}
-            <Link href="/" className="flex items-center gap-2 flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2 shrink-0">
               <div className="w-10 h-10 bg-brand-primary rounded-lg flex items-center justify-center text-white font-bold text-2xl">
                 E
               </div>
               <div className="hidden sm:flex flex-col">
                 <span className="font-display font-bold text-lg tracking-tight text-slate-900">
-                  ESLAMED
+                  {REALITY_ANCHORS.officialBusinessName.split(' - ')[0]}
                 </span>
                 <span className="text-xs text-slate-500 font-normal">
                   Medikal Çözüm Merkezi
@@ -96,7 +97,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
               </div>
               <div className="sm:hidden flex flex-col leading-tight">
                 <span className="font-display font-bold text-lg tracking-tight text-slate-900">
-                  ESLAMED
+                  {REALITY_ANCHORS.officialBusinessName.split(' - ')[0]}
                 </span>
                 <span className="text-[10px] text-slate-500 font-normal">
                   Medikal Çözüm Merkezi
@@ -105,45 +106,45 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
             </Link>
 
             {/* NAVIGATION LINKS - Desktop */}
-            <nav className="hidden lg:flex items-center gap-3 xl:gap-4 flex-shrink-0">
-              <Link 
-                href="/rehber/solunum-sistemleri" 
+            <nav className="hidden lg:flex items-center gap-3 xl:gap-4 shrink-0">
+              <Link
+                href="/rehber/solunum-sistemleri"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Oksijen konsantratörü ve solunum destek sistemleri"
               >
                 Oksijen
               </Link>
-              <Link 
-                href="/rehber/evde-bakim-ekipmanlari" 
+              <Link
+                href="/rehber/evde-bakim-ekipmanlari"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Evde bakım ekipmanları ve hasta yatakları"
               >
                 Evde Bakım
               </Link>
-              <Link 
-                href="/ekipmanlar" 
+              <Link
+                href="/ekipmanlar"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Tüm medikal ekipman kataloğu"
               >
                 Ekipmanlar
               </Link>
-              <Link 
-                href="/hizmetler" 
+              <Link
+                href="/hizmetler"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="Teknik servis, kiralama ve satış hizmetleri"
               >
                 Hizmetler
               </Link>
-              <Link 
-                href="/tabanlik" 
+              <Link
+                href="/tabanlik"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 style={{ fontFamily: 'var(--font-premium)' }}
                 title="Kişiye özel tabanlık analizi ve çözümleri"
               >
                 VIP Tabanlık
               </Link>
-              <Link 
-                href="/iletisim" 
+              <Link
+                href="/iletisim"
                 className="text-slate-700 hover:text-brand-primary font-medium text-xs xl:text-sm transition-colors whitespace-nowrap px-1"
                 title="İletişim bilgileri ve adres"
               >
@@ -152,7 +153,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
             </nav>
 
             {/* SEARCH - Desktop Only (2XL) */}
-            <div className="hidden 2xl:flex items-center flex-shrink-0 w-56 ml-2">
+            <div className="hidden 2xl:flex items-center shrink-0 w-56 ml-2">
               <div className="relative w-full">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" strokeWidth={1.5} />
                 <input
@@ -164,7 +165,7 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
                     window.setTimeout(() => openSearch(), 50);
                   }}
                   onKeyDown={(e) => {
-                    // If user starts typing, open modal and prefill with the first character.
+                    // If user starts typing, open modal och prefill with the first character.
                     if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
                       e.preventDefault();
                       setSearchEnabled(true);
@@ -191,8 +192,8 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
 
             {/* ACIL DESTEK BUTTON - Desktop */}
             <Link
-              href="tel:+905372425535"
-              className="hidden lg:flex min-h-[40px] items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-3 xl:px-4 py-2 rounded-lg transition-colors font-semibold text-xs xl:text-sm flex-shrink-0 shadow-sm"
+              href={getPhoneLink()}
+              className="hidden lg:flex min-h-[40px] items-center justify-center gap-1.5 bg-red-600 hover:bg-red-700 text-white px-3 xl:px-4 py-2 rounded-lg transition-colors font-semibold text-xs xl:text-sm shrink-0 shadow-sm"
               title="Acil teknik destek için hemen arayın"
             >
               <Phone className="w-4 h-4 xl:w-5 xl:h-5" strokeWidth={2} />
@@ -232,24 +233,24 @@ export function Navbar({ isEmergency = false }: NavbarProps = {}) {
       {/* Mobile Menu Overlay */}
       {isMenuOpen && (
         <>
-          <div 
-            className="fixed inset-0 bg-black/5 backdrop-blur-sm z-[55] lg:hidden transition-opacity"
+          <div
+            className="fixed inset-0 bg-black/5 backdrop-blur-sm z-55 lg:hidden transition-opacity"
             onClick={() => setIsMenuOpen(false)}
           />
-          <div 
-            className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md z-[60] lg:hidden border-b border-slate-200 transition-transform" 
+          <div
+            className="fixed top-0 left-0 right-0 bg-white/95 backdrop-blur-md z-60 lg:hidden border-b border-slate-200 transition-transform"
             style={{ marginTop: isEmergency ? '76px' : '64px' }}
           >
             <div className="container-wide py-8 relative">
               {/* Close Button - Inside Menu Panel */}
               <button
                 onClick={() => setIsMenuOpen(false)}
-                className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors z-[70]"
-                aria-label="Menüyü Kapat"
+                className="absolute top-4 right-4 w-11 h-11 flex items-center justify-center text-slate-700 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition-colors z-70"
+                aria-label="Menüye Kapat"
               >
                 <X className="w-6 h-6" strokeWidth={1.5} />
               </button>
-              
+
               <nav className="flex flex-col gap-0">
                 <Link
                   href="/rehber/solunum-sistemleri"

@@ -8,6 +8,7 @@ import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { routeDictionary } from '@/lib/routes/route-dictionary';
 import { SearchModal } from '@/components/search/search-modal';
+import { getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 export default function NotFound() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -18,7 +19,7 @@ export default function NotFound() {
     // Keywords: servis, tamir, cihaz, rehber, hizmet
     const currentPath = typeof window !== 'undefined' ? window.location.pathname.toLowerCase() : '';
     let smartSuggestion: { path: string; title: string } | null = null;
-    
+
     // Enhanced path-based smart suggestions with multiple keyword patterns
     if (currentPath.includes('servis') || currentPath.includes('tamir') || currentPath.includes('hizmet')) {
       smartSuggestion = { path: '/hizmetler/teknik-servis', title: 'Teknik Servis' };
@@ -27,15 +28,16 @@ export default function NotFound() {
     } else if (currentPath.includes('rehber') || currentPath.includes('bilgi') || currentPath.includes('nasil')) {
       smartSuggestion = { path: '/rehber/solunum-sistemleri', title: 'Solunum Sistemleri Rehberi' };
     }
-    
+
     // Get additional suggestions from route dictionary
     const allRoutes = Object.entries(routeDictionary)
       .filter(([path]) => path !== '/' && (!smartSuggestion || path !== smartSuggestion.path))
       .slice(0, 4)
       .map(([path, meta]) => ({ path, title: meta.title }));
-    
+
     // Combine smart suggestion with other routes (smart suggestion first)
     const routes = smartSuggestion ? [smartSuggestion, ...allRoutes] : allRoutes;
+    // eslint-disable-next-line -- Intentional run-once on mount for client-side detection
     setSuggestedRoutes(routes);
   }, []);
 
@@ -45,7 +47,7 @@ export default function NotFound() {
 
       <section className="pt-28 sm:pt-24 pb-12">
         <div className="container-wide">
-          <div className="rounded-3xl border border-slate-200 bg-white overflow-hidden">
+          <div className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border border-slate-200 shadow-2xl">
             <div className="grid grid-cols-1 lg:grid-cols-2">
               <div className="p-8 lg:p-12">
                 <h1 className="text-3xl sm:text-4xl font-display font-semibold text-slate-900">
@@ -89,8 +91,8 @@ export default function NotFound() {
                 {/* Smart Redirect: "Yolunuzu mu kaybettiniz?" CTA */}
                 <div className="mt-8">
                   <a
-                    href={`https://wa.me/905372425535?text=${encodeURIComponent('Merhaba, site içinde yolumu kaybettim. Uzmanınızla görüşmek istiyorum.')}`}
-                    className="min-h-[56px] w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-700 text-white px-6 text-base font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg hover:shadow-xl"
+                    href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent('Merhaba, site içinde yolumu kaybettim. Uzmanınızla görüşmek istiyorum.')}`}
+                    className="min-h-[56px] w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-linear-to-r from-emerald-600 to-emerald-700 text-white px-6 text-base font-semibold hover:from-emerald-700 hover:to-emerald-800 transition-all shadow-lg hover:shadow-xl"
                     aria-label="WhatsApp ile uzmanımıza bağlan"
                   >
                     <LifeBuoy className="w-5 h-5" strokeWidth={2} />
@@ -116,7 +118,7 @@ export default function NotFound() {
                     Katalog
                   </Link>
                   <a
-                    href={`https://wa.me/905372425535?text=${encodeURIComponent('Merhaba, site içinde aradığım sayfayı bulamadım. Yardım alabilir miyim?')}`}
+                    href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent('Merhaba, site içinde aradığım sayfayı bulamadım. Yardım alabilir miyim?')}`}
                     className="min-h-[56px] inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 text-white px-5 text-base font-semibold hover:bg-emerald-700 transition-colors"
                     aria-label="WhatsApp ile hızlı destek al"
                   >
@@ -126,7 +128,7 @@ export default function NotFound() {
                 </div>
               </div>
 
-              <div className="relative aspect-[16/10] lg:aspect-auto lg:min-h-[520px] bg-blue-50/40">
+              <div className="relative aspect-16/10 lg:aspect-auto lg:min-h-[520px] bg-blue-50/40">
                 <div className="absolute inset-0 flex items-center justify-center text-slate-600 font-semibold">
                   [İllüstrasyon Yer Tutucu]
                 </div>

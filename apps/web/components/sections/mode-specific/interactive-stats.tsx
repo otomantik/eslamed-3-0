@@ -2,7 +2,7 @@
 
 import { ShieldCheck, Settings, Building2 } from 'lucide-react';
 import Link from 'next/link';
-import { VERIFIED_CREDENTIALS, assertNoUnverifiedClaims } from '@/lib/integrity/business-credentials';
+import { assertNoUnverifiedClaims } from '@/lib/integrity/business-credentials';
 import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
 
 /**
@@ -48,14 +48,14 @@ export function InteractiveStats() {
   };
 
   return (
-    <section id="interactive-stats" className="py-16 bg-gradient-to-br from-slate-50 to-slate-100">
+    <section id="interactive-stats" className="py-16 bg-linear-to-br from-slate-50 to-slate-100">
       <div className="container-wide">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-display font-semibold text-slate-900 mb-4">
-            Doğrulanabilir Kurumsal Statü
+            Kurumsal Doğrulama ve Kayıtlar
           </h2>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Doğrulanabilir kurumsal yetkinlik ve yasal belgelerimiz. Tüm bilgiler resmi kayıtlarla eşleşmektedir.
+            Resmi makamlarca onaylı kurumsal yetkinlik ve yasal belgelerimiz. Tüm bilgiler güncel kayıtlarla eşleşmektedir.
           </p>
         </div>
 

@@ -5,6 +5,8 @@ import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { detectIntent } from '@/lib/intent/detector';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { getPhoneLink, getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 export const metadata: Metadata = {
   title: 'İletişim | ESLAMED',
@@ -24,24 +26,24 @@ export default async function IletisimPage({
   const lng = 29.1826;
 
   const mapsDirections = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
-    'Alemdağ Mah. Atabey Cad. No:19/E1A, Çekmeköy, İstanbul'
+    `${REALITY_ANCHORS.address.street}, ${REALITY_ANCHORS.address.city}, ${REALITY_ANCHORS.address.region}`
   )}&destination_place_id=&travelmode=driving`;
 
   const localBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'LocalBusiness',
-    '@id': 'https://www.eslamed.com/#business',
-    name: 'ESLAMED MEDİKAL - SALİH CEVHEROĞLU',
+    '@id': `${REALITY_ANCHORS.siteUrl}/#business`,
+    name: REALITY_ANCHORS.officialBusinessName,
     alternateName: 'ESLAMED',
-    url: 'https://www.eslamed.com/',
-    telephone: '+905372425535',
+    url: `${REALITY_ANCHORS.siteUrl}/`,
+    telephone: REALITY_ANCHORS.contact.phone,
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Alemdağ Mah. Atabey Cad. No:19/E1A',
-      addressLocality: 'Çekmeköy',
-      addressRegion: 'İstanbul',
-      postalCode: '34797',
-      addressCountry: 'TR',
+      streetAddress: REALITY_ANCHORS.address.street,
+      addressLocality: REALITY_ANCHORS.address.city,
+      addressRegion: REALITY_ANCHORS.address.region,
+      postalCode: REALITY_ANCHORS.address.postalCode,
+      addressCountry: REALITY_ANCHORS.address.country,
     },
     geo: {
       '@type': 'GeoCoordinates',
@@ -107,23 +109,23 @@ export default async function IletisimPage({
             <h2 className="text-xl font-semibold text-slate-900">Adres ve iletişim</h2>
             <address className="mt-4 not-italic text-slate-700" style={{ lineHeight: 1.8 }}>
               <div className="font-semibold text-slate-900">ESLAMED</div>
-              Alemdağ Mah. Atabey Cad. No:19/E1A
+              {REALITY_ANCHORS.address.street}
               <br />
-              Çekmeköy / İstanbul, <span className="font-mono">34797</span>
+              {REALITY_ANCHORS.address.city} / {REALITY_ANCHORS.address.region}, <span className="font-mono">{REALITY_ANCHORS.address.postalCode}</span>
               <br />
-              Telefon: <a className="underline underline-offset-4" href="tel:+905372425535">+90 537 242 55 35</a>
+              Telefon: <a className="underline underline-offset-4" href={getPhoneLink()}>{REALITY_ANCHORS.contact.phoneFormatted}</a>
             </address>
 
             <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
               <a
-                href="https://wa.me/905372425535?text=Merhaba"
+                href={getWhatsAppBaseUrl()}
                 className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 text-white px-6 text-base font-semibold hover:bg-emerald-700 transition-colors"
               >
                 <MessageCircle className="w-5 h-5" strokeWidth={1.5} />
                 WhatsApp
               </a>
               <a
-                href="tel:+905372425535"
+                href={getPhoneLink()}
                 className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 text-base font-semibold hover:bg-slate-800 transition-colors"
               >
                 <Phone className="w-5 h-5" strokeWidth={1.5} />

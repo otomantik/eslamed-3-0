@@ -6,6 +6,8 @@ import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { ProcessTimeline } from '@/components/services/process-timeline';
 import { PricingTransparency } from '@/components/services/pricing-transparency';
 import { ServiceFAQ } from '@/components/services/service-faq';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 export const metadata: Metadata = {
   title: 'Cihaz Satışı | ESLAMED',
@@ -19,11 +21,11 @@ export default function CihazSatisiPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://www.eslamed.com/hizmetler/cihaz-satisi#service',
+    '@id': `${REALITY_ANCHORS.siteUrl}/hizmetler/cihaz-satisi#service`,
     name: 'Cihaz Satışı',
     description:
       'Evde kullanım için cihaz satış sürecinde ihtiyaç odaklı eşleştirme ve teknik kullanım uyumu kontrolü. Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
-    provider: { '@id': 'https://www.eslamed.com/#business' },
+    provider: { '@id': `${REALITY_ANCHORS.siteUrl}/#business` },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 
@@ -125,7 +127,7 @@ export default function CihazSatisiPage() {
         </div>
         <div className="mt-6">
           <a
-            href={`https://wa.me/905372425535?text=${encodeURIComponent(
+            href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent(
               'Merhaba, cihaz satışı için ihtiyaç odaklı yönlendirme almak istiyorum. Hekim önerisi ve kullanım koşuluna göre yardımcı olur musunuz?'
             )}`}
             className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 text-white px-6 text-base font-semibold hover:bg-emerald-700 transition-colors"

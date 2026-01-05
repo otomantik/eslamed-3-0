@@ -3,6 +3,7 @@
 import { Phone, MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { TactileButton } from './tactile-button';
+import { getPhoneLink, getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 /**
  * StickyPanicBar: Mobile-only, one-tap call with haptic feedback
@@ -10,11 +11,11 @@ import { TactileButton } from './tactile-button';
  */
 export function StickyPanicBar() {
   const handleCall = () => {
-    window.location.href = 'tel:+905372425535';
+    window.location.href = getPhoneLink();
   };
 
   const handleWhatsApp = () => {
-    window.open('https://wa.me/905372425535?text=Acil%20teknik%20destek%20ihtiyacım%20var', '_blank');
+    window.open(`${getWhatsAppBaseUrl()}?text=Acil%20teknik%20destek%20ihtiyacım%20var`, '_blank');
   };
 
   return (

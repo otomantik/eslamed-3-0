@@ -24,6 +24,17 @@ export interface RealityAnchors {
     postalCode: string;
     country: string;
   };
+  contact: {
+    phone: string;
+    phoneFormatted: string;
+    whatsapp: string;
+    email: string;
+  };
+  pricing: {
+    startingPrice: string;
+    currency: string;
+  };
+  siteUrl: string;
   lastVerifiedDate: string;
   expertReviewDate: string;
 }
@@ -47,11 +58,20 @@ export const REALITY_ANCHORS: RealityAnchors = {
     postalCode: '34797',
     country: 'TR',
   },
+  contact: {
+    phone: '+905372425535',
+    phoneFormatted: '0537 242 55 35',
+    whatsapp: '905372425535',
+    email: 'info@eslamed.com',
+  },
+  pricing: {
+    startingPrice: '450 TL',
+    currency: 'TRY',
+  },
+  siteUrl: 'https://www.eslamed.com',
   lastVerifiedDate: '2026-01-03',
   expertReviewDate: '2026-01-03',
 } as const;
 
 // Formatted address string for UI
 export const FORMATTED_ADDRESS = `${REALITY_ANCHORS.address.street}, ${REALITY_ANCHORS.address.city}, ${REALITY_ANCHORS.address.region} ${REALITY_ANCHORS.address.postalCode} ${REALITY_ANCHORS.address.country}`;
-
-

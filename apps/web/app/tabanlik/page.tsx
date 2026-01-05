@@ -5,6 +5,8 @@ import { ModeAwareNavbar } from '@/components/layout/mode-aware-navbar';
 import { Footer } from '@/components/sections/footer';
 import { Breadcrumbs } from '@/components/navigation/breadcrumbs';
 import { detectIntent } from '@/lib/intent/detector';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { getPhoneLink, getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 export const metadata: Metadata = {
   title: 'Kişiye Özel Tabanlık | ESLAMED',
@@ -46,23 +48,23 @@ export default async function TabanlikPage({
     {
       '@context': 'https://schema.org',
       '@type': 'MedicalWebPage',
-      '@id': 'https://www.eslamed.com/tabanlik#webpage',
-      url: 'https://www.eslamed.com/tabanlik',
+      '@id': `${REALITY_ANCHORS.siteUrl}/tabanlik#webpage`,
+      url: `${REALITY_ANCHORS.siteUrl}/tabanlik`,
       name: 'Kişiye Özel Tabanlık | ESLAMED',
       description:
         'Yürüme analizi ve biomekanik ölçümlerle kişiye özel tabanlık süreci. Teknik rehberlik ve süreç yönetimi; tanı ve tedavi kararı hekimlere aittir.',
-      isPartOf: { '@id': 'https://www.eslamed.com/#website' },
-      about: { '@id': 'https://www.eslamed.com/#business' },
+      isPartOf: { '@id': `${REALITY_ANCHORS.siteUrl}/#website` },
+      about: { '@id': `${REALITY_ANCHORS.siteUrl}/#business` },
       specialty: 'Orthopedics',
       inLanguage: 'tr-TR',
     },
     {
       '@context': 'https://schema.org',
       '@type': 'LocalBusiness',
-      '@id': 'https://www.eslamed.com/#business',
-      name: 'Eslamed',
-      url: 'https://www.eslamed.com/',
-      telephone: '+905372425535',
+      '@id': `${REALITY_ANCHORS.siteUrl}/#business`,
+      name: REALITY_ANCHORS.officialBusinessName,
+      url: `${REALITY_ANCHORS.siteUrl}/`,
+      telephone: REALITY_ANCHORS.contact.phone,
       address: {
         '@type': 'PostalAddress',
         streetAddress: 'Alemdağ Mah. Atabey Caddesi 19/BA',
@@ -125,7 +127,7 @@ export default async function TabanlikPage({
                   priority
                   loading="eager"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent" />
+                <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-r from-blue-50 to-transparent rounded-bl-full opacity-50" />
                 <div className="absolute top-5 left-5 inline-flex items-center gap-2 rounded-full bg-white/90 backdrop-blur border border-slate-200 px-3 py-2 text-slate-900 text-sm font-semibold">
                   <ShieldCheck className="w-4 h-4 text-slate-700" strokeWidth={1.5} />
                   VIP / Öncelikli
@@ -142,7 +144,7 @@ export default async function TabanlikPage({
 
                 <div className="mt-7 flex flex-col sm:flex-row gap-3">
                   <a
-                    href={`https://wa.me/905372425535?text=${encodeURIComponent(
+                    href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent(
                       'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
                     )}`}
                     className="min-h-[48px] inline-flex items-center justify-center rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"
@@ -150,7 +152,7 @@ export default async function TabanlikPage({
                     Randevu Al / Detaylı Bilgi
                   </a>
                   <a
-                    href="tel:+905372425535"
+                    href={getPhoneLink()}
                     className="min-h-[48px] inline-flex items-center justify-center rounded-xl border border-slate-200 bg-white px-6 py-3.5 text-base font-semibold text-slate-900 hover:bg-slate-50 transition-colors"
                   >
                     Telefonla Sor
@@ -162,7 +164,7 @@ export default async function TabanlikPage({
                 </p>
 
                 <a
-                  href={`https://wa.me/905372425535?text=${encodeURIComponent(
+                  href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent(
                     'Merhaba, kişiye özel tabanlık analizi süreci hakkında bilgi almak istiyorum.'
                   )}`}
                   className="mt-6 min-h-[48px] inline-flex items-center justify-center gap-2 rounded-xl bg-brand-primary text-white px-6 py-3.5 text-base font-semibold hover:opacity-95 transition-opacity"
@@ -307,7 +309,7 @@ export default async function TabanlikPage({
             </div>
 
             <a
-              href={`https://wa.me/905372425535?text=${encodeURIComponent(
+              href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent(
                 'Merhaba, kişiye özel tabanlık kullanımı ve bakım süreci hakkında soru sormak istiyorum.'
               )}`}
               className="mt-8 min-h-[48px] inline-flex w-full sm:w-auto items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-base font-semibold hover:bg-slate-800 transition-colors"

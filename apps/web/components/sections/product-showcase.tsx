@@ -94,7 +94,7 @@ export function ProductShowcase() {
                   sizes="(max-width: 1024px) 100vw, 50vw"
                   priority={false}
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent" />
+                <div className="absolute top-0 right-0 w-1/3 h-full bg-linear-to-r from-transparent to-slate-50/50" />
                 <div className="absolute top-4 left-4 inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white/90 px-3 py-1.5 text-slate-900 text-xs font-semibold backdrop-blur-sm">
                   VIP / Öncelikli
                 </div>
@@ -103,7 +103,7 @@ export function ProductShowcase() {
               {/* Right: content (vertically centered) */}
               <div className="w-full lg:w-1/2 p-8 lg:p-12 flex flex-col justify-center">
                 <div className="flex items-start gap-3">
-                  <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center flex-shrink-0">
+                  <div className="w-11 h-11 rounded-xl bg-white border border-slate-200 flex items-center justify-center shrink-0">
                     <Footprints className="w-5 h-5 text-slate-800" strokeWidth={1.5} />
                   </div>
                   <div className="min-w-0">
@@ -124,8 +124,7 @@ export function ProductShowcase() {
                     href={tabanlikWhatsappHref}
                     className="w-full sm:w-auto inline-flex items-center justify-center gap-2 rounded-xl bg-slate-900 text-white px-6 py-3.5 text-sm font-semibold hover:bg-slate-800 transition-colors"
                   >
-                    <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
-                    Randevu Al / Detaylı Bilgi
+                    Randevu ve Bilgi Al
                   </a>
                   <div className="mt-3 text-xs text-slate-500">
                     Hekim planına uygun teknik süreç bilgilendirmesi.
@@ -142,11 +141,10 @@ export function ProductShowcase() {
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${
-                activeTab === tab.id
-                  ? 'border-brand-primary text-brand-primary'
-                  : 'border-transparent text-slate-600 hover:text-slate-900'
-              }`}
+              className={`px-6 py-3 font-medium text-sm transition-colors border-b-2 ${activeTab === tab.id
+                ? 'border-brand-primary text-brand-primary'
+                : 'border-transparent text-slate-600 hover:text-slate-900'
+                }`}
             >
               {tab.label}
             </button>
@@ -170,7 +168,7 @@ export function ProductShowcase() {
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-slate-900 via-slate-900/40 to-transparent opacity-90 transition-opacity group-hover:opacity-100" />
                 <div className="absolute bottom-3 left-3 right-3">
                   <div className="text-white text-xs font-medium leading-snug">
                     {activeVisual.label}
@@ -189,7 +187,7 @@ export function ProductShowcase() {
                 className="w-full flex items-center justify-center gap-2 bg-slate-50 hover:bg-slate-100 text-slate-700 px-4 py-3 rounded-lg transition-colors font-medium text-sm border border-slate-200"
               >
                 <MessageCircle className="w-4 h-4" strokeWidth={1.5} />
-                Bilgi Al
+                Hemen Bilgi Al
               </a>
             </article>
           ))}

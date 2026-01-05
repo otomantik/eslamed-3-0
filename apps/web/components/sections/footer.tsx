@@ -1,12 +1,13 @@
 import Link from 'next/link';
 import { ShieldCheck, Phone, MapPin, Clock, Database } from 'lucide-react';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
 
 export function Footer() {
   return (
     <footer id="kurumsal" className="bg-slate-50 border-t border-slate-200 pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
-          
+
           {/* Section A: Kapsam */}
           <div className="space-y-4">
             <h4 className="font-serif text-slate-900 font-semibold tracking-tight">Kapsam</h4>
@@ -43,7 +44,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="w-4 h-4 text-slate-400 mt-0.5 shrink-0" />
-                <span>Alemdağ Mah. Atabey Cad. No:19/E1A, Çekmeköy, İstanbul</span>
+                <span>{REALITY_ANCHORS.address.street}, {REALITY_ANCHORS.address.city}, {REALITY_ANCHORS.address.region}</span>
               </li>
               <li className="flex items-center gap-2 italic text-slate-500">
                 <Clock className="w-4 h-4" />
@@ -74,15 +75,13 @@ export function Footer() {
         {/* Closing Line & Copyright */}
         <div className="border-t border-slate-200 pt-8 flex flex-col items-center gap-4">
           <p className="text-xs text-slate-400 tracking-wide text-center uppercase">
-            İstanbul genelinde evde kullanılan medikal ekipmanlar için süreç yönlendirmesi sunar.
+            {REALITY_ANCHORS.address.region} genelinde evde kullanılan medikal ekipmanlar için süreç yönlendirmesi sunar.
           </p>
           <p className="text-[10px] text-slate-300">
-            &copy; 2026 ESLAMED MEDİKAL. Tüm hakları saklıdır.
+            &copy; {new Date().getFullYear()} {REALITY_ANCHORS.officialBusinessName}. Tüm hakları saklıdır.
           </p>
         </div>
       </div>
     </footer>
   );
 }
-
-

@@ -26,16 +26,13 @@ const playfair = Playfair_Display({
   display: "swap",
 });
 
+import { REALITY_ANCHORS } from "@/lib/integrity/reality-anchors";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.eslamed.com"),
+  metadataBase: new URL(REALITY_ANCHORS.siteUrl),
   title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
   description:
     "Evde bakım, solunum desteği ve takip cihazları için teknik rehberlik. Tanı/tedavi dışı, ekipman uygunluk ve güvenli kullanım süreçlerinde destek. 4.9 yıldız, 73+ doğrulanmış yorum.",
-  // Icons are automatically detected by Next.js from:
-  // - app/icon.svg (or icon.png)
-  // - app/favicon.ico
-  // - app/apple-icon.tsx (or apple-icon.png)
-  // No manual configuration needed - Next.js handles this automatically
   manifest: "/manifest.webmanifest",
   appleWebApp: {
     title: "ESLAMED",
@@ -44,7 +41,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    url: "https://www.eslamed.com/",
+    url: `${REALITY_ANCHORS.siteUrl}/`,
     siteName: "ESLAMED",
     title: "ESLAMED | Evde Medikal Ekipman ve Süreç Yönlendirme Merkezi",
     description:
@@ -80,31 +77,31 @@ export default function RootLayout({
   const medicalBusinessSchema = {
     '@context': 'https://schema.org',
     '@type': 'MedicalBusiness',
-    '@id': 'https://www.eslamed.com/#business',
-    name: 'ESLAMED MEDİKAL - SALİH CEVHEROĞLU',
+    '@id': `${REALITY_ANCHORS.siteUrl}/#business`,
+    name: REALITY_ANCHORS.officialBusinessName,
     alternateName: 'ESLAMED',
-    url: 'https://www.eslamed.com/',
-    image: 'https://www.eslamed.com/assets/hero-bg.png',
-    logo: 'https://www.eslamed.com/assets/hero-bg.png',
+    url: `${REALITY_ANCHORS.siteUrl}/`,
+    image: `${REALITY_ANCHORS.siteUrl}/assets/hero-bg.png`,
+    logo: `${REALITY_ANCHORS.siteUrl}/assets/hero-bg.png`,
     description:
       'Eslamed, evde kullanım için medikal ekipman uygunluğu ve süreç yönlendirmesi sağlar (solunum desteği, evde bakım, ölçüm/takip). Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz.',
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Alemdağ Mah. Atabey Cad. No:19/E1A',
-      addressLocality: 'Çekmeköy',
-      addressRegion: 'İstanbul',
-      postalCode: '34797',
-      addressCountry: 'TR',
+      streetAddress: REALITY_ANCHORS.address.street,
+      addressLocality: REALITY_ANCHORS.address.city,
+      addressRegion: REALITY_ANCHORS.address.region,
+      postalCode: REALITY_ANCHORS.address.postalCode,
+      addressCountry: REALITY_ANCHORS.address.country,
     },
-    taxID: '2070554381',
-    vatID: '2070554381',
-    telephone: '+905372425535',
+    taxID: REALITY_ANCHORS.taxID,
+    vatID: REALITY_ANCHORS.taxID,
+    telephone: REALITY_ANCHORS.contact.phone,
     openingHours: 'Mo-Su 00:00-24:00',
     priceRange: '$$',
     knowsAbout: ['ÜTS Kayıtlı', 'CE Mevzuatına Uygun Ürün Tedariki', 'Evde Sağlık Ekipmanları'],
     areaServed: [
-      { '@type': 'AdministrativeArea', name: 'İstanbul' },
-      { '@type': 'AdministrativeArea', name: 'Çekmeköy' },
+      { '@type': 'AdministrativeArea', name: REALITY_ANCHORS.address.region },
+      { '@type': 'AdministrativeArea', name: REALITY_ANCHORS.address.city },
       { '@type': 'AdministrativeArea', name: 'Ümraniye' },
       { '@type': 'AdministrativeArea', name: 'Üsküdar' },
       { '@type': 'AdministrativeArea', name: 'Kadıköy' },

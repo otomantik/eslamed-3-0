@@ -1,3 +1,5 @@
+import { REALITY_ANCHORS } from './reality-anchors';
+
 /**
  * Operational Anchors: Single Source of Truth for Operational Claims
  * Chief Truth Architect + Global MedTech Standards Copy Auditor
@@ -36,64 +38,48 @@ export interface OperationalAnchors {
     note: "Tanı ve tedavi kararı hekimlere aittir; bu hizmet tıbbi tanı veya tedavi sunmaz";
   };
   qualityStandards: {
-    traceability: [
-      "ÜTS kayıt numarası ile doğrulanabilir",
-      "Seri/lot kaydı ile izlenebilir (uygulanabilir durumlarda)",
-      "ÇKYS kayıt numarası: 5120489"
-    ];
-    hygiene: [
-      "Paketleme bütünlük kontrolü",
-      "Teslim öncesi temel temizlik kontrolü",
-      "Teslim formu (handover checklist)"
-    ];
-    documentation: [
-      "Hizmet formu (service form)",
-      "Kalibrasyon kaydı (uygulanabilir durumlarda)",
-      "İşlem kaydı (transaction log)"
-    ];
-    dataProtection: [
-      "KVKK kapsamında korunmakta",
-      "Veri minimizasyonu prensibi",
-      "EHDS uyumlu veri aktarımı"
-    ];
+    traceability: string[];
+    hygiene: string[];
+    documentation: string[];
+    dataProtection: string[];
   };
   languagePolicy: {
     noGuarantees: true;
     allowedGuaranteeType: "process guarantee only";
     badges: {
-      fastInstallation: "Hızlı Kurulum (Mümkünse)";
-      quickResponse: "Hızlı Müdahale (Acil Durumlar İçin)";
-      verifiedProcess: "Doğrulanabilir Süreç";
-      traceableEquipment: "ÜTS Kayıtlı Cihaz";
-      compliantService: "CE Mevzuatına Uygun";
+      fastInstallation: string;
+      quickResponse: string;
+      verifiedProcess: string;
+      traceableEquipment: string;
+      compliantService: string;
     };
     availabilityStatements: {
-      whatsapp24h: "7/24 mesaj kabul ediyoruz; acil durumlar önceliklidir";
-      phoneHours: "Telefon hattımızdan operasyon saatleri içinde ulaşabilirsiniz";
-      messageOnly: "7/24 mesaj bırakabilirsiniz; yanıt süresi yoğunluğa göre";
-      emergencyTriage: "24/7 mesaj alımı ve acil triage";
+      whatsapp24h: string;
+      phoneHours: string;
+      messageOnly: string;
+      emergencyTriage: string;
     };
     responseTimeStatements: {
-      sameDayConditional: "Aynı gün müdahale hedeflenir (yoğunluğa ve aciliyet seviyesine göre)";
-      nextDayConditional: "Genellikle aynı gün veya ertesi gün (yoğunluğa göre planlanır)";
-      urgentPriority: "Acil durumlar önceliklidir; müdahale süresi yoğunluğa göre değişebilir";
-      standardTimeline: "Süreç genellikle 1-3 iş günü içinde tamamlanır; acil durumlarda öncelikli planlama yapılır";
+      sameDayConditional: string;
+      nextDayConditional: string;
+      urgentPriority: string;
+      standardTimeline: string;
     };
   };
   operationalCapacity: {
     mobileTeams: {
-      count: 2;
-      verifiedDate: "2026-01-03";
-      note: "İstanbul genelinde 2 tam yetkili mobil ekip (doğrulanabilir operasyon kapasitesi)";
+      count: number;
+      verifiedDate: string;
+      note: string;
     };
-    coverageArea: "İstanbul metropolitan area";
-    serviceRadius: "Çekmeköy merkezden yaklaşık 50 km yarıçap (yoğunluğa göre değişebilir)";
+    coverageArea: string;
+    serviceRadius: string;
   };
   pricing: {
-    startingPrice: "450 TL";
-    currency: "TRY";
-    note: "Fiyatlandırma cihaz tipine, teknik özelliklerine ve işlem türüne göre değişir";
-    disclaimer: "Şeffaf fiyat çerçevesi iletişimde netleştirilir";
+    startingPrice: string;
+    currency: string;
+    note: string;
+    disclaimer: string;
   };
 }
 
@@ -128,7 +114,7 @@ export const OPERATIONAL_ANCHORS: OperationalAnchors = {
     traceability: [
       "ÜTS kayıt numarası ile doğrulanabilir",
       "Seri/lot kaydı ile izlenebilir (uygulanabilir durumlarda)",
-      "ÇKYS kayıt numarası: 5120489"
+      `ÇKYS kayıt numarası: ${REALITY_ANCHORS.ckysRegistrationNumber}`
     ],
     hygiene: [
       "Paketleme bütünlük kontrolü",
@@ -186,40 +172,25 @@ export const OPERATIONAL_ANCHORS: OperationalAnchors = {
   },
 } as const;
 
-/**
- * Helper function to get operational copy by key path
- * Usage: getOperationalCopy('availabilityStatements', 'whatsapp24h')
- */
 export function getOperationalCopy(
   category: keyof OperationalAnchors['languagePolicy'],
   key?: string
 ): string | string[] | Record<string, string> | boolean | undefined {
-  const policy = OPERATIONAL_ANCHORS.languagePolicy[category];
+  const policy = (OPERATIONAL_ANCHORS.languagePolicy as any)[category];
   if (key && typeof policy === 'object' && !Array.isArray(policy) && key in policy) {
     return (policy as Record<string, any>)[key];
   }
-  // Type assertion needed because policy can be boolean, string, or object
-  return policy as string | string[] | Record<string, string> | boolean | undefined;
+  return policy;
 }
 
-/**
- * Helper function to get availability statement
- */
-export function getAvailabilityStatement(type: 'whatsapp24h' | 'phoneHours' | 'messageOnly' | 'emergencyTriage'): string {
+export function getAvailabilityStatement(type: keyof OperationalAnchors['languagePolicy']['availabilityStatements']): string {
   return OPERATIONAL_ANCHORS.languagePolicy.availabilityStatements[type];
 }
 
-/**
- * Helper function to get response time statement
- */
-export function getResponseTimeStatement(type: 'sameDayConditional' | 'nextDayConditional' | 'urgentPriority' | 'standardTimeline'): string {
+export function getResponseTimeStatement(type: keyof OperationalAnchors['languagePolicy']['responseTimeStatements']): string {
   return OPERATIONAL_ANCHORS.languagePolicy.responseTimeStatements[type];
 }
 
-/**
- * Helper function to get badge text
- */
-export function getBadgeText(type: 'fastInstallation' | 'quickResponse' | 'verifiedProcess' | 'traceableEquipment' | 'compliantService'): string {
+export function getBadgeText(type: keyof OperationalAnchors['languagePolicy']['badges']): string {
   return OPERATIONAL_ANCHORS.languagePolicy.badges[type];
 }
-

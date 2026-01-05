@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react';
 import type { IntentMode } from '@/lib/intent/detector';
 import { FAQAccordion } from '@/components/ui/faq-accordion';
 import { useIntent } from '@/context/IntentContext';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { getPhoneLink } from '@/lib/constants/contact-info';
 
 interface SmartFAQProps {
   intent: IntentMode;
@@ -15,52 +17,51 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
   const [clickedFaqCount, setClickedFaqCount] = useState(0);
   const [showFastTrackCTA, setShowFastTrackCTA] = useState(false);
 
-  // Track FAQ clicks for predictive CTA injection (pure state update, no side effects)
-  const handleFaqClick = (faqId: string) => {
-    setClickedFaqCount((prev) => prev + 1);
+  // Track FAQ clicks for predictive CTA injection
+  const handleFaqClick = () => {
+    const newCount = clickedFaqCount + 1;
+    setClickedFaqCount(newCount);
+
+    // Show CTA when conditions are met: urgent mode + 2+ FAQs clicked
+    if (mode === 'CRITICAL_EMERGENCY' && newCount >= 2 && !showFastTrackCTA) {
+      // Check session storage to avoid showing if already shown
+      const fastTrackShown = typeof window !== 'undefined' ? sessionStorage.getItem('eslamed_fast_track_cta_shown') : null;
+
+      if (fastTrackShown !== 'true') {
+        setShowFastTrackCTA(true);
+        sessionStorage.setItem('eslamed_fast_track_cta_shown', 'true');
+
+        // Log High_Intent_Conversion_Signal to demand_logs API
+        const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
+        sessionStorage.setItem('eslamed_session_id', sessionId);
+
+        fetch('/api/demand_logs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            type: 'intent_shift',
+            subtype: 'High_Intent_Conversion_Signal',
+            mode: 'CRITICAL_EMERGENCY',
+            previousMode: mode,
+            newMode: mode,
+            sessionId,
+            faqClickCount: newCount,
+            trigger: 'fast_track_cta_displayed',
+            timestamp: new Date().toISOString(),
+          }),
+          keepalive: true,
+        }).catch(() => {
+          // Silent fail for analytics
+        });
+      }
+    }
   };
 
-  // Show Fast-Track CTA when urgent mode + 2+ FAQs clicked (VIP exclusivity: once per session)
-  // Link to demand_logs API as High_Intent_Conversion_Signal
+  // Check on mount if already shown in session (to keep it visible on refresh if state lost but session kept)
   useEffect(() => {
-    // Check sessionStorage for Fast-Track CTA flag (don't show if already shown in this session)
-    if (typeof window === 'undefined') return;
-    
-    const fastTrackShown = sessionStorage.getItem('eslamed_fast_track_cta_shown');
-    if (fastTrackShown === 'true') {
-      // CTA already shown in this session, don't show again
-      return;
-    }
-    
-    // Show CTA when conditions are met: urgent mode + 2+ FAQs clicked
-    if (mode === 'CRITICAL_EMERGENCY' && clickedFaqCount >= 2) {
-      setShowFastTrackCTA(true);
-      sessionStorage.setItem('eslamed_fast_track_cta_shown', 'true');
-      
-      // Log High_Intent_Conversion_Signal to demand_logs API
-      const sessionId = sessionStorage.getItem('eslamed_session_id') || `session_${Date.now()}`;
-      sessionStorage.setItem('eslamed_session_id', sessionId);
-      
-      fetch('/api/demand_logs', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'intent_shift',
-          subtype: 'High_Intent_Conversion_Signal',
-          mode: 'CRITICAL_EMERGENCY',
-          previousMode: mode,
-          newMode: mode,
-          sessionId,
-          faqClickCount: clickedFaqCount,
-          trigger: 'fast_track_cta_displayed',
-          timestamp: new Date().toISOString(),
-        }),
-        keepalive: true,
-      }).catch(() => {
-        // Silent fail for analytics
-      });
-    }
-  }, [mode, clickedFaqCount]);
+    // Intentionally left empty to avoid synchronous setState error.
+    // Persistence is not critical for this ephemeral CTA.
+  }, []);
   const faqs = [
     // Foundation (always relevant)
     {
@@ -174,7 +175,7 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
               style={{ containIntrinsicSize: 'auto 120px' }}
             >
               <div className="flex items-start gap-4">
-                <div className="flex-shrink-0 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
+                <div className="shrink-0 mt-1 w-12 h-12 rounded-full bg-red-600 flex items-center justify-center">
                   <Phone className="w-6 h-6 text-white" strokeWidth={2} />
                 </div>
                 <div className="flex-1">
@@ -185,11 +186,11 @@ export function SmartFAQ({ intent }: SmartFAQProps) {
                     Sorularınıza hızlıca yanıt almak ve acil teknik destek için doğrudan arayabilirsiniz.
                   </p>
                   <a
-                    href="tel:+905372425535"
+                    href={getPhoneLink()}
                     className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors min-h-[48px]"
                   >
                     <Phone className="w-5 h-5" strokeWidth={2} />
-                    Hemen Ara: 0537 242 55 35
+                    Hemen Ara: {REALITY_ANCHORS.contact.phoneFormatted}
                   </a>
                 </div>
               </div>

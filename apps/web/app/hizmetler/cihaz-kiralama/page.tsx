@@ -6,6 +6,8 @@ import { QuickActionCard } from '@/components/rehber/quick-action-card';
 import { ProcessTimeline } from '@/components/services/process-timeline';
 import { PricingTransparency } from '@/components/services/pricing-transparency';
 import { ServiceFAQ } from '@/components/services/service-faq';
+import { REALITY_ANCHORS } from '@/lib/integrity/reality-anchors';
+import { getWhatsAppBaseUrl } from '@/lib/constants/contact-info';
 
 export const metadata: Metadata = {
   title: 'Cihaz Kiralama | ESLAMED',
@@ -19,11 +21,11 @@ export default function CihazKiralamaPage() {
   const serviceSchema = {
     '@context': 'https://schema.org',
     '@type': 'Service',
-    '@id': 'https://www.eslamed.com/hizmetler/cihaz-kiralama#service',
+    '@id': `${REALITY_ANCHORS.siteUrl}/hizmetler/cihaz-kiralama#service`,
     name: 'Cihaz Kiralama',
     description:
-      'Evde kullanım için cihaz kiralama sürecinde hijyen hazırlığı, teknik kontrol ve esnek süre/koşul planlama yaklaşımı.',
-    provider: { '@id': 'https://www.eslamed.com/#business' },
+      'Evde bakım ve solunum cihazları (konsantratör, hasta yatağı vb.) kiralama hizmeti. Teknik rehberlik ve süreç yönetimi; tanı ve tedavi kararı hekimlere aittir.',
+    provider: { '@id': `${REALITY_ANCHORS.siteUrl}/#business` },
     areaServed: { '@type': 'AdministrativeArea', name: 'İstanbul' },
   };
 
@@ -131,8 +133,8 @@ export default function CihazKiralamaPage() {
         </p>
         <div className="mt-6">
           <a
-            href={`https://wa.me/905372425535?text=${encodeURIComponent(
-              'Merhaba, cihaz kiralama süreci (hasta yatağı / konsantratör / mobilite) hakkında kurulum ve koşul bilgisi almak istiyorum.'
+            href={`${getWhatsAppBaseUrl()}?text=${encodeURIComponent(
+              'Merhaba, cihaz kiralama süreci hakkında bilgi almak istiyorum. Teknik destek ve kurulum dahil seçenekleriniz nelerdir?'
             )}`}
             className="min-h-[48px] inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-600 text-white px-6 text-base font-semibold hover:bg-emerald-700 transition-colors"
           >

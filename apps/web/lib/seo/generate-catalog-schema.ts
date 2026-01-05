@@ -1,4 +1,5 @@
 import type { SearchItem } from '@/lib/search/search-config';
+import { REALITY_ANCHORS } from '../integrity/reality-anchors';
 
 interface CatalogSchemaOptions {
   items: SearchItem[];
@@ -17,7 +18,7 @@ export function generateCatalogSchema({
   currentUrl,
   totalProducts,
 }: CatalogSchemaOptions) {
-  const baseUrl = 'https://www.eslamed.com';
+  const baseUrl = REALITY_ANCHORS.siteUrl;
   const breadcrumbs = [
     { '@type': 'ListItem', position: 1, name: 'Ana Sayfa', item: `${baseUrl}/` },
     { '@type': 'ListItem', position: 2, name: 'Tüm Ekipmanlar', item: `${baseUrl}/ekipmanlar` },
@@ -82,5 +83,3 @@ export function generateCatalogSchema({
     breadcrumb: breadcrumbSchema,
   };
 }
-
-

@@ -1,3 +1,5 @@
+import { REALITY_ANCHORS } from '../integrity/reality-anchors';
+
 /**
  * Contact Information Constants
  * ✅ ADSMantık Compliance: Single source of truth for all contact methods
@@ -6,13 +8,13 @@
 
 export const CONTACT_INFO = {
   phone: {
-    formatted: '0537 242 55 35',
-    tel: '+905372425535',
-    display: '0537 242 55 35',
+    formatted: REALITY_ANCHORS.contact.phoneFormatted,
+    tel: REALITY_ANCHORS.contact.phone,
+    display: REALITY_ANCHORS.contact.phoneFormatted,
   },
   whatsapp: {
-    number: '905372425535',
-    baseUrl: 'https://wa.me/905372425535',
+    number: REALITY_ANCHORS.contact.whatsapp,
+    baseUrl: `https://wa.me/${REALITY_ANCHORS.contact.whatsapp}`,
   },
 } as const;
 
@@ -29,5 +31,3 @@ export function getPhoneLink(): string {
 export function getWhatsAppBaseUrl(): string {
   return CONTACT_INFO.whatsapp.baseUrl;
 }
-
-
